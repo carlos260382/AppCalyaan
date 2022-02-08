@@ -25,21 +25,3 @@ $ cd frontend
 $ npm install
 $ npm start
 ```
-
-### 5. Seed Users and Products
-
-- Run this on chrome: http://localhost:5000/api/users/seed
-- It returns admin email and password
-- Run this on chrome: http://localhost:5000/api/products/seed
-- It creates 6 sample products
-
-### 6. Admin Login
-
-- Run http://localhost:3000/signin
-- Enter admin email and password and click signin
-
-## Support
-
-- Q/A: https://webacademy.pro/amazona
-- Contact Instructor: [Basir](mailto:basir.jafarzadeh@gmail.com)
-

@@ -31,6 +31,7 @@ import MapScreen from './screens/MapScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
 import ChatBox from './components/ChatBox';
+import Navbar from './components/Navbar';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -54,6 +55,7 @@ function App() {
   }, [dispatch]);
   return (
     <BrowserRouter>
+    <Navbar/>
       <div className="grid-container">
         <header className="row">
           <div>
@@ -175,6 +177,7 @@ function App() {
             )}
           </ul>
         </aside>
+        
         <main>
           <Route path="/seller/:id" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>

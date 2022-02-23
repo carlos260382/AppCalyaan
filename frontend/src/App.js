@@ -32,6 +32,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
 import ChatBox from './components/ChatBox';
 import Navbar from './components/Navbar';
+import MercadoPagoForm from './MercadoPago/components/MercadoPago/MercadoPagoForm';
 
 function App() {
   //const cart = useSelector((state) => state.cart);
@@ -194,6 +195,8 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <Route path="/mercadoPago" component={MercadoPagoForm}></Route>      
+          
           <Route
             path="/search/name/:name?"
             component={SearchScreen}

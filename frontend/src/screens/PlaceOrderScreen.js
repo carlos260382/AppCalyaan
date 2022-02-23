@@ -12,6 +12,9 @@ export default function PlaceOrderScreen(props) {
   if (!cart.paymentMethod) {
     props.history.push('/payment');
   }
+  console.log('este es el payment', cart.paymentMethod)
+  console.log('este es el carrito', cart)
+  
   const orderCreate = useSelector((state) => state.orderCreate);
   const { loading, success, error, order } = orderCreate;
   const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12

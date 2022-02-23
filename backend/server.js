@@ -30,6 +30,39 @@ app.get('/api/config/paypal', (req, res) => {
 app.get('/api/config/google', (req, res) => {
   res.send(process.env.GOOGLE_API_KEY || '');
 });
+
+app.post("/process-payment", (req, res) => {
+  mercadopago.configurations.setAccessToken('TEST-8932127300566154-012622-75445131cd945a120ce35722a1fe1c3c-226754364');
+  const payment_data = {
+      transaction_amount: req.body.transaction_amount,
+      token: req.body.token,
+      description: req.body.description,
+      installments: Number(req.body.installments),
+      payment_method_id: req.body.paymentMethodId,
+      issuer_id: req.body.issuer,
+      payer: {
+          email: req.body.payer.email,
+          identification: {
+              type: req.body.payer.docType,
+              number: req.body.payer.docNumber,
+          },
+      },
+  };
+
+  mercadopago.payment
+      .save(payment_data)
+      .then((response) => {
+          return res.status(response.status).json({
+              status: response.body.status,
+              status_detail: response.body.status_detail,
+              id: response.body.id,
+          });
+      })
+      .catch((err) => {
+          return res.status(500).send(err);
+      });
+});
+
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use(express.static(path.join(__dirname, '/frontend/build')));

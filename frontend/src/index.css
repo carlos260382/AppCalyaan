@@ -85,7 +85,7 @@ button:hover {
   border: 0.1rem #404040 solid;
 }
 button.primary {
-  background-color: #f0c040;
+  background-color: #df641c;
 }
 button.block {
   width: 100%;
@@ -212,7 +212,7 @@ img.large {
 }
 /* Rating */
 .rating span {
-  color: #f0c040;
+  color: #d6f040;
   margin: 0.1rem;
 }
 .rating span:last-child {
@@ -270,7 +270,7 @@ img.large {
   min-width: 12rem;
   padding: 1rem;
   z-index: 1;
-  background-color: #203040;
+  background-color: #627C8E;
   margin: 0;
   margin-top: 0.4rem;
   border-radius: 0.5rem;
@@ -287,8 +287,8 @@ img.large {
   font-weight: bold;
 }
 .checkout-steps > div.active {
-  border-top-color: #f08000;
-  color: #f08000;
+  border-top-color: #c2e42c;
+  color: #c2e42c;
 }
 /* Table */
 .table {

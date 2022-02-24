@@ -155,7 +155,7 @@ export default function ServiceEditScreen(props) {
                 id="city"
                 type="text"
                 placeholder="Enter city"
-                value={brand}
+                value={city}
                 onChange={(e) => setCity(e.target.value)}
               ></input>
             </div>

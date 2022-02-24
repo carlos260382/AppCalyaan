@@ -58,7 +58,7 @@ export const listServiceCategories = () => async (dispatch) => {
   }
 };
 
-export const detailsservice = (serviceId) => async (dispatch) => {
+export const detailsService = (serviceId) => async (dispatch) => {
   dispatch({ type: SERVICE_DETAILS_REQUEST, payload: serviceId });
   try {
     const { data } = await Axios.get(`/api/services/${serviceId}`);
@@ -73,7 +73,7 @@ export const detailsservice = (serviceId) => async (dispatch) => {
     });
   }
 };
-export const createservice = () => async (dispatch, getState) => {
+export const createService = () => async (dispatch, getState) => {
   dispatch({ type: SERVICE_CREATE_REQUEST });
   const {
     userSignin: { userInfo },
@@ -98,7 +98,7 @@ export const createservice = () => async (dispatch, getState) => {
     dispatch({ type: SERVICE_CREATE_FAIL, payload: message });
   }
 };
-export const updateservice = (service) => async (dispatch, getState) => {
+export const updateService = (service) => async (dispatch, getState) => {
   dispatch({ type: SERVICE_UPDATE_REQUEST, payload: service });
   const {
     userSignin: { userInfo },
@@ -116,7 +116,7 @@ export const updateservice = (service) => async (dispatch, getState) => {
     dispatch({ type: SERVICE_UPDATE_FAIL, error: message });
   }
 };
-export const deleteservice = (serviceId) => async (dispatch, getState) => {
+export const deleteService = (serviceId) => async (dispatch, getState) => {
   dispatch({ type: SERVICE_DELETE_REQUEST, payload: serviceId });
   const {
     userSignin: { userInfo },

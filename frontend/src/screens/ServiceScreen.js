@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createReview, detailsProduct } from '../actions/productActions';
+import { createReview, detailsService } from '../actions/serviceActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
-import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstants';
+import { SERVICE_REVIEW_CREATE_RESET } from '../constants/serviceConstants';
 
-export default function ProductScreen(props) {
+export default function ServiceScreen(props) {
   const dispatch = useDispatch();
-  const productId = props.match.params.id;
+  const serviceId = props.match.params.id;
   const [qty, setQty] = useState(1);
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
+  const serviceDetails = useSelector((state) => state.serviceDetails);
+  const { loading, error, service } = serviceDetails;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
-  const productReviewCreate = useSelector((state) => state.productReviewCreate);
+  const serviceReviewCreate = useSelector((state) => state.serviceReviewCreate);
   const {
     loading: loadingReviewCreate,
     error: errorReviewCreate,
     success: successReviewCreate,
-  } = productReviewCreate;
+  } = serviceReviewCreate;
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
@@ -31,18 +31,18 @@ export default function ProductScreen(props) {
       window.alert('Review Submitted Successfully');
       setRating('');
       setComment('');
-      dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
+      dispatch({ type: SERVICE_REVIEW_CREATE_RESET });
     }
-    dispatch(detailsProduct(productId));
-  }, [dispatch, productId, successReviewCreate]);
+    dispatch(detailsService(serviceId));
+  }, [dispatch, serviceId, successReviewCreate]);
   const addToCartHandler = () => {
-    props.history.push(`/cart/${productId}?qty=${qty}`);
+    props.history.push(`/cart/${serviceId}?qty=${qty}`);
   };
   const submitHandler = (e) => {
     e.preventDefault();
     if (comment && rating) {
       dispatch(
-        createReview(productId, { rating, comment, name: userInfo.name })
+        createReview(serviceId, { rating, comment, name: userInfo.name })
       );
     } else {
       alert('Please enter comment and rating');
@@ -56,30 +56,30 @@ export default function ProductScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <Link to="/">Back to result</Link>
+          <Link to="/">Volver al Resultado</Link>
           <div className="row top">
             <div className="col-2">
               <img
                 className="large"
-                src={product.image}
-                alt={product.name}
+                src={service.image}
+                alt={service.name}
               ></img>
             </div>
             <div className="col-1">
               <ul>
                 <li>
-                  <h1>{product.name}</h1>
+                  <h1>{service.name}</h1>
                 </li>
                 <li>
                   <Rating
-                    rating={product.rating}
-                    numReviews={product.numReviews}
+                    rating={service.rating}
+                    numReviews={service.numReviews}
                   ></Rating>
                 </li>
-                <li>Pirce : ${product.price}</li>
+                <li>Pirce : ${service.price}</li>
                 <li>
                   Description:
-                  <p>{product.description}</p>
+                  <p>{service.description}</p>
                 </li>
               </ul>
             </div>
@@ -87,28 +87,28 @@ export default function ProductScreen(props) {
               <div className="card card-body">
                 <ul>
                   <li>
-                    Seller{' '}
+                    Vendedor{' '}
                     <h2>
-                      <Link to={`/seller/${product.seller._id}`}>
-                        {product.seller.seller.name}
+                      <Link to={`/seller/${service.seller._id}`}>
+                        {service.seller.seller.name}
                       </Link>
                     </h2>
                     <Rating
-                      rating={product.seller.seller.rating}
-                      numReviews={product.seller.seller.numReviews}
+                      rating={service.seller.seller.rating}
+                      numReviews={service.seller.seller.numReviews}
                     ></Rating>
                   </li>
                   <li>
                     <div className="row">
-                      <div>Price</div>
-                      <div className="price">${product.price}</div>
+                      <div>Precio</div>
+                      <div className="price">${service.price}</div>
                     </div>
                   </li>
                   <li>
                     <div className="row">
-                      <div>Status</div>
+                      <div>Estado</div>
                       <div>
-                        {product.countInStock > 0 ? (
+                        {service.countInStock > 0 ? (
                           <span className="success">In Stock</span>
                         ) : (
                           <span className="danger">Unavailable</span>
@@ -116,7 +116,7 @@ export default function ProductScreen(props) {
                       </div>
                     </div>
                   </li>
-                  {product.countInStock > 0 && (
+                  {service.countInStock > 0 && (
                     <>
                       <li>
                         <div className="row">
@@ -126,7 +126,7 @@ export default function ProductScreen(props) {
                               value={qty}
                               onChange={(e) => setQty(e.target.value)}
                             >
-                              {[...Array(product.countInStock).keys()].map(
+                              {[...Array(service.countInStock).keys()].map(
                                 (x) => (
                                   <option key={x + 1} value={x + 1}>
                                     {x + 1}
@@ -153,11 +153,11 @@ export default function ProductScreen(props) {
           </div>
           <div>
             <h2 id="reviews">Reviews</h2>
-            {product.reviews.length === 0 && (
+            {service.reviews.length === 0 && (
               <MessageBox>There is no review</MessageBox>
             )}
             <ul>
-              {product.reviews.map((review) => (
+              {service.reviews.map((review) => (
                 <li key={review._id}>
                   <strong>{review.name}</strong>
                   <Rating rating={review.rating} caption=" "></Rating>
@@ -169,7 +169,7 @@ export default function ProductScreen(props) {
                 {userInfo ? (
                   <form className="form" onSubmit={submitHandler}>
                     <div>
-                      <h2>Write a customer review</h2>
+                      <h2>Escriba una Reseña</h2>
                     </div>
                     <div>
                       <label htmlFor="rating">Rating</label>
@@ -179,15 +179,15 @@ export default function ProductScreen(props) {
                         onChange={(e) => setRating(e.target.value)}
                       >
                         <option value="">Select...</option>
-                        <option value="1">1- Poor</option>
-                        <option value="2">2- Fair</option>
-                        <option value="3">3- Good</option>
-                        <option value="4">4- Very good</option>
-                        <option value="5">5- Excelent</option>
+                        <option value="1">1- Malo</option>
+                        <option value="2">2- Mediano</option>
+                        <option value="3">3- Bueno</option>
+                        <option value="4">4- Muy Bueno</option>
+                        <option value="5">5- Excelente</option>
                       </select>
                     </div>
                     <div>
-                      <label htmlFor="comment">Comment</label>
+                      <label htmlFor="comment">Commentario</label>
                       <textarea
                         id="comment"
                         value={comment}
@@ -197,7 +197,7 @@ export default function ProductScreen(props) {
                     <div>
                       <label />
                       <button className="primary" type="submit">
-                        Submit
+                        Enviar
                       </button>
                     </div>
                     <div>

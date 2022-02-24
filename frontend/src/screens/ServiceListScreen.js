@@ -12,17 +12,6 @@ import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
 } from '../constants/productConstants';
-import {
-  createService,
-  deleteService,
-  listService,
-} from '../actions/serviceActions';
-import {
-  SERVICE_CREATE_RESET,
-  SERVICE_DELETE_RESET,
-} from '../constants/serviceConstants';
-
-
 
 export default function ProductListScreen(props) {
   const { pageNumber = 1 } = useParams();
@@ -31,10 +20,6 @@ export default function ProductListScreen(props) {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
 
-  const serviceList = useSelector((state) => state.serviceList);
-  const { loading, error, services, page, pages } = serviceList;
-
-
   const productCreate = useSelector((state) => state.productCreate);
   const {
     loading: loadingCreate,
@@ -42,16 +27,6 @@ export default function ProductListScreen(props) {
     success: successCreate,
     product: createdProduct,
   } = productCreate;
-
-  const productCreate = useSelector((state) => state.productCreate);
-  const {
-    loading: loadingCreate,
-    error: errorCreate,
-    success: successCreate,
-    product: createdProduct,
-  } = productCreate;
-
-
 
   const productDelete = useSelector((state) => state.productDelete);
   const {

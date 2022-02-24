@@ -5,7 +5,7 @@ import Service from '../models/serviceModel.js';
 import User from '../models/userModel.js';
 import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
-const productRouter = express.Router();
+const serviceRouter = express.Router();
 
 serviceRouter.get(
   '/',
@@ -167,7 +167,7 @@ serviceRouter.post(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const serviceId = req.params.id;
-    const service = await service.findById(serviceId);
+    const service = await Service.findById(serviceId);
     if (service) {
       if (service.reviews.find((x) => x.name === req.user.name)) {
         return res

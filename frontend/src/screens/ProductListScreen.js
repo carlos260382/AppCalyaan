@@ -12,17 +12,6 @@ import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
 } from '../constants/productConstants';
-import {
-  createService,
-  deleteService,
-  listService,
-} from '../actions/serviceActions';
-import {
-  SERVICE_CREATE_RESET,
-  SERVICE_DELETE_RESET,
-} from '../constants/serviceConstants';
-
-
 
 export default function ProductListScreen(props) {
   const { pageNumber = 1 } = useParams();
@@ -30,10 +19,6 @@ export default function ProductListScreen(props) {
   const sellerMode = props.match.path.indexOf('/seller') >= 0;
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
-
-  const serviceList = useSelector((state) => state.serviceList);
-  const { loadingService, errorService, services, pageService, pagesService } = serviceList;
-
 
   const productCreate = useSelector((state) => state.productCreate);
   const {
@@ -43,63 +28,33 @@ export default function ProductListScreen(props) {
     product: createdProduct,
   } = productCreate;
 
-  const serviceCreate = useSelector((state) => state.serviceCreate);
-  const {
-    loading: loadingCreateService,
-    error: errorCreateService,
-    success: successCreateService,
-    service: createdService,
-  } = serviceCreate;
-
   const productDelete = useSelector((state) => state.productDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
   } = productDelete;
-
-  const serviceDelete = useSelector((state) => state.serviceDelete);
-  const {
-    loading: loadingDeleteService,
-    error: errorDeleteService,
-    success: successDeleteService,
-  } = serviceDelete;
-
-
-
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
       props.history.push(`/product/${createdProduct._id}/edit`);
     }
-    if (successCreateService) {
-      dispatch({ type: SERVICE_CREATE_RESET });
-      props.history.push(`/service/${createdService._id}/edit`);
-    }
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
-    if (successDeleteService) {
-      dispatch({ type: SERVICE_DELETE_RESET });
-    }
     dispatch(
-      listProducts({ seller: sellerMode ? userInfo._id : '', pageNumber }),
-      listService({ seller: sellerMode ? userInfo._id : '', pageNumber })
+      listProducts({ seller: sellerMode ? userInfo._id : '', pageNumber })
     );
   }, [
     createdProduct,
-    createService,
     dispatch,
     props.history,
     sellerMode,
     successCreate,
     successDelete,
-    successCreateService,
-    successDeleteService,
     userInfo._id,
     pageNumber,
   ]);
@@ -109,19 +64,8 @@ export default function ProductListScreen(props) {
       dispatch(deleteProduct(product._id));
     }
   };
-  
-  const deleteHandlerService = (service) => {
-    if (window.confirm('¿Desea eliminar el servicio?')) {
-      dispatch(deleteService(service._id));
-    }
-  };
-
   const createHandler = () => {
     dispatch(createProduct());
-  };
-
-  const createHandlerService = () => {
-    dispatch(createService());
   };
 
   return (
@@ -132,19 +76,12 @@ export default function ProductListScreen(props) {
           Create Product
         </button>
       </div>
-      <div className="row">
-        <h1>Servicios</h1>
-        <button type="button" className="primary" onClick={createHandlerService}>
-          Crear Servicios
-        </button>
-      </div>
 
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
-      {loadingDelete ||loadingDeleteService && <LoadingBox></LoadingBox>}
-      {errorDelete || errorDeleteService && <MessageBox variant="danger">{errorDelete}</MessageBox>}
-
-      {loadingCreate ||loadingCreateService && <LoadingBox></LoadingBox>}
-      {errorCreate || errorCreateService && <MessageBox variant="danger">{errorCreate}</MessageBox>}
+      {loadingCreate && <LoadingBox></LoadingBox>}
+      {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -192,53 +129,6 @@ export default function ProductListScreen(props) {
               ))}
             </tbody>
           </table>
-
-
-          
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>SERVICIO</th>
-                <th>PRECIO</th>
-                <th>CATEGORIA</th>
-                <th>CIUDAD</th>
-                <th>ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {services.map((service) => (
-                <tr key={service._id}>
-                  <td>{service._id}</td>
-                  <td>{service.name}</td>
-                  <td>{service.price}</td>
-                  <td>{service.category}</td>
-                  <td>{service.city}</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="small"
-                      onClick={() =>
-                        props.history.push(`/service/${service._id}/edit`)
-                      }
-                    >
-                      Editar
-                    </button>
-                    <button
-                      type="button"
-                      className="small"
-                      onClick={() => deleteHandlerService(service)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-
-
           <div className="row center pagination">
             {[...Array(pages).keys()].map((x) => (
               <Link

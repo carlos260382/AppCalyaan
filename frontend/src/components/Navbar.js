@@ -138,7 +138,10 @@ return (
               <NavLink to="/dashboard">Dashboard</NavLink>
             </li>
             <li>
-              <NavLink to="/productlist">Products</NavLink>
+              <NavLink to="/productlist">Productos</NavLink>
+            </li>
+            <li>
+              <NavLink to="/servicelist">Servicios</NavLink>
             </li>
             <li>
               <NavLink to="/orderlist">Orders</NavLink>

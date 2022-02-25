@@ -108,20 +108,20 @@ serviceRouter.post(
   isAuth,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    const service = new service({
-      name: 'sample name ' + Date.now(),
-      seller: req.user._id,
-      image: '/images/p1.jpg',
-      price: 0,
-      category: 'sample category',
-      brand: 'sample brand',
-      countInStock: 0,
-      rating: 0,
-      numReviews: 0,
-      description: 'sample description',
-    });
-    const createdservice = await service.save();
-    res.send({ message: 'service Created', service: createdservice });
+        const service = new Service({
+        name: 'sample name ' + Date.now(),
+        seller: req.user._id,
+        image: '/images/p1.jpg',
+        price: 0,
+        category: 'sample category',
+        city: 'sample Bogota',
+        rating: 0,
+        numReviews: 0,
+        description: 'sample description',
+      });
+      const createdservice = await service.save();
+      res.send({ message: 'service Created', service: createdservice });    
+   
   })
 );
 serviceRouter.put(
@@ -130,7 +130,7 @@ serviceRouter.put(
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const serviceId = req.params.id;
-    const service = await service.findById(serviceId);
+    const service = await Service.findById(serviceId);
     if (service) {
       service.name = req.body.name;
       service.price = req.body.price;
@@ -152,7 +152,7 @@ serviceRouter.delete(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const service = await service.findById(req.params.id);
+    const service = await Service.findById(req.params.id);
     if (service) {
       const deleteservice = await service.remove();
       res.send({ message: 'service Deleted', service: deleteservice });

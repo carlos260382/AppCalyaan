@@ -11,6 +11,7 @@ import OrderScreen from './screens/OrderScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductListScreen from './screens/ProductListScreen';
+import ServiceListScreen from './screens/ServiceListScreen';
 import ProductScreen from './screens/ProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
@@ -233,6 +234,17 @@ function App() {
             exact
           ></AdminRoute>
           <AdminRoute
+            path="/servicelist"
+            component={ServiceListScreen}
+            exact
+          ></AdminRoute>
+          <AdminRoute
+            path="/servicelist/pageNumber/:pageNumber"
+            component={ServiceListScreen}
+            exact
+          ></AdminRoute>
+
+          <AdminRoute
             path="/orderlist"
             component={OrderListScreen}
             exact
@@ -253,6 +265,11 @@ function App() {
             path="/productlist/seller"
             component={ProductListScreen}
           ></SellerRoute>
+          <SellerRoute
+            path="/servicelist/seller"
+            component={ServiceListScreen}
+          ></SellerRoute>
+
           <SellerRoute
             path="/orderlist/seller"
             component={OrderListScreen}

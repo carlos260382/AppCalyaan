@@ -38,7 +38,7 @@ export const listService = ({
   });
   try {
     const { data } = await Axios.get(
-      `/api/service?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+      `/api/services?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
     );
     dispatch({ type: SERVICE_LIST_SUCCESS, payload: data });
   } catch (error) {

@@ -74,11 +74,11 @@ serviceRouter.get(
     // await Product.remove({});
     const seller = await User.findOne({ isSeller: true });
     if (seller) {
-      const service = data.Service.map((product) => ({
+      const services = data.Service.map((product) => ({
         ...product,
         seller: seller._id,
       }));
-      const createdService = await Service.insertMany(products);
+      const createdService = await Service.insertMany(services);
       res.send({ createdProducts });
     } else {
       res
@@ -109,18 +109,19 @@ serviceRouter.post(
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
         const service = new Service({
-        name: 'sample name ' + Date.now(),
-        seller: req.user._id,
-        image: '/images/p1.jpg',
-        price: 0,
-        category: 'sample category',
-        city: 'sample Bogota',
-        rating: 0,
-        numReviews: 0,
-        description: 'sample description',
+          name: 'sample name ' + Date.now(),
+          seller: req.user._id,
+          image: '/images/p1.jpg',
+          price: 0,
+          category: 'sample category',
+          brand: 'sample brand',
+          countInStock: 0,
+          rating: 0,
+          numReviews: 0,
+          description: 'sample description',
       });
-      const createdservice = await service.save();
-      res.send({ message: 'service Created', service: createdservice });    
+      const createdService = await service.save();
+      res.send({ message: 'service Created', service: createdService });    
    
   })
 );
@@ -139,8 +140,8 @@ serviceRouter.put(
       service.brand = req.body.brand;
       service.countInStock = req.body.countInStock;
       service.description = req.body.description;
-      const updatedservice = await service.save();
-      res.send({ message: 'service Updated', service: updatedservice });
+      const updatedService = await service.save();
+      res.send({ message: 'Service Updated', service: updatedService });
     } else {
       res.status(404).send({ message: 'service Not Found' });
     }
@@ -154,10 +155,10 @@ serviceRouter.delete(
   expressAsyncHandler(async (req, res) => {
     const service = await Service.findById(req.params.id);
     if (service) {
-      const deleteservice = await service.remove();
-      res.send({ message: 'service Deleted', service: deleteservice });
+      const deleteService = await service.remove();
+      res.send({ message: 'Service Deleted', service: deleteService });
     } else {
-      res.status(404).send({ message: 'service Not Found' });
+      res.status(404).send({ message: 'Service Not Found' });
     }
   })
 );
@@ -184,13 +185,13 @@ serviceRouter.post(
       service.rating =
         service.reviews.reduce((a, c) => c.rating + a, 0) /
         service.reviews.length;
-      const updatedservice = await service.save();
+      const updatedService = await service.save();
       res.status(201).send({
         message: 'Review Created',
-        review: updatedservice.reviews[updatedservice.reviews.length - 1],
+        review: updatedService.reviews[updatedService.reviews.length - 1],
       });
     } else {
-      res.status(404).send({ message: 'service Not Found' });
+      res.status(404).send({ message: 'Service Not Found' });
     }
   })
 );

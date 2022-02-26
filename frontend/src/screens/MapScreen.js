@@ -110,7 +110,7 @@ export default function MapScreen(props) {
             <div className="map-input-box">
               <input type="text" placeholder="Enter your address"></input>
               <button type="button" className="primary" onClick={onConfirm}>
-                Confirm
+              Confirmar
               </button>
             </div>
           </StandaloneSearchBox>

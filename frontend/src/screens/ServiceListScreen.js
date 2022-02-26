@@ -14,7 +14,7 @@ import {
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
-export default function ProductListScreen(props) {
+export default function ServiceListScreen(props) {
   const { pageNumber = 1 } = useParams();
 
   const sellerMode = props.match.path.indexOf('/seller') >= 0;
@@ -41,7 +41,7 @@ export default function ProductListScreen(props) {
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: SERVICE_CREATE_RESET });
-      props.history.push(`/service/${createdService._id}/edit`);
+      props.history.push(`/services/${createdService._id}/edit`);
     }
     if (successDelete) {
       dispatch({ type: SERVICE_DELETE_RESET });
@@ -105,7 +105,7 @@ return (
     <th>ACTIONS</th>
   </tr>
 </thead>
-<tbody>
+{/* <tbody>
   {services.map((service) => (
     <tr key={service._id}>
       <td>{service._id}</td>
@@ -118,7 +118,7 @@ return (
           type="button"
           className="small"
           onClick={() =>
-            props.history.push(`/service/${service._id}/edit`)
+            props.history.push(`/services/${service._id}/edit`)
           }
         >
           Editar
@@ -133,7 +133,7 @@ return (
       </td>
     </tr>
   ))}
-</tbody>
+</tbody> */}
 </table>
 
 

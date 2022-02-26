@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/calyaan', {
 app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
-app.use('/api/service', serviceRouter);
+app.use('/api/services', serviceRouter);
 app.use('/api/orders', orderRouter);
 app.get('/api/config/paypal', (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
@@ -100,6 +100,7 @@ io.on('connection', (socket) => {
       }
     }
   });
+
   socket.on('onLogin', (user) => {
     const updatedUser = {
       ...user,

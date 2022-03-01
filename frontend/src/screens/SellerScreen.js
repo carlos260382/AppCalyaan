@@ -54,7 +54,7 @@ export default function SellerScreen(props) {
               ></Rating>
             </li>
             <li>
-              <a href={`mailto:${user.email}`}>Contact Seller</a>
+              <a href={`mailto:${user.email}`}>Contacte al Vendedor</a>
             </li>
             <li>{user.seller.description}</li>
           </ul>
@@ -67,7 +67,7 @@ export default function SellerScreen(props) {
           <MessageBox variant="danger">{errorProducts}</MessageBox>
         ) : (
           <>
-            {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+            {products.length === 0 && <MessageBox>No se encontró ningún producto</MessageBox>}
             <div className="row center">
               {products.map((product) => (
                 <Product key={product._id} product={product}></Product>

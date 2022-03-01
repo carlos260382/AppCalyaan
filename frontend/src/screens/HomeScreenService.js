@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
-import Product from '../components/Product';
+import Service from '../components/Service';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions';
+import { listService } from '../actions/serviceActions';
 import { listTopSellers } from '../actions/userActions';
 import { Link } from 'react-router-dom';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const serviceList = useSelector((state) => state.serviceList);
+  const { loading, error, services } = serviceList;
+
+  console.log('estos son...', services)
 
   const userTopSellersList = useSelector((state) => state.userTopSellersList);
   const {
@@ -22,7 +24,7 @@ export default function HomeScreen() {
   } = userTopSellersList;
 
   useEffect(() => {
-    dispatch(listProducts({}));
+    //dispatch(listService({}));
     dispatch(listTopSellers());
   }, [dispatch]);
   return (
@@ -47,17 +49,17 @@ export default function HomeScreen() {
           </Carousel>
         </>
       )}
-      <h2>Productos Destacados</h2>
+      <h2>Servicios Destacados</h2>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          {products.length === 0 && <MessageBox>No se encontró ningún producto</MessageBox>}
+          {services.length === 0 && <MessageBox>No se encontró ningún servicio</MessageBox>}
           <div className="row center">
-            {products.map((product) => (
-              <Product key={product._id} product={product}></Product>
+            {services.map((service) => (
+              <Service key={service._id} service={service}></Service>
             ))}
           </div>
         </>

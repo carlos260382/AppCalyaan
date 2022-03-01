@@ -7,6 +7,14 @@ import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
 const serviceRouter = express.Router();
 
+// serviceRouter.get(
+//   '/',
+//   expressAsyncHandler(async (req, res) => {
+//   console.log('este es el get servicios')  
+//   })
+// );
+
+
 serviceRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
@@ -52,12 +60,15 @@ serviceRouter.get(
       ...priceFilter,
       ...ratingFilter,
     })
+
+    console.log('este es el servicio', services)
       .populate('seller', 'seller.name seller.logo')
       .sort(sortOrder)
       .skip(pageSize * (page - 1))
       .limit(pageSize);
     res.send({ services, page, pages: Math.ceil(count / pageSize) });
   })
+  
 );
 
 serviceRouter.get(
@@ -72,19 +83,26 @@ serviceRouter.get(
   '/seed',
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
-    const seller = await User.findOne({ isSeller: true });
-    if (seller) {
-      const services = data.Service.map((product) => ({
-        ...product,
-        seller: seller._id,
-      }));
-      const createdService = await Service.insertMany(services);
-      res.send({ createdProducts });
-    } else {
-      res
-        .status(500)
-        .send({ message: 'No seller found. first run /api/users/seed' });
+    
+    try {
+      const seller = await User.findOne({ isSeller: true });
+      if (seller) {
+        const services = data.service.map((servic) => ({
+          ...servic,
+          seller: seller._id,
+        }));
+        const createdService = await Service.insertMany(services);
+        res.send({ createdService });
+      } else {
+        res
+          .status(500)
+          .send({ message: 'No seller found. first run /api/users/seed' });
+      }
+      
+    } catch (error) {
+      console.log('este es el error', error)
     }
+    
   })
 );
 
@@ -109,7 +127,7 @@ serviceRouter.post(
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
         const service = new Service({
-          name: 'sample name ' + Date.now(),
+          name: 'servicio ejemplo ' + Date.now(),
           seller: req.user._id,
           image: '/images/p1.jpg',
           price: 0,

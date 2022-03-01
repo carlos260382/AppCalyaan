@@ -83,7 +83,7 @@ return (
 
     <div className={styles.cart}>
       <NavLink to="/cart">
-        Cart
+        Carrito
         {cartItems.length > 0 && (
           <span className="badge">{cartItems.length}</span>
         )}
@@ -98,32 +98,32 @@ return (
           </NavLink>
           <ul className="dropdown-content">
             <li>
-              <NavLink to="/profile">User Profile</NavLink>
+              <NavLink to="/profile">Perfil de Usuario</NavLink>
             </li>
             <li>
-              <NavLink to="/orderhistory">Order History</NavLink>
+              <NavLink to="/orderhistory">Historial de pedidos</NavLink>
             </li>
             <li>
               <NavLink to="#signout" onClick={signoutHandler}>
-                Sign Out
+              Desconectar
               </NavLink>
             </li>
           </ul>
         </div>
       ) : (
-        <NavLink to="/signin">Sign In</NavLink>
+        <NavLink to="/signin">Iniciar sesión</NavLink>
       )}
       {userInfo && userInfo.isSeller && (
         <div className="dropdown">
           <NavLink to="#admin">
-            Seller <i className="fa fa-caret-down"></i>
+            Vendedor <i className="fa fa-caret-down"></i>
           </NavLink>
           <ul className="dropdown-content">
             <li>
-              <NavLink to="/productlist/seller">Products</NavLink>
+              <NavLink to="/productlist/seller">Productos</NavLink>
             </li>
             <li>
-              <NavLink to="/orderlist/seller">Orders</NavLink>
+              <NavLink to="/orderlist/seller">Pedidos</NavLink>
             </li>
           </ul>
         </div>
@@ -144,13 +144,13 @@ return (
               <NavLink to="/servicelist">Servicios</NavLink>
             </li>
             <li>
-              <NavLink to="/orderlist">Orders</NavLink>
+              <NavLink to="/orderlist">Pedidos</NavLink>
             </li>
             <li>
-              <NavLink to="/userlist">Users</NavLink>
+              <NavLink to="/userlist">Usuarios</NavLink>
             </li>
             <li>
-              <NavLink to="/support">Support</NavLink>
+              <NavLink to="/support">Soporte</NavLink>
             </li>
           </ul>
         </div>
@@ -159,7 +159,7 @@ return (
     <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
-              <strong>Categories</strong>
+              <strong>Categorias</strong>
               <button
                 onClick={() => setSidebarIsOpen(false)}
                 className="close-sidebar"

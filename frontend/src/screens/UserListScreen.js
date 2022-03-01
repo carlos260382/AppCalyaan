@@ -34,7 +34,7 @@ export default function UserListScreen(props) {
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {successDelete && (
-        <MessageBox variant="success">User Deleted Successfully</MessageBox>
+        <MessageBox variant="success">Usuario eliminado exitosamente</MessageBox>
       )}
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -45,11 +45,11 @@ export default function UserListScreen(props) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>IS SELLER</th>
-              <th>IS ADMIN</th>
-              <th>ACTIONS</th>
+              <th>NOMBRE</th>
+              <th>CORREO</th>
+              <th>ES VENDEDOR</th>
+              <th>IS ADMINISTRADOR</th>
+              <th>ACCION</th>
             </tr>
           </thead>
           <tbody>
@@ -66,14 +66,14 @@ export default function UserListScreen(props) {
                     className="small"
                     onClick={() => props.history.push(`/user/${user._id}/edit`)}
                   >
-                    Edit
+                    Editar
                   </button>
                   <button
                     type="button"
                     className="small"
                     onClick={() => deleteHandler(user)}
                   >
-                    Delete
+                    Eliminar
                   </button>
                 </td>
               </tr>

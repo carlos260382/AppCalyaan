@@ -14,7 +14,7 @@ export default function HomeScreen() {
   const serviceList = useSelector((state) => state.serviceList);
   const { loading, error, services } = serviceList;
 
-  console.log('estos son...', services)
+  console.log('estos son los servicios', services)
 
   const userTopSellersList = useSelector((state) => state.userTopSellersList);
   const {
@@ -24,7 +24,7 @@ export default function HomeScreen() {
   } = userTopSellersList;
 
   useEffect(() => {
-    //dispatch(listService({}));
+    dispatch(listService({}));
     dispatch(listTopSellers());
   }, [dispatch]);
   return (

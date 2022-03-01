@@ -105,7 +105,7 @@ return (
     <th>ACTIONS</th>
   </tr>
 </thead>
-{/* <tbody>
+<tbody>
   {services.map((service) => (
     <tr key={service._id}>
       <td>{service._id}</td>
@@ -133,7 +133,7 @@ return (
       </td>
     </tr>
   ))}
-</tbody> */}
+</tbody>
 </table>
 
 

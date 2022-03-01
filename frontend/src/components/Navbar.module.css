@@ -3,7 +3,7 @@ display: flex;
 background-color: #627C8E;
 height: auto;
 flex-direction: row;
-justify-content: end;
+
 }
 
 .container h3{

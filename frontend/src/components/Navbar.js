@@ -10,6 +10,7 @@ import LoadingBox from './LoadingBox';
 import MessageBox from './MessageBox';
 import styles from "./Navbar.module.css";
 import logo from '../assent/logo.png'
+import carrito from '../assent/cart.svg'
 
 function Navbar() {
     const cart = useSelector((state) => state.cart);
@@ -83,7 +84,7 @@ return (
 
     <div className={styles.cart}>
       <NavLink to="/cart">
-        Carrito
+      <img src={carrito} alt="description" className={styles.carrito}/>
         {cartItems.length > 0 && (
           <span className="badge">{cartItems.length}</span>
         )}

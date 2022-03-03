@@ -12,7 +12,8 @@ export default function ServiceEditScreen(props) {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [category, setCategory] = useState('');
-  const [city, setCity] = useState('');
+  const [countInStock, setCountInStock] = useState('');
+  const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
 
   const serviceDetails = useSelector((state) => state.serviceDetails);
@@ -38,7 +39,8 @@ export default function ServiceEditScreen(props) {
       setPrice(service.price);
       setImage(service.image);
       setCategory(service.category);
-      setCity(service.city);
+      setCountInStock(service.countInStock);
+      setBrand(service.brand);
       setDescription(service.description);
     }
   }, [service, dispatch, serviceId, successUpdate, props.history]);
@@ -52,7 +54,8 @@ export default function ServiceEditScreen(props) {
         price,
         image,
         category,
-        city,
+        brand,
+        countInStock,
         description,
       })
     );
@@ -83,7 +86,7 @@ export default function ServiceEditScreen(props) {
   };
 
   return (
-    <div>
+<div>
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Editar Servicio {serviceId}</h1>
@@ -97,7 +100,7 @@ export default function ServiceEditScreen(props) {
         ) : (
           <>
             <div>
-              <label htmlFor="name">Nombre del Servicio</label>
+              <label htmlFor="name">Nombre</label>
               <input
                 id="name"
                 type="text"
@@ -150,17 +153,27 @@ export default function ServiceEditScreen(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="brand">Ciudad</label>
+              <label htmlFor="brand">Marca</label>
               <input
-                id="city"
+                id="brand"
                 type="text"
-                placeholder="Enter city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                placeholder="Enter brand"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="description">Description</label>
+              <label htmlFor="countInStock">Cantidad Existencias</label>
+              <input
+                id="countInStock"
+                type="text"
+                placeholder="Enter countInStock"
+                value={countInStock}
+                onChange={(e) => setCountInStock(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="description">descripción</label>
               <textarea
                 id="description"
                 rows="3"
@@ -173,7 +186,7 @@ export default function ServiceEditScreen(props) {
             <div>
               <label></label>
               <button className="primary" type="submit">
-                Actualizar
+              Actualizar
               </button>
             </div>
           </>

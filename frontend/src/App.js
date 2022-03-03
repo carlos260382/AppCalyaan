@@ -37,6 +37,7 @@ import SupportScreen from './screens/SupportScreen';
 import ChatBox from './components/ChatBox';
 import Navbar from './components/Navbar';
 import MercadoPagoForm from './MercadoPago/components/MercadoPago/MercadoPagoForm';
+import Landing from './screens/Landing';
 
 function App() {
   //const cart = useSelector((state) => state.cart);
@@ -184,6 +185,7 @@ function App() {
         </aside>
         
         <main>
+          <Route path="/" component={Landing} exact></Route>
           <Route path="/seller/:id" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/product/:id" component={ProductScreen} exact></Route>
@@ -276,7 +278,7 @@ function App() {
             component={OrderListScreen}
           ></SellerRoute>
 
-          <Route path="/" component={HomeScreen} exact></Route>
+          <Route path="/product" component={HomeScreen} exact></Route>
           <Route path="/service" component={HomeScreenService} exact></Route>
         </main>
         <footer className="row center">

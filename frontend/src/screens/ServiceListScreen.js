@@ -41,7 +41,7 @@ export default function ServiceListScreen(props) {
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: SERVICE_CREATE_RESET });
-      props.history.push(`/services/${createdService._id}/edit`);
+      props.history.push(`/service/${createdService._id}/edit`);
     }
     if (successDelete) {
       dispatch({ type: SERVICE_DELETE_RESET });
@@ -61,14 +61,14 @@ export default function ServiceListScreen(props) {
   ]);
 
  
-const deleteHandlerService = (service) => {
+const deleteHandler = (service) => {
     if (window.confirm('¿Desea eliminar el servicio?')) {
       dispatch(deleteService(service._id));
     }
   };
 
 
-  const createHandlerService = () => {
+  const createHandler = () => {
     dispatch(createService());
   };
 console.log('este es el service', serviceList)
@@ -76,81 +76,78 @@ console.log('este es el error', error)
 
 return (
   <div>
-    <div className="row">
-      <h1>servicio</h1>
-      <button type="button" className="primary" onClick={createHandlerService}>
-        Crear servicio
-      </button>
-    </div>
+  <div className="row">
+    <h1>Servicios</h1>
+    <button type="button" className="primary" onClick={createHandler}>
+      Crear Servicios
+    </button>
+  </div>
 
-    {loadingDelete && <LoadingBox></LoadingBox>}
-    {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
+  {loadingDelete && <LoadingBox></LoadingBox>}
+  {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
-    {loadingCreate && <LoadingBox></LoadingBox>}
-    {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
-    {loading ? (
-      <LoadingBox></LoadingBox>
-    ) : error ? (
-      <MessageBox variant="danger">{error}</MessageBox>
-    ) : (
-      <>
-<table className="table">
-<thead>
-  <tr>
-    <th>ID</th>
-    <th>SERVICIO</th>
-    <th>PRECIO</th>
-    <th>CATEGORIA</th>
-    <th>CIUDAD</th>
-    <th>ACTIONS</th>
-  </tr>
-</thead>
-<tbody>
-  {services.map((service) => (
-    <tr key={service._id}>
-      <td>{service._id}</td>
-      <td>{service.name}</td>
-      <td>{service.price}</td>
-      <td>{service.category}</td>
-      <td>{service.city}</td>
-      <td>
-        <button
-          type="button"
-          className="small"
-          onClick={() =>
-            props.history.push(`/services/${service._id}/edit`)
-          }
-        >
-          Editar
-        </button>
-        <button
-          type="button"
-          className="small"
-          onClick={() => deleteHandlerService(service)}
-        >
-          Eliminar
-        </button>
-      </td>
-    </tr>
-  ))}
-</tbody>
-</table>
-
-
-
-<div className="row center pagination">
-{[...Array(pages).keys()].map((x) => (
-  <Link
-    className={x + 1 === page ? 'active' : ''}
-    key={x + 1}
-    to={`/productlist/pageNumber/${x + 1}`}
-  >
-    {x + 1}
-  </Link>
-))}
-</div>
-</>
-)}
+  {loadingCreate && <LoadingBox></LoadingBox>}
+  {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
+  {loading ? (
+    <LoadingBox></LoadingBox>
+  ) : error ? (
+    <MessageBox variant="danger">{error}</MessageBox>
+  ) : (
+    <>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>PRECIO</th>
+            <th>CATEGORIA</th>
+            <th>MARCA</th>
+            <th>ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          {services.map((service) => (
+            <tr key={service._id}>
+              <td>{service._id}</td>
+              <td>{service.name}</td>
+              <td>{service.price}</td>
+              <td>{service.category}</td>
+              <td>{service.brand}</td>
+              <td>
+                <button
+                  type="button"
+                  className="small"
+                  onClick={() =>
+                    props.history.push(`/service/${service._id}/edit`)
+                  }
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  className="small"
+                  onClick={() => deleteHandler(service)}
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="row center pagination">
+        {[...Array(pages).keys()].map((x) => (
+          <Link
+            className={x + 1 === page ? 'active' : ''}
+            key={x + 1}
+            to={`/servicelist/pageNumber/${x + 1}`}
+          >
+            {x + 1}
+          </Link>
+        ))}
+      </div>
+    </>
+  )}
 </div>
 );
 }

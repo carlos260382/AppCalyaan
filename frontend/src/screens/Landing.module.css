@@ -1,0 +1,246 @@
+.container{
+display: flex;
+flex-direction: column;
+}
+
+.container h2{
+  color: #0d0324;
+  text-align: center;
+  font-size:x-large
+}
+
+.container ul{
+  text-align: center;
+}
+
+.container img{
+width: 20%;
+height: 30%;
+margin-left: 35%;
+text-align: center;
+} 
+.container p{
+  text-align: center;
+}
+.container1{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left:5px;
+    padding-right:5px;
+}
+
+.Card1{
+    transition:0.5s;
+    cursor:pointer;
+    border: solid black 3px;
+    border-radius: 10px;
+    width: 35%;
+    height: 40%;
+    margin: auto;
+    align-content: center;
+}
+
+.Card1 h2{
+color: rgb(24, 9, 107);
+font-style: italic;
+align-items: center;
+} 
+
+.Card1 img{
+margin-left: 5%;
+width: 90%;
+height: 60%;
+}
+
+.Card1 ul{
+list-style-type:circle;
+margin-left: 5%;
+}
+
+.Card1-title{  
+    font-size:15px;
+    transition:1s;
+    cursor:pointer;
+  }
+  .Card1-title i{  
+    font-size:15px;
+    transition:1s;
+    cursor:pointer;
+    color:#ffa710
+  }
+  .Card1-title i:hover{
+    transform: scale(1.25) rotate(100deg); 
+    color:#18d4ca;
+    
+  }
+  .Card1:hover{
+    transform: scale(1.05);
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+  }
+  .Card1-text{
+    height:80px;  
+  }
+  
+  .Card1::before, .Card1::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: scale3d(0, 0, 1);
+    transition: transform .3s ease-out 0s;
+    background: rgba(255, 255, 255, 0.1);
+    content: '';
+    pointer-events: none;
+  }
+  .Card1::before {
+    transform-origin: left top;
+  }
+  .Card1::after {
+    transform-origin: right bottom;
+  }
+  .Card1:hover::before, .Card1:hover::after, .Card1:focus::before, .Card1:focus::after {
+    transform: scale3d(1, 1, 1);
+  }
+
+/* From cssbuttons.io by @Gumpack */
+.btn {
+    background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%)
+   }
+   
+   .btn {
+    margin: 10px;
+    margin-left: 30%;
+    margin-top: 3%;
+    padding: 15px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    font-weight: 700;
+    box-shadow: 0px 0px 14px -7px #f09819;
+   }
+   
+   .btn:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+   }
+   
+   .btn:active {
+    transform: scale(0.95);
+   }
+
+
+
+   .Card2{
+    transition:0.5s;
+    cursor:pointer;
+    border: solid black 3px;
+    border-radius: 10px;
+    width: 35%;
+    height: 40%;
+    margin: auto;
+    align-content: center;
+}
+
+.Card2 h2{
+color: rgb(24, 9, 107);
+font-style: italic;
+align-items: center;
+} 
+
+.Card2 img{
+margin-left: 5%;
+width: 90%;
+height: 60%;
+}
+
+.Card2 ul{
+list-style-type:circle;
+margin-left: 5%;
+}
+
+.Card2-title{  
+    font-size:15px;
+    transition:1s;
+    cursor:pointer;
+  }
+  .Card2-title i{  
+    font-size:15px;
+    transition:1s;
+    cursor:pointer;
+    color:#ffa710
+  }
+  .Card2-title i:hover{
+    transform: scale(1.25) rotate(100deg); 
+    color:#18d4ca;
+    
+  }
+  .Card2:hover{
+    transform: scale(1.05);
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+  }
+  .Card2-text{
+    height:80px;  
+  }
+  
+  .Card2::before, .Card2::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: scale3d(0, 0, 1);
+    transition: transform .3s ease-out 0s;
+    background: rgba(255, 255, 255, 0.1);
+    content: '';
+    pointer-events: none;
+  }
+  .Card2::before {
+    transform-origin: left top;
+  }
+  .Card2::after {
+    transform-origin: right bottom;
+  }
+  .Card2:hover::before, .Card2:hover::after, .Card2:focus::before, .Card2:focus::after {
+    transform: scale3d(1, 1, 1);
+  }
+
+/* From cssbuttons.io by @Gumpack */
+.btn2 {
+    background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%)
+   }
+   
+   .btn2 {
+    margin: 10px;
+    margin-left: 30%;
+    margin-top: 3%;
+    padding: 15px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    font-weight: 700;
+    box-shadow: 0px 0px 14px -7px #f09819;
+   }
+   
+   .btn2:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+   }
+   
+   .btn2:active {
+    transform: scale(0.95);
+   }

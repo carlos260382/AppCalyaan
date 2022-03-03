@@ -45,7 +45,7 @@ export default function ProductScreen(props) {
         createReview(productId, { rating, comment, name: userInfo.name })
       );
     } else {
-      alert('Please enter comment and rating');
+      alert('Por favor ingrese comentario y calificación');
     }
   };
   return (
@@ -109,9 +109,9 @@ export default function ProductScreen(props) {
                       <div>Estado</div>
                       <div>
                         {product.countInStock > 0 ? (
-                          <span className="success">In Stock</span>
+                          <span className="success">disponibles</span>
                         ) : (
-                          <span className="danger">Unavailable</span>
+                          <span className="danger">No disponibles</span>
                         )}
                       </div>
                     </div>

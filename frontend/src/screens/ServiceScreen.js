@@ -45,7 +45,7 @@ export default function ServiceScreen(props) {
         createReview(serviceId, { rating, comment, name: userInfo.name })
       );
     } else {
-      alert('Please enter comment and rating');
+      alert('Por favor ingrese comentario y calificación');
     }
   };
   return (
@@ -109,9 +109,9 @@ export default function ServiceScreen(props) {
                       <div>Estado</div>
                       <div>
                         {service.countInStock > 0 ? (
-                          <span className="success">In Stock</span>
+                          <span className="success">Disponible</span>
                         ) : (
-                          <span className="danger">Unavailable</span>
+                          <span className="danger">No disponible</span>
                         )}
                       </div>
                     </div>
@@ -120,7 +120,7 @@ export default function ServiceScreen(props) {
                     <>
                       <li>
                         <div className="row">
-                          <div>Qty</div>
+                          <div>Cant.</div>
                           <div>
                             <select
                               value={qty}
@@ -142,7 +142,7 @@ export default function ServiceScreen(props) {
                           onClick={addToCartHandler}
                           className="primary block"
                         >
-                          Add to Cart
+                          Agregar al carrito
                         </button>
                       </li>
                     </>
@@ -152,9 +152,9 @@ export default function ServiceScreen(props) {
             </div>
           </div>
           <div>
-            <h2 id="reviews">Reviews</h2>
+            <h2 id="reviews">Reseñas</h2>
             {service.reviews.length === 0 && (
-              <MessageBox>There is no review</MessageBox>
+              <MessageBox>No hay Reseñas</MessageBox>
             )}
             <ul>
               {service.reviews.map((review) => (
@@ -211,7 +211,7 @@ export default function ServiceScreen(props) {
                   </form>
                 ) : (
                   <MessageBox>
-                    Please <Link to="/signin">Sign In</Link> to write a review
+                  Por favor <Link to="/signin">Inicie sesión</Link> Para escribir una reseña
                   </MessageBox>
                 )}
               </li>

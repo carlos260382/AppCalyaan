@@ -44,7 +44,6 @@ export const listService = ({
   } catch (error) {
     dispatch({ type: SERVICE_LIST_FAIL, payload: error.message });
   }
-  
 };
 
 export const listServiceCategories = () => async (dispatch) => {

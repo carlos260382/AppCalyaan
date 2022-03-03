@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NavLink } from 'react-router-dom';
 import styles from './Landing.module.css';
@@ -12,7 +12,7 @@ return(
 <div className={styles.container1}>
 <div className={styles.Card1}>
 <NavLink to="/product">
-<img src={product1} alt="description of image" className={styles.product1}/>
+<img src={product1} alt="" className={styles.product1}/>
 <h2>Productos de Belleza y Salud al por mayor</h2>
 <ul> 
    	<li>Ideal para Negocios</li> 
@@ -25,7 +25,7 @@ return(
 
 <div className={styles.Card2}>
 <NavLink to="/service">
-<img src={service1} alt="description of image" className={styles.service1}/>
+<img src={service1} alt="" className={styles.service1}/>
 <h2>Servicios de Cuidado Personal y Belleza</h2>
 <ul> 
    	<li>SPA/Yoga</li> 
@@ -58,7 +58,7 @@ return(
 
 <h2>Testimonios</h2>
 <div>
-<img src={testimonio1} alt="description of image" className={styles.testimonio1}/>
+<img src={testimonio1} alt="" className={styles.testimonio1}/>
 <p>Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica </p>
 </div>
 </div>

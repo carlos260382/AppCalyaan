@@ -38,6 +38,7 @@ import ChatBox from './components/ChatBox';
 import Navbar from './components/Navbar';
 import MercadoPagoForm from './MercadoPago/components/MercadoPago/MercadoPagoForm';
 import Landing from './screens/Landing';
+import TurnScreen from './screens/TurnScreen';
 
 function App() {
   //const cart = useSelector((state) => state.cart);
@@ -280,6 +281,7 @@ function App() {
 
           <Route path="/product" component={HomeScreen} exact></Route>
           <Route path="/service" component={HomeScreenService} exact></Route>
+          <Route path="/turn" component={TurnScreen} exact></Route>
         </main>
         <footer className="row center">
           {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}

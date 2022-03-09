@@ -10,6 +10,7 @@ import userRouter from './routers/userRouter.js';
 import orderRouter from './routers/orderRouter.js';
 import uploadRouter from './routers/uploadRouter.js';
 import cors from 'cors'
+import turnRouter from './routers/turnRouter.js';
 dotenv.config();
 
 const app = express();
@@ -35,6 +36,7 @@ app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/services', serviceRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/turn', turnRouter);
 app.get('/api/config/paypal', (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
 });

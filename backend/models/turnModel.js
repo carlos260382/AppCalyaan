@@ -4,6 +4,7 @@ const turnSchema = new mongoose.Schema(
   {
     day: { type: String, required: true },
     hour: { type: String, required: true, unique: true },
+    seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
   },
   {
     timestamps: true,

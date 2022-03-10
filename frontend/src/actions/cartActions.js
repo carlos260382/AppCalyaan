@@ -9,6 +9,8 @@ import {
 
 export const addToCart = (productId, qty) => async (dispatch, getState) => {
   const { data } = await Axios.get(`/api/products/${productId}`);
+  //if (!data)  data = await Axios.get(`/api/services/${productId}`)
+  
   const {
     cart: { cartItems },
   } = getState();

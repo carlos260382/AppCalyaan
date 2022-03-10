@@ -6,6 +6,7 @@ import MessageBox from '../components/MessageBox';
 
 export default function CartScreen(props) {
   const productId = props.match.params.id;
+  console.log('este es productID', productId)
   const qty = props.location.search
     ? Number(props.location.search.split('=')[1])
     : 1;

@@ -84,7 +84,7 @@ export default function ServiceEditScreen(props) {
       setLoadingUpload(false);
     }
   };
-
+  console.log('este es el serivicio', service)
   return (
 <div>
       <form className="form" onSubmit={submitHandler}>

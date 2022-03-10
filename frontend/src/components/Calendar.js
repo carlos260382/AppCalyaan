@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { createTurn } from '../actions/turnAction.js'
 //import Cookie from 'universal-cookie';
 
 
@@ -7,39 +8,41 @@ import { useSelector } from 'react-redux';
 const Calendar = () => {
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
-
+    const dispatch = useDispatch();
+console.log('informacion de usuario', userInfo)
     //const cookies = new Cookie();
 
-    var hoy = new Date();
-    var horario =
-        hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+    //var day = new Date();
+    //var hour =
+      //  day.getHours() + ':' + day.getMinutes() + ':' + day.getSeconds();
 
-    const [turn, setturn] = useState({
-        //dni: cookies.get('dni'),
-        //centro: '',
-        dia: '',
-        horario: horario,
+    const [turn, setTurn] = useState({
+        seller: userInfo,        
+        day: '',
+        hour: '',
     });
 
     const handleChange = (e) => {
-        setturn({
+        setTurn({
             ...turn,
             [e.target.name]: e.target.value,
         });
+        console.log('este es el turno', turn)
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let res = await fetch(
-            `api/turn/${userInfo}`,
-            {
-                method: 'POST',
-                headers: { Authorization: `Bearer ${userInfo?.token}` },
-                body: JSON.stringify(turn),
-            }
-        );
-        const data = await res.json();
-        console.log(data);
+        dispatch (createTurn(turn))
+        // let res = await fetch(
+        //     `api/turn/${userInfo}`,
+        //     {
+        //         method: 'POST',
+        //         headers: { Authorization: `Bearer ${userInfo?.token}` },
+        //         body: JSON.stringify(turn),
+        //     }
+        // );
+        // const data = await res.json();
+        // console.log(data);
     };
 
     return (
@@ -47,13 +50,13 @@ const Calendar = () => {
            
             <div>
                 <label>Selecciona la Fecha</label>
-                <input type="date" name="dia" onChange={handleChange} />
+                <input type="date" name="day" onChange={handleChange} />
             </div>
 
             <div>
                 <label>Selecciona la Hora</label>
                     
-                <select name="horario" onChange={handleChange}>
+                <select name="hour" onChange={handleChange}>
                     <option value="09:00 AM">09:00 AM</option>
                     <option value="10:00 AM">10:00 AM</option>
                     <option value="11:00 AM">11:00 AM</option>

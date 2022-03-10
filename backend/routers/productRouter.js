@@ -2,6 +2,7 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js';
 import Product from '../models/productModel.js';
+import Service from '../models/serviceModel.js';
 import User from '../models/userModel.js';
 import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
@@ -95,8 +96,13 @@ productRouter.get(
       'seller',
       'seller.name seller.logo seller.rating seller.numReviews'
     );
-    if (product) {
-      res.send(product);
+    const service = await Service.findById(req.params.id).populate(
+      'seller',
+      'seller.name seller.logo seller.rating seller.numReviews'
+    );
+
+    if (product || service) {
+      res.send(product || service);
     } else {
       res.status(404).send({ message: 'Product Not Found' });
     }

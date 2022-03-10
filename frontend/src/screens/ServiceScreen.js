@@ -48,6 +48,8 @@ export default function ServiceScreen(props) {
       alert('Por favor ingrese comentario y calificación');
     }
   };
+
+  console.log ('servicio este es el detallado', serviceDetails )
   return (
     <div>
       {loading ? (

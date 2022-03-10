@@ -62,10 +62,10 @@ serviceRouter.get(
     })
 
     console.log('este es el servicio', services)
-      .populate('seller', 'seller.name seller.logo')
-      .sort(sortOrder)
-      .skip(pageSize * (page - 1))
-      .limit(pageSize);
+      //.populate('seller', 'seller.name seller.logo')
+      //.sort(sortOrder)
+      //.skip(pageSize * (page - 1))
+      //.limit(pageSize);
     res.send({ services, page, pages: Math.ceil(count / pageSize) });
   })
   

@@ -11,23 +11,13 @@ const turnRouter = express.Router();
 turnRouter.get('/', 
 expressAsyncHandler(async (req, res) => {
 console.log('este es el get turn')    
-    
-    // try {
-    //     let turns = await Turn.find({
-    //         include: [
-    //             {
-    //                 model: Center,
-    //                 attributes: ['id', 'name', 'address'],
-    //                 through: {
-    //                     attributes: [],
-    //                 },
-    //             },
-    //         ],
-    //     });
-    //     res.json(turns);
-    // } catch (error) {
-    //     res.send(error);
-    // }
+   
+    try {
+        let turns = await Turn.find();
+        res.json(turns);
+    } catch (error) {
+        res.send(error);
+    }
 }));
 
 // turnRouter.get('/:id', async (req, res) => {
@@ -53,6 +43,8 @@ console.log('este es el get turn')
 
 turnRouter.post(
     '/',
+    isAuth,
+    isSellerOrAdmin,
     expressAsyncHandler(async (req, res) => {
     if (req.body.length === 0) {
       res.status(400).send({ message: 'No hay turno creado' });
@@ -61,6 +53,7 @@ turnRouter.post(
       const turn = new Turn({
         day: day,
         hour: hour,
+        seller: req.user._id,
       });
       const createdTurn = await turn.save();
       res

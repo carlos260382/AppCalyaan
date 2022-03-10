@@ -124,6 +124,9 @@ return (
               <NavLink to="/productlist/seller">Productos</NavLink>
             </li>
             <li>
+              <NavLink to="/servicelist">Servicios</NavLink>
+            </li>
+            <li>
               <NavLink to="/orderlist/seller">Pedidos</NavLink>
             </li>
           </ul>

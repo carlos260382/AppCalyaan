@@ -11,6 +11,7 @@ import orderRouter from './routers/orderRouter.js';
 import uploadRouter from './routers/uploadRouter.js';
 import cors from 'cors'
 import turnRouter from './routers/turnRouter.js';
+import mercadopago from 'mercadopago';
 dotenv.config();
 
 const app = express();
@@ -46,7 +47,7 @@ app.get('/api/config/google', (req, res) => {
 
 app.post("/process-payment", (req, res) => {
   mercadopago.configurations.setAccessToken('TEST-8932127300566154-012622-75445131cd945a120ce35722a1fe1c3c-226754364');
-  const payment_data = {
+    const payment_data = {
       transaction_amount: req.body.transaction_amount,
       token: req.body.token,
       description: req.body.description,
@@ -61,7 +62,7 @@ app.post("/process-payment", (req, res) => {
           },
       },
   };
-
+  
   mercadopago.payment
       .save(payment_data)
       .then((response) => {
@@ -74,7 +75,18 @@ app.post("/process-payment", (req, res) => {
       .catch((err) => {
           return res.status(500).send(err);
       });
+      console.log('este es el payment', payment_data)
 });
+
+
+
+
+
+
+
+
+
+
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

@@ -15,7 +15,7 @@ export default function useScript(url, name) {
         return () => {
             document.body.removeChild(script)
         }
-    }, [url])
+    }, [url, name])
 
     return lib
 }

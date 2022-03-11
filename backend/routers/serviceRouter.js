@@ -1,29 +1,28 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import data from '../data.js';
-import Service from '../models/serviceModel.js';
-import User from '../models/userModel.js';
-import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
+import express from "express";
+import expressAsyncHandler from "express-async-handler";
+import data from "../data.js";
+import Service from "../models/serviceModel.js";
+import User from "../models/userModel.js";
+import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
 
 const serviceRouter = express.Router();
 
 // serviceRouter.get(
 //   '/',
 //   expressAsyncHandler(async (req, res) => {
-//   console.log('este es el get servicios')  
+//   console.log('este es el get servicios')
 //   })
-// );
-
+// );.
 
 serviceRouter.get(
-  '/',
+  "/",
   expressAsyncHandler(async (req, res) => {
     const pageSize = 3;
     const page = Number(req.query.pageNumber) || 1;
-    const name = req.query.name || '';
-    const category = req.query.category || '';
-    const seller = req.query.seller || '';
-    const order = req.query.order || '';
+    const name = req.query.name || "";
+    const category = req.query.category || "";
+    const seller = req.query.seller || "";
+    const order = req.query.order || "";
     const min =
       req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
     const max =
@@ -33,17 +32,17 @@ serviceRouter.get(
         ? Number(req.query.rating)
         : 0;
 
-    const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
+    const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
     const sortOrder =
-      order === 'lowest'
+      order === "lowest"
         ? { price: 1 }
-        : order === 'highest'
+        : order === "highest"
         ? { price: -1 }
-        : order === 'toprated'
+        : order === "toprated"
         ? { rating: -1 }
         : { _id: -1 };
     const count = await Service.count({
@@ -59,31 +58,30 @@ serviceRouter.get(
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
-    })
+    });
 
-    console.log('este es el servicio', services)
-      //.populate('seller', 'seller.name seller.logo')
-      //.sort(sortOrder)
-      //.skip(pageSize * (page - 1))
-      //.limit(pageSize);
+    console.log("este es el servicio", services);
+    //.populate('seller', 'seller.name seller.logo')
+    //.sort(sortOrder)
+    //.skip(pageSize * (page - 1))
+    //.limit(pageSize);
     res.send({ services, page, pages: Math.ceil(count / pageSize) });
   })
-  
 );
 
 serviceRouter.get(
-  '/categories',
+  "/categories",
   expressAsyncHandler(async (req, res) => {
-    const categories = await Service.find().distinct('category');
+    const categories = await Service.find().distinct("category");
     res.send(categories);
   })
 );
 
 serviceRouter.get(
-  '/seed',
+  "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
-    
+
     try {
       const seller = await User.findOne({ isSeller: true });
       if (seller) {
@@ -96,55 +94,52 @@ serviceRouter.get(
       } else {
         res
           .status(500)
-          .send({ message: 'No seller found. first run /api/users/seed' });
+          .send({ message: "No seller found. first run /api/users/seed" });
       }
-      
     } catch (error) {
-      console.log('este es el error', error)
+      console.log("este es el error", error);
     }
-    
   })
 );
 
 serviceRouter.get(
-  '/:id',
+  "/:id",
   expressAsyncHandler(async (req, res) => {
     const service = await Service.findById(req.params.id).populate(
-      'seller',
-      'seller.name seller.logo seller.rating seller.numReviews'
+      "seller",
+      "seller.name seller.logo seller.rating seller.numReviews"
     );
     if (service) {
       res.send(service);
     } else {
-      res.status(404).send({ message: 'service Not Found' });
+      res.status(404).send({ message: "service Not Found" });
     }
   })
 );
 
 serviceRouter.post(
-  '/',
+  "/",
   isAuth,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-        const service = new Service({
-          name: 'servicio ejemplo ' + Date.now(),
-          seller: req.user._id,
-          image: '/images/p1.jpg',
-          price: 0,
-          category: 'sample category',
-          brand: 'sample brand',
-          countInStock: 0,
-          rating: 0,
-          numReviews: 0,
-          description: 'sample description',
-      });
-      const createdService = await service.save();
-      res.send({ message: 'service Created', service: createdService });    
-   
+    const service = new Service({
+      name: "servicio ejemplo " + Date.now(),
+      seller: req.user._id,
+      image: "/images/p1.jpg",
+      price: 0,
+      category: "sample category",
+      brand: "sample brand",
+      countInStock: 0,
+      rating: 0,
+      numReviews: 0,
+      description: "sample description",
+    });
+    const createdService = await service.save();
+    res.send({ message: "service Created", service: createdService });
   })
 );
 serviceRouter.put(
-  '/:id',
+  "/:id",
   isAuth,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -159,30 +154,30 @@ serviceRouter.put(
       service.countInStock = req.body.countInStock;
       service.description = req.body.description;
       const updatedService = await service.save();
-      res.send({ message: 'Service Updated', service: updatedService });
+      res.send({ message: "Service Updated", service: updatedService });
     } else {
-      res.status(404).send({ message: 'service Not Found' });
+      res.status(404).send({ message: "service Not Found" });
     }
   })
 );
 
 serviceRouter.delete(
-  '/:id',
+  "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const service = await Service.findById(req.params.id);
     if (service) {
       const deleteService = await service.remove();
-      res.send({ message: 'Service Deleted', service: deleteService });
+      res.send({ message: "Service Deleted", service: deleteService });
     } else {
-      res.status(404).send({ message: 'Service Not Found' });
+      res.status(404).send({ message: "Service Not Found" });
     }
   })
 );
 
 serviceRouter.post(
-  '/:id/reviews',
+  "/:id/reviews",
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const serviceId = req.params.id;
@@ -191,7 +186,7 @@ serviceRouter.post(
       if (service.reviews.find((x) => x.name === req.user.name)) {
         return res
           .status(400)
-          .send({ message: 'You already submitted a review' });
+          .send({ message: "You already submitted a review" });
       }
       const review = {
         name: req.user.name,
@@ -205,11 +200,11 @@ serviceRouter.post(
         service.reviews.length;
       const updatedService = await service.save();
       res.status(201).send({
-        message: 'Review Created',
+        message: "Review Created",
         review: updatedService.reviews[updatedService.reviews.length - 1],
       });
     } else {
-      res.status(404).send({ message: 'Service Not Found' });
+      res.status(404).send({ message: "Service Not Found" });
     }
   })
 );

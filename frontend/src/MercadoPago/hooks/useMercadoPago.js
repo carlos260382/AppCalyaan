@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import useScript from "./useScript";
 import { formConfig } from "../components/formConfig.js";
+import { useSelector } from 'react-redux';
 
 export default function useMercadoPago() {
     const [resultPayment, setResultPayment] = useState(undefined);
+    const cart = useSelector((state) => state.cart);
 
     const { MercadoPago } = useScript(
         "https://sdk.mercadopago.com/js/v2",
@@ -46,9 +48,9 @@ export default function useMercadoPago() {
                                 // entry point backend
                                 method: "POST",
                                 headers: {
-                                    // "Access-Control-Allow-Origin": "*",
-                                    // "Access-Control-Request-Method":
-                                    //     "GET, POST, DELETE, PUT, OPTIONS",
+                                     "Access-Control-Allow-Origin": "*",
+                                     "Access-Control-Request-Method":
+                                     "GET, POST, DELETE, PUT, OPTIONS",
                                     "Content-Type": "application/json",
                                 },
                                 body: JSON.stringify({

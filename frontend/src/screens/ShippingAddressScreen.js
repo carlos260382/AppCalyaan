@@ -7,10 +7,15 @@ export default function ShippingAddressScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
 
   const { userInfo } = userSignin;
+  console.log('Info de usuario', userInfo)
+  
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
+  console.log('Info de address', shippingAddress)
+
   const [lat, setLat] = useState(shippingAddress.lat);
   const [lng, setLng] = useState(shippingAddress.lng);
+  
   const userAddressMap = useSelector((state) => state.userAddressMap);
   const { address: addressMap } = userAddressMap;
 
@@ -22,7 +27,9 @@ export default function ShippingAddressScreen(props) {
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
+  
   const dispatch = useDispatch();
+  
   const submitHandler = (e) => {
     e.preventDefault();
     const newLat = addressMap ? addressMap.lat : lat;
@@ -34,7 +41,7 @@ export default function ShippingAddressScreen(props) {
     let moveOn = true;
     if (!newLat || !newLng) {
       moveOn = window.confirm(
-        'You did not set your location on map. Continue?'
+        'No configuró su ubicación en el mapa. Continuar?'
       );
     }
     if (moveOn) {
@@ -49,9 +56,10 @@ export default function ShippingAddressScreen(props) {
           lng: newLng,
         })
       );
-      props.history.push('/payment');
+      props.history.push('/placeorder');
     }
   };
+  
   const chooseOnMap = () => {
     dispatch(
       saveShippingAddress({

@@ -36,7 +36,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
 import ChatBox from './components/ChatBox';
 import Navbar from './components/Navbar';
-import MercadoPagoForm from './MercadoPago/components/MercadoPago/MercadoPagoForm';
+import MercadoPagoForm from './MercadoPago/components/MercadoPagoForm';
 import Landing from './screens/Landing';
 import TurnScreen from './screens/TurnScreen';
 

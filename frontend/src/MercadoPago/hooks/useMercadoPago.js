@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useScript from "./useScript";
-import { formConfig } from "../components/MercadoPago/formConfig.js";
+import { formConfig } from "../components/formConfig.js";
 
 export default function useMercadoPago() {
     const [resultPayment, setResultPayment] = useState(undefined);
@@ -9,7 +9,7 @@ export default function useMercadoPago() {
         "https://sdk.mercadopago.com/js/v2",
         "MercadoPago"
     );
-
+        
     useEffect(() => {
         if (MercadoPago) {
             const mp = new MercadoPago('TEST-b0fd6bf6-2020-461d-94ce-eeddbcab6442');
@@ -39,23 +39,23 @@ export default function useMercadoPago() {
                             identificationNumber,
                             identificationType,
                         } = cardForm.getCardFormData();
-
+                        
                         fetch(
                             `http://localhost:5000/process-payment`,
                             {
                                 // entry point backend
                                 method: "POST",
                                 headers: {
-                                    "Access-Control-Allow-Origin": "*",
-                                    "Access-Control-Request-Method":
-                                        "GET, POST, DELETE, PUT, OPTIONS",
+                                    // "Access-Control-Allow-Origin": "*",
+                                    // "Access-Control-Request-Method":
+                                    //     "GET, POST, DELETE, PUT, OPTIONS",
                                     "Content-Type": "application/json",
                                 },
                                 body: JSON.stringify({
                                     token,
                                     issuer_id,
                                     payment_method_id,
-                                    transaction_amount: 1000,
+                                    transaction_amount: amount,
                                     installments: Number(installments),
                                     description: "Descripción del producto",
                                     payer: {
@@ -87,7 +87,48 @@ export default function useMercadoPago() {
                 },
             });
         }
+        
     }, [MercadoPago]);
-
+    console.log('resultado pago', resultPayment)
     return resultPayment;
+    
 }
+
+
+// export let buyCoins = (payload) => {
+//     return async (dispatch) => {
+//         try {
+//             console.log(payload);
+//             let buyCoins = await axios.post(
+//                 `http://localhost:3001/api/coins/buy`,
+//                 payload
+//             );
+//             return dispatch({
+//                 type: BUY_COINS,
+//                 payload: buyCoins,
+//             });
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     };
+// };
+// ivan passalia08:53
+// externalOrderRouter.post<{}, {}>("/buy", (req, res) => {
+//   let product = req.body;
+//   console.log(req.body);
+//   let preference = {
+//     items: [
+//       {
+//         title: product.title,
+//         unit_price: product.buyprice,
+//         quantity: 1,
+//       },
+//     ],
+//     installments: 1,
+
+//     back_urls: {
+//       success: `http://localhost:3001/api/coins/pagos/${product.idaux}`,
+//       failure: "http://localhost:3001/api/coins/buy",
+//       pending: "http://localhost:3001/api/coins/buy",
+//     },
+//     auto_return: "

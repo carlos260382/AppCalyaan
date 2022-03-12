@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 export default function useScript(url, name) {
     const [lib, setLib] = useState({})
 
+
+    
     useEffect(() => {
         const script = document.createElement('script')
 

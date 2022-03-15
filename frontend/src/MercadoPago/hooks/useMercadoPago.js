@@ -5,7 +5,12 @@ import { useSelector } from 'react-redux';
 
 export default function useMercadoPago() {
     const [resultPayment, setResultPayment] = useState(undefined);
-    const cart = useSelector((state) => state.cart);
+ 
+    const orderDetails = useSelector((state) => state.orderDetails);
+    const { order, loading, error } = orderDetails;
+
+    const userSignin = useSelector((state) => state.userSignin);
+    const { userInfo } = userSignin;
 
     const { MercadoPago } = useScript(
         "https://sdk.mercadopago.com/js/v2",
@@ -33,7 +38,7 @@ export default function useMercadoPago() {
 
                         const {
                             paymentMethodId: payment_method_id,
-                            issuerId: issuer_id,
+                            orderId: orderId,
                             cardholderEmail: email,
                             amount,
                             token,
@@ -55,7 +60,7 @@ export default function useMercadoPago() {
                                 },
                                 body: JSON.stringify({
                                     token,
-                                    issuer_id,
+                                    orderId:orderId,
                                     payment_method_id,
                                     transaction_amount: amount,
                                     installments: Number(installments),

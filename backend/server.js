@@ -2,6 +2,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import express from 'express';
 import mongoose from 'mongoose';
+import morgan from 'morgan'
 import dotenv from 'dotenv';
 import path from 'path';
 import productRouter from './routers/productRouter.js';
@@ -16,7 +17,7 @@ import { response } from 'express';
 dotenv.config();
 
 const app = express();
-
+app.use(morgan('dev'))
 app.use(cors()); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,18 +49,19 @@ app.get('/api/config/google', (req, res) => {
 
 app.post("/process-payment", (req, res) => {
   mercadopago.configurations.setAccessToken('TEST-8932127300566154-012622-75445131cd945a120ce35722a1fe1c3c-226754364');
-    const payment_data = {
+  console.log('este es lo q llega del body', req.body)  
+  const payment_data = {
       transaction_amount: req.body.transaction_amount,
       token: req.body.token,
       description: req.body.description,
       installments: Number(req.body.installments),
       payment_method_id: req.body.paymentMethodId,
-      issuer_id: req.body.issuer,
+      orderId: req.body.orderId,
       payer: {
           email: req.body.payer.email,
           identification: {
-              type: req.body.payer.docType,
-              number: req.body.payer.docNumber,
+              type: req.body.payer.identification.type,
+              number: req.body.payer.identification.number,
           },
       },
   };

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Card from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import useMercadoPago from "../hooks/useMercadoPago.js";
+import { useSelector } from 'react-redux';
 
 const INITIAL_STATE = {
     cvc: "",
@@ -12,18 +13,24 @@ const INITIAL_STATE = {
     focus: "cardNumber",
     cardholderName: "",
     cardNumber: "",
-    issuer: "",
+    identificationType: "",
+    identificationNumber: "",
+    orderId: "",
 };
 
-export default function MercadoPagoForm() {
+export default function MercadoPagoForm(props) {
+    const orderId = props.match.params.id;
+    
+    
     const [state, setState] = useState(INITIAL_STATE);
     const resultPayment = useMercadoPago();
-
+    
     const handleInputChange = (e) => {
         setState({
             ...state,
             [e.target.dataset.name || e.target.name]: e.target.value,
         });
+        console.log('este es el stado', state)
     };
 
     const handleInputFocus = (e) => {
@@ -38,7 +45,10 @@ export default function MercadoPagoForm() {
                 name={state.cardholderName}
                 number={state.cardNumber}
                 focused={state.focus}
+                identificationType= {state.identificationType}
+                identificationNumber={state.identificationNumber}
                 brand={state.issuer}
+                orderId={orderId}
             />
 
             <form id="form-checkout">
@@ -98,6 +108,7 @@ export default function MercadoPagoForm() {
                     <select
                         name="identificationType"
                         id="form-checkout__identificationType"
+                        onChange={handleInputChange}
                     ></select>
                 </div>
                 <div className="form-control">
@@ -105,12 +116,14 @@ export default function MercadoPagoForm() {
                         type="text"
                         name="identificationNumber"
                         id="form-checkout__identificationNumber"
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="form-control">
                     <select
                         name="installments"
                         id="form-checkout__installments"
+                        onChange={handleInputChange}
                     ></select>
                 </div>
                 <div className="form-control">

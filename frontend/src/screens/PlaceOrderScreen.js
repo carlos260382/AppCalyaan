@@ -9,31 +9,43 @@ import MessageBox from '../components/MessageBox';
 
 export default function PlaceOrderScreen(props) {
   const cart = useSelector((state) => state.cart);
+  
   if (!cart.paymentMethod) {
     props.history.push('/payment');
   }
-  console.log('este es el payment', cart.paymentMethod)
-  console.log('este es el carrito', cart)
-  
+    
   const orderCreate = useSelector((state) => state.orderCreate);
+  
+
   const { loading, success, error, order } = orderCreate;
+  
   const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
   cart.itemsPrice = toPrice(
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
+
+
   cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
+  cart.taxPrice = toPrice(0 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+  
   const dispatch = useDispatch();
+  
   const placeOrderHandler = () => {
     dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
   };
+  
+  console.log('este es el carrito', cart);
+  console.log ('esta es la orden', orderCreate);
+
   useEffect(() => {
     if (success) {
       props.history.push(`/order/${order._id}`);
       dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [dispatch, order, props.history, success]);
+
+ 
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>

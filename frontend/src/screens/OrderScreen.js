@@ -30,7 +30,7 @@ export default function OrderScreen(props) {
     success: successPay,
   } = orderPay;
   
-
+ 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const {
     loading: loadingDeliver,

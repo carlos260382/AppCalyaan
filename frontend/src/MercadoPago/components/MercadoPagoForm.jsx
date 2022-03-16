@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-//import useScript from "../../hooks/useScript";
-//import { formConfig } from "./formConfig";
+import React, { useState, useEffect } from "react";
+import useScript from "../hooks/useScript.js";
+import { formConfig } from "./formConfig";
 import Card from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
-import useMercadoPago from "../hooks/useMercadoPago.js";
+//import useMercadoPago from "../hooks/useMercadoPago.js";
 import { useSelector } from 'react-redux';
+import axios from "../../../node_modules/axios/index.js";
+
+//import {ORDER_DETAILS_REQUEST} from '../../constants/orderConstants.js';
+//import data from "../../data.js";
 
 const INITIAL_STATE = {
     cvc: "",
@@ -15,16 +19,37 @@ const INITIAL_STATE = {
     cardNumber: "",
     identificationType: "",
     identificationNumber: "",
-    orderId: "",
+    issuer:""
+    
 };
+
 
 export default function MercadoPagoForm(props) {
     const orderId = props.match.params.id;
-    
-    
+        
     const [state, setState] = useState(INITIAL_STATE);
     const resultPayment = useMercadoPago();
-    
+  
+    const detailsOrder = (orderId) => async (getState) => {
+            
+            const {
+              userSignin: { userInfo },
+            } = getState();
+            try {
+              const data  = await axios.get(`/api/orders/${orderId}`, {
+                headers: { Authorization: `Bearer ${userInfo.token}` },
+              });
+              return data;
+            } catch (error) {
+              const message =
+                error.response && error.response.data.message
+                  ? error.response.data.message
+                  : error.message;
+             console.log (error);
+            }
+          };
+          
+
     const handleInputChange = (e) => {
         setState({
             ...state,
@@ -37,6 +62,106 @@ export default function MercadoPagoForm(props) {
         setState({ ...state, focus: e.target.dataset.name || e.target.name });
     };
 
+    function useMercadoPago() {
+         
+        const [resultPayment, setResultPayment] = useState(undefined);
+     
+        const orderDetails = useSelector((state) => state.orderDetails);
+        const { order, loading, error } = orderDetails;
+    
+        const userSignin = useSelector((state) => state.userSignin);
+        const { userInfo } = userSignin;
+    
+        const { MercadoPago } = useScript(
+            "https://sdk.mercadopago.com/js/v2",
+            "MercadoPago"
+        );
+            
+        useEffect(() => {
+            if (MercadoPago) {
+                const mp = new MercadoPago('TEST-b1149716-091a-44cc-82d0-20f7cf7075e8');
+               
+                const cardForm = mp.cardForm({
+                    amount: "100000.5",
+                    autoMount: true,
+                    form: formConfig,
+                    callbacks: {
+                        onFormMounted: (error) => {
+                            if (error)
+                                return console.warn(
+                                    "Form Mounted handling error: ",
+                                    error
+                                );
+                        },
+    
+                        onSubmit: (event) => {
+                            event.preventDefault();
+    
+                            const {
+                                paymentMethodId: payment_method_id,
+                                issuerId: issuer_id,
+                                cardholderEmail: email,
+                                amount,
+                                token,
+                                installments,
+                                identificationNumber,
+                                identificationType,
+                            } = cardForm.getCardFormData();
+                            
+                            fetch(
+                                `http://localhost:5000/process-payment`,
+                                {
+                                    // entry point backend
+                                    method: "POST",
+                                    headers: {
+                                         "Access-Control-Allow-Origin": "*",
+                                         "Access-Control-Request-Method":
+                                         "GET, POST, DELETE, PUT, OPTIONS",
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        token,
+                                        issuer_id,
+                                        payment_method_id,
+                                        transaction_amount: amount,
+                                        installments: 1,
+                                        description: "Descripción del producto",
+                                        payer: {
+                                            email,
+                                            identification: {
+                                                type: identificationType,
+                                                number: identificationNumber,
+                                            },
+                                        },
+                                    }),
+                                }
+                            )
+                                .then((res) => res.json())
+                                .then((data) => setResultPayment(data))
+                                .catch((err) => {
+                                    setResultPayment(err);
+                                });
+                        },
+                        onFetching: (resource) => {
+                            // Animate progress bar
+                            const progressBar =
+                                document.querySelector(".progress-bar");
+                            progressBar.removeAttribute("value");
+    
+                            return () => {
+                                progressBar.setAttribute("value", "0");
+                            };
+                        },
+                    },
+                });
+            }
+            
+        }, [MercadoPago]);
+        console.log('resultado pago', resultPayment)
+        return resultPayment;
+        
+    }
+
     return (
         <div className="container">
             <Card
@@ -48,7 +173,9 @@ export default function MercadoPagoForm(props) {
                 identificationType= {state.identificationType}
                 identificationNumber={state.identificationNumber}
                 brand={state.issuer}
-                orderId={orderId}
+                paymentMethodId={state.paymentMethodId}
+
+                //orderId={orderId}
             />
 
             <form id="form-checkout">
@@ -104,6 +231,7 @@ export default function MercadoPagoForm(props) {
                         name="issuer"
                         id="form-checkout__issuer"
                         on= 'true'
+                        onChange={handleInputChange}
                     ></select>
                     <select
                         name="identificationType"

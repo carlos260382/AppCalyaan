@@ -83,7 +83,7 @@ export default function OrderScreen(props) {
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
   };
-  //console.log('esta es la ordersProps', order)
+
   
 const irMercadoPago=()=> {
   props.history.push(`/mercadoPago/${order._id}`)

@@ -44,7 +44,6 @@ console.log('este es el get turn')
 turnRouter.post(
     '/',
     isAuth,
-    isSellerOrAdmin,
     expressAsyncHandler(async (req, res) => {
     if (req.body.length === 0) {
       res.status(400).send({ message: 'No hay turno creado' });

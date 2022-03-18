@@ -48,8 +48,9 @@ app.get('/api/config/google', (req, res) => {
 });
 
 app.post("/process-payment", (req, res) => {
-  mercadopago.configurations.setAccessToken('TEST-3056782519895007-031616-fb5176cd2a36b239664a8d595c1aa07e-226754364');
-  console.log('este es lo q llega del body', req.body)  
+  mercadopago.configurations.setAccessToken('TEST-963807750333991-031716-1dd2ac29f3cc0f1a2a97f9a341d3fe80-226754364');
+  console.log('este es lo q llega del body', req.body) 
+  const orderId= req.body.orderId 
   const payment_data = {
       transaction_amount: Number(req.body.transaction_amount),
       token: req.body.token,
@@ -66,6 +67,9 @@ app.post("/process-payment", (req, res) => {
       },
   };
   
+
+
+  
   mercadopago.payment
       .save(payment_data)
       .then((response) => {
@@ -81,7 +85,9 @@ app.post("/process-payment", (req, res) => {
           
       });
       console.log('este es el payment', payment_data)
-      console.log('respuesta de mercado pago', response.body)
+      console.log('respuesta de mercado pago', response.body.status)
+      //console.log ('este es el orderId', orderId,)
+
 });
 
 const __dirname = path.resolve();
@@ -180,3 +186,11 @@ httpServer.listen(port, () => {
 // app.listen(port, () => {
 //   console.log(`Serve at http://localhost:${port}`);
 // });
+
+
+// back_urls: {
+//   success: `http://localhost:3001/api/coins/pagos/${product.idaux}`,
+//   failure: "http://localhost:3001/api/coins/buy",
+//   pending: "http://localhost:3001/api/coins/buy",
+// },
+// auto_return: "approved",

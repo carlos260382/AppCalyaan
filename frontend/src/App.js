@@ -200,7 +200,7 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-          <Route path="/mercadoPago" component={MercadoPagoForm}></Route>      
+          <Route path="/mercadoPago/:id" component={MercadoPagoForm}></Route>      
           
           <Route
             path="/search/name/:name?"

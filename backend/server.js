@@ -2,6 +2,7 @@ import http from "http";
 import { Server } from "socket.io";
 import express from "express";
 import mongoose from "mongoose";
+import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
 import productRouter from "./routers/productRouter.js";
@@ -16,7 +17,7 @@ import { response } from "express";
 dotenv.config();
 
 const app = express();
-
+app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -49,20 +50,21 @@ app.get("/api/config/google", (req, res) => {
 
 app.post("/process-payment", (req, res) => {
   mercadopago.configurations.setAccessToken(
-    "TEST-8932127300566154-012622-75445131cd945a120ce35722a1fe1c3c-226754364"
+    "TEST-3056782519895007-031616-fb5176cd2a36b239664a8d595c1aa07e-226754364"
   );
+  console.log("este es lo q llega del body", req.body);
   const payment_data = {
-    transaction_amount: req.body.transaction_amount,
+    transaction_amount: Number(req.body.transaction_amount),
     token: req.body.token,
     description: req.body.description,
     installments: Number(req.body.installments),
-    payment_method_id: req.body.paymentMethodId,
-    issuer_id: req.body.issuer,
+    payment_method_id: req.body.payment_method_id,
+    issuer_id: req.body.issuer_id,
     payer: {
       email: req.body.payer.email,
       identification: {
-        type: req.body.payer.docType,
-        number: req.body.payer.docNumber,
+        type: req.body.payer.identification.type,
+        number: req.body.payer.identification.number,
       },
     },
   };
@@ -78,6 +80,7 @@ app.post("/process-payment", (req, res) => {
       });
     })
     .catch((err) => {
+      console.log("este es el error", err);
       return res.status(500).send(err);
     });
   console.log("este es el payment", payment_data);

@@ -11,19 +11,18 @@ import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from '../constants/orderConstants';
+//import MercadoPagoForm from '../MercadoPago/components/MercadoPagoForm';
 
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id;
+  //console.log('estas son las props', props)
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
-  const { order, loading, error } = orderDetails;
+  const { order, loading, error, } = orderDetails;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-
-console.log('este es el order', orderDetails)
-console.log('este es info usuar', userInfo)
-
+ 
   const orderPay = useSelector((state) => state.orderPay);
   const {
     loading: loadingPay,
@@ -31,7 +30,7 @@ console.log('este es info usuar', userInfo)
     success: successPay,
   } = orderPay;
   
-
+ 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const {
     loading: loadingDeliver,
@@ -55,7 +54,6 @@ console.log('este es info usuar', userInfo)
       document.body.appendChild(script);
       
     };
-
     
     if (
       !order ||
@@ -85,6 +83,12 @@ console.log('este es info usuar', userInfo)
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
   };
+  //console.log('esta es la ordersProps', order)
+  
+const irMercadoPago=()=> {
+  props.history.push(`/mercadoPago/${order._id}`)
+}
+
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -210,6 +214,10 @@ console.log('este es info usuar', userInfo)
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
                       ></PayPalButton>
+
+                       <button onClick={irMercadoPago}>Pagar</button>
+                                    
+
                     </>
                   )}
                 </li>

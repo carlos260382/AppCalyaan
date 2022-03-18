@@ -67,10 +67,7 @@ app.post("/process-payment", (req, res) => {
       },
     },
   };
-  
-
-
-  
+    
   mercadopago.payment
     .save(payment_data)
     .then((response) => {
@@ -83,7 +80,8 @@ app.post("/process-payment", (req, res) => {
       console.log('respuesta de mercado pago', response.body.status)
       //console.log ('este es el orderId', orderId,)
 
-});
+})
+})
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

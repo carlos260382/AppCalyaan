@@ -5,6 +5,7 @@ import User from "../models/userModel.js";
 import Service from "../models/serviceModel.js";
 import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
 
+
 const turnRouter = express.Router();
 
 turnRouter.get(
@@ -49,11 +50,21 @@ turnRouter.post(
     if (req.body.length === 0) {
       res.status(400).send({ message: "No hay turno creado" });
     } else {
-      const { day, hour } = req.body;
+      const { service, day, seller, hour, status, orderId, user, country, postalCode, city, address, fullName  } = req.body;
       const turn = new Turn({
         day: day,
         hour: hour,
-        seller: req.user._id,
+        seller: seller,
+        status: status,
+        orderId: orderId,
+        user: user,
+        fullName: fullName,
+        address: address,
+        city: city,
+        postalCode: postalCode,
+        country: country,
+        service: service,
+
       });
       const createdTurn = await turn.save();
       res.status(201).send({ message: "New Turn Created", turn: createdTurn });

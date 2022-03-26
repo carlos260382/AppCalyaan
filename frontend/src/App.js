@@ -9,6 +9,7 @@ import HomeScreen from './screens/HomeScreen';
 import HomeScreenService from './screens/HomeScreenService';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderScreen from './screens/OrderScreen';
+import OrderScreenTurn from './screens/OrderScreenTurn';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductListScreen from './screens/ProductListScreen';
@@ -39,6 +40,7 @@ import Navbar from './components/Navbar';
 import MercadoPagoForm from './MercadoPago/components/MercadoPagoForm';
 import Landing from './screens/Landing';
 import TurnScreen from './screens/TurnScreen';
+import TurnListScreen from './screens/TurnListScreen';
 
 function App() {
   //const cart = useSelector((state) => state.cart);
@@ -199,6 +201,8 @@ function App() {
           <Route path="/payment" component={PaymentMethodScreen}></Route>
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
+          <Route path="/orderTurn/:id" component={OrderScreenTurn}></Route>
+          <Route path="/turnlist" component={TurnListScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
           <Route path="/mercadoPago/:id" component={MercadoPagoForm}></Route>      
           

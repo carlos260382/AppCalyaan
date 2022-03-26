@@ -98,7 +98,7 @@ export default function CartScreen(props) {
                 className="primary block"
                 disabled={cartItems.length === 0}
               >
-                Pagar
+                Completa tu pedido
               </button>
             </li>
           </ul>

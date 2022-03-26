@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTurn } from '../actions/turnAction.js'
 //import Cookie from 'universal-cookie';
 
 
 
-const Calendar = () => {
+const Calendar = (props) => {
+    console.log('estas son las props', props)
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
     const dispatch = useDispatch();
 console.log('informacion de usuario', userInfo)
-    //const cookies = new Cookie();
 
-    //var day = new Date();
-    //var hour =
-      //  day.getHours() + ':' + day.getMinutes() + ':' + day.getSeconds();
+const turnCreate = useSelector((state) => state.turnCreate);
+
+const { loading, success, error, order } = turnCreate;
 
     const [turn, setTurn] = useState({
         seller: userInfo,        
@@ -32,22 +32,21 @@ console.log('informacion de usuario', userInfo)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch (createTurn(turn))
-        // let res = await fetch(
-        //     `api/turn/${userInfo}`,
-        //     {
-        //         method: 'POST',
-        //         headers: { Authorization: `Bearer ${userInfo?.token}` },
-        //         body: JSON.stringify(turn),
-        //     }
-        // );
-        // const data = await res.json();
-        // console.log(data);
+       if (dispatch (createTurn(turn))) alert('Turno creado con exito') 
     };
 
+    // useEffect(() => {
+    //     if (success) {
+    //       props.history.push(`/order/${order._id}`)
+    //       //props.history.push(`/order/${order._id}`);
+    //       //dispatch({ type: TURN_CREATE_RESET });
+    //     }
+    //   }, [dispatch, success]);
+
     return (
+        
         <form onSubmit={handleSubmit}>
-           
+           <h1>Elije la fecha y hora para agendar su turno (solo aplica para solicitud de servicios y no de productos)</h1>
             <div>
                 <label>Selecciona la Fecha</label>
                 <input type="date" name="day" onChange={handleChange} />

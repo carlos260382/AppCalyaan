@@ -78,9 +78,10 @@ app.post("/process-payment", (req, res) => {
       });
       console.log('este es el payment', payment_data)
       console.log('respuesta de mercado pago', response.body.status)
-      //console.log ('este es el orderId', orderId,)
+     
 
 })
+console.log ('este es el orderId', orderId,)
 })
 
 const __dirname = path.resolve();

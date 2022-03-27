@@ -5,7 +5,11 @@ const {
   TURN_CREATE_RESET,
   TURN_LIST_REQUEST,
   TURN_LIST_SUCCESS,
-  TURN_LIST_FAIL } = require('../constants/turnConstant');
+  TURN_LIST_FAIL,
+  TURN_UPDATE_REQUEST,
+  TURN_UPDATE_SUCCESS, 
+  TURN_UPDATE_FAIL,
+  TURN_UPDATE_RESET } = require('../constants/turnConstant');
 
 
 export const turnCreateReducer = (state = {}, action) => {
@@ -44,7 +48,20 @@ export const turnCreateReducer = (state = {}, action) => {
     }
   };
 
-
+  export const turnUpdateReducer = (state = {}, action) => {
+    switch (action.type) {
+      case TURN_UPDATE_REQUEST:
+        return { loading: true };
+      case TURN_UPDATE_SUCCESS:
+        return { loading: false, success: true };
+      case TURN_UPDATE_FAIL:
+        return { loading: false, error: action.payload };
+      case TURN_UPDATE_RESET:
+        return {};
+      default:
+        return state;
+    }
+  };
 
 
 

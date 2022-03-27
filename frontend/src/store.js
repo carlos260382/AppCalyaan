@@ -44,7 +44,7 @@ import {
   userUpdateReducer,
 } from './reducers/userReducers';
 
-import { turnCreateReducer,turnListReducer } from './reducers/turnReducers'
+import { turnCreateReducer,turnListReducer, turnUpdateReducer } from './reducers/turnReducers'
 
 const initialState = {
   userSignin: {
@@ -96,7 +96,8 @@ const reducer = combineReducers({
   userAddressMap: userAddressMapReducer,
   orderSummary: orderSummaryReducer,
   turnCreate: turnCreateReducer,
-  turnList: turnListReducer
+  turnList: turnListReducer,
+  turnUpdate: turnUpdateReducer
 
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

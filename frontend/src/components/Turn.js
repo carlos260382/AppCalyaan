@@ -1,10 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateTurn } from '../actions/turnAction';
 
 
 export default function Turn(props) {
   const { turn } = props;
   console.log('estos son los turnos', turn)
+  const dispatch = useDispatch();
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
 const nameService= turn.service.map((servi)=>{
   return servi.name })
 const priceService = turn.service.map((servi)=>{
@@ -13,11 +19,18 @@ const qtyService = turn.service.map((servi)=>{
     return servi.qty })
 
 const handleAcceptor=(turn)=>{
-  if (window.confirm('¿Desea eliminar el turno?')) {
-    dispatch(deleteService(turn._id));
+ 
+  console.log('este es id', turn)
+  if (window.confirm('¿Desea aceptar el turno?')) {
+    dispatch(updateTurn(turn));
   }
+  window.location.replace('');
 }
 
+// useEffect (()=>{
+//   //
+  
+// }, [dispatch,handleAcceptor] )
   
 
     return (
@@ -52,13 +65,13 @@ const handleAcceptor=(turn)=>{
                 <button
                   type="button"
                   className="small"
+                  onClick={()=>handleAcceptor(turn._id)}
                 >
                   Aceptar servicio
                 </button>
                 <button
                   type="button"
                   className="small"
-                  onClick={() => handleAcceptor(turn)}
                 >
                   Eliminar Turno
                 </button>

@@ -38,6 +38,7 @@ export default function ServiceListScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
+  
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: SERVICE_CREATE_RESET });

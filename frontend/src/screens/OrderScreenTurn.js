@@ -1,9 +1,7 @@
-import Axios from 'axios';
-//import { PayPalButton } from 'react-paypal-button-v2';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
+import { detailsOrder } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
@@ -22,21 +20,15 @@ export default function OrderScreen(props) {
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error, } = orderDetails;
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
- 
+  
   const orderPay = useSelector((state) => state.orderPay);
   const {
-    loading: loadingPay,
-    error: errorPay,
     success: successPay,
   } = orderPay;
   
  
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const {
-    loading: loadingDeliver,
-    error: errorDeliver,
     success: successDeliver,
   } = orderDeliver;
   
@@ -44,19 +36,7 @@ export default function OrderScreen(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // const addPayPalScript = async () => {
-    //   const { data } = await Axios.get('/api/config/paypal');
-    //   const script = document.createElement('script');
-    //   script.type = 'text/javascript';
-    //   script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
-    //   script.async = true;
-    //   script.onload = () => {
-    //     setSdkReady(true);
-    //   };
-    //   document.body.appendChild(script);
-      
-    // };
-    
+   
     if (
       !order ||
       successPay ||
@@ -78,18 +58,9 @@ export default function OrderScreen(props) {
     }
   }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
 
-  // const successPaymentHandler = (paymentResult) => {
-  //   dispatch(payOrder(order, paymentResult));
-  // };
-  
-  const deliverHandler = () => {
-    dispatch(deliverOrder(order._id));
-  };
-
-  
-const irMercadoPago=()=> {
-  props.history.push(`/mercadoPago/${order._id}`)
-}
+// const irMercadoPago=()=> {
+//   props.history.push(`/mercadoPago/${order._id}`)
+// }
 
 
   return loading ? (
@@ -99,6 +70,7 @@ const irMercadoPago=()=> {
   ) : (
     <div>
       <h1>Pedido {order._id}</h1>
+      <TurnScreen order = {order} />
       <div className="row top">
         <div className="col-2">
           <ul>
@@ -205,7 +177,6 @@ const irMercadoPago=()=> {
           </div>
         </div>
       </div>
-      <TurnScreen order = {order} />
     </div>
   );
 }

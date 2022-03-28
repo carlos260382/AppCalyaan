@@ -6,7 +6,7 @@ import "react-credit-cards/es/styles-compiled.css";
 import { useParams } from "react-router-dom";
 //import useMercadoPago from "../hooks/useMercadoPago.js";
 //import { useSelector } from 'react-redux';
-import OrderScreen from "../../screens/OrderScreen.js";
+//import OrderScreen from "../../screens/OrderScreen.js";
 
 //import axios from "../../../node_modules/axios/index.js";
 

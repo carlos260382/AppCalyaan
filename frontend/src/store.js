@@ -44,7 +44,10 @@ import {
   userUpdateReducer,
 } from './reducers/userReducers';
 
-import { turnCreateReducer,turnListReducer, turnUpdateReducer } from './reducers/turnReducers'
+import { turnCreateReducer,
+  turnListReducer, 
+  turnUpdateReducer,
+  turnDeleteReducer } from './reducers/turnReducers'
 
 const initialState = {
   userSignin: {
@@ -97,7 +100,8 @@ const reducer = combineReducers({
   orderSummary: orderSummaryReducer,
   turnCreate: turnCreateReducer,
   turnList: turnListReducer,
-  turnUpdate: turnUpdateReducer
+  turnUpdate: turnUpdateReducer,
+  turnDelete: turnDeleteReducer
 
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -10,7 +10,10 @@ import { GET_TURNS,
   TURN_LIST_FAIL,
   TURN_UPDATE_REQUEST,
   TURN_UPDATE_SUCCESS, 
-  TURN_UPDATE_FAIL} from '../constants/turnConstant';
+  TURN_UPDATE_FAIL,
+  TURN_DELETE_REQUEST,
+  TURN_DELETE_SUCCESS,
+  TURN_DELETE_FAIL} from '../constants/turnConstant';
 
 
 export const createTurn = (turn) => async (dispatch, getState) => {
@@ -73,29 +76,29 @@ export const updateTurn = (id) => async (dispatch, getState) => {
 };
 
 
-// export const deleteService = (serviceId) => async (dispatch, getState) => {
-//   dispatch({ type: SERVICE_DELETE_REQUEST, payload: serviceId });
-//   const {
-//     userSignin: { userInfo },
-//   } = getState();
-//   try {
-//     const { data } = Axios.delete(`http://localhost:5000/api/services/${serviceId}`, {
-//       headers: { Authorization: `Bearer ${userInfo.token}` },
-//     });
-//     dispatch({ type: SERVICE_DELETE_SUCCESS, payload:data });
-//   } catch (error) {
-//     const message =
-//       error.response && error.response.data.message
-//         ? error.response.data.message
-//         : error.message;
-//     dispatch({ type: SERVICE_DELETE_FAIL, payload: message });
-//   }
-// };
+export const deleteTurn = (id) => async (dispatch, getState) => {
+  dispatch({ type: TURN_DELETE_REQUEST, payload: id });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.delete(`http://localhost:5000/api/turn/${id}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: TURN_DELETE_SUCCESS, payload:data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: TURN_DELETE_FAIL, payload: message });
+  }
+};
 
 
 
 // !carlos
-export function getTurn() {
+export function getTurn(id) {
     return async function (dispatch) {
         try {
             let resul = await Axios.get(`http://localhost:5000/api/turn`);

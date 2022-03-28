@@ -36,7 +36,6 @@ const [turn, setTurn] = useState({
     status:false,
     user:props.order.user,
     orderId: props.order._id,
-//    shippinAddres:props.order.shippingAddress,
     fullName: props.order.shippingAddress.fullName,
     address: props.order.shippingAddress.address,
     city: props.order.shippingAddress.city,
@@ -58,7 +57,8 @@ const handleSubmit = async (e) => {
     e.preventDefault();
    if (dispatch (createTurn(turn))) 
    alert('Turno creado con exito')
-//   props.history.push(`/order/${order._id}`) 
+//   props.history.push(`/order/${order._id}`)
+window.location.replace(`/order/${props.order._id}`); 
 };
 
 // useEffect(() => {

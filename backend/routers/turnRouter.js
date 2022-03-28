@@ -1,8 +1,8 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Turn from "../models/turnModel.js";
-import User from "../models/userModel.js";
-import Service from "../models/serviceModel.js";
+// import User from "../models/userModel.js";
+// import Service from "../models/serviceModel.js";
 import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
 
 
@@ -21,27 +21,6 @@ turnRouter.get(
     }
   })
 );
-
-// turnRouter.get('/:id', async (req, res) => {
-//     let id = req.params;
-//     try {
-//         let turn = await Turn.findOne({
-//             where: { id: id },
-//             include: [
-//                 {
-//                     model: Center,
-//                     attributes: ['id', 'name', 'address'],
-//                     through: {
-//                         attributes: [],
-//                     },
-//                 },
-//             ],
-//         });
-//         res.json(turn);
-//     } catch (error) {
-//         res.send(error);
-//     }
-// });
 
 turnRouter.post(
     '/',
@@ -85,12 +64,44 @@ turnRouter.put(
       const updatedTurn = await turn.save();
       res.send({ message: 'Turno Aceptado', Turn: updatedTurn });
     } else {
-      res.status(404).send({ message: 'Turno no encontrado' });
+      res.status(404).send({ message: 'Turn Not Found' });
     }
   })
 );
 
+turnRouter.get(
+  '/:id',
+  
+  
+  expressAsyncHandler(async (req, res) => {
+    const orderId = req.params.id;
+   try {
+    const turn = await Turn.find({orderId: orderId});
+    res.json(turn); 
 
+   } catch (error) {
+    res.send(error)
+
+   }}));
+    
+
+
+
+
+turnRouter.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const turn = await Turn.findById(req.params.id);
+    if (turn) {
+      const deleteTurn = await turn.remove();
+      res.send({ message: 'Turn Deleted', turn: deleteTurn });
+    } else {
+      res.status(404).send({ message: 'Turn Not Found' });
+    }
+  })
+);
 
 
 //     try {

@@ -18,7 +18,7 @@ import TurnScreen from './TurnScreen';
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id;
-  //console.log('estas son las props', props)
+  console.log('estas son las props', props)
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error, } = orderDetails;
@@ -40,22 +40,31 @@ export default function OrderScreen(props) {
     success: successDeliver,
   } = orderDeliver;
   
-
+ const getTurn = (orderId)=> {
+    return async function () {
+        try {
+            let resul = await Axios.get(`http://localhost:5000/api/turn${orderId}`);
+            return resul.data
+        } catch (error) {
+            console.log(error);
+        }
+    };
+}
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const addPayPalScript = async () => {
-      const { data } = await Axios.get('/api/config/paypal');
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      document.body.appendChild(script);
+    // const addPayPalScript = async () => {
+    //   const { data } = await Axios.get('/api/config/paypal');
+    //   const script = document.createElement('script');
+    //   script.type = 'text/javascript';
+    //   script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+    //   script.async = true;
+    //   script.onload = () => {
+    //     setSdkReady(true);
+    //   };
+    //   document.body.appendChild(script);
       
-    };
+    // };
     
     if (
       !order ||
@@ -69,7 +78,7 @@ export default function OrderScreen(props) {
     } else {
       if (!order.isPaid) {
         if (!window.paypal) {
-          addPayPalScript();
+          //addPayPalScript();
           
         } else {
           setSdkReady(true);
@@ -78,9 +87,9 @@ export default function OrderScreen(props) {
     }
   }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
 
-  const successPaymentHandler = (paymentResult) => {
-    dispatch(payOrder(order, paymentResult));
-  };
+  // const successPaymentHandler = (paymentResult) => {
+  //   dispatch(payOrder(order, paymentResult));
+  // };
   
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
@@ -114,10 +123,10 @@ const irMercadoPago=()=> {
                 </p>
                 {order.isDelivered ? (
                   <MessageBox variant="success">
-                  Entregado en {order.deliveredAt}
+                  Servicio Realizado en {order.deliveredAt}
                   </MessageBox>
                 ) : (
-                  <MessageBox variant="danger">No entregado</MessageBox>
+                  <MessageBox variant="danger">Servicio no realizado</MessageBox>
                 )}
               </div>
             </li>
@@ -138,7 +147,7 @@ const irMercadoPago=()=> {
             </li>
             <li>
               <div className="card card-body">
-                <h2>Encargar artículos</h2>
+                <h2>Servicio Solicitado</h2>
                 <ul>
                   {order.orderItems.map((item) => (
                     <li key={item.product}>
@@ -201,7 +210,7 @@ const irMercadoPago=()=> {
                   </div>
                 </div>
               </li>
-              {!order.isPaid && (
+              {/* {!order.isPaid && (
                 <li>
                   {!sdkReady ? (
                     <LoadingBox></LoadingBox>
@@ -216,15 +225,11 @@ const irMercadoPago=()=> {
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
                       ></PayPalButton>
-
-                       <button onClick={irMercadoPago}>Pagar</button>
-                                    
-
                     </>
                   )}
                 </li>
-              )}
-              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              )} */}
+              {/* {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                 <li>
                   {loadingDeliver && <LoadingBox></LoadingBox>}
                   {errorDeliver && (
@@ -238,12 +243,13 @@ const irMercadoPago=()=> {
                     Entregar pedido
                   </button>
                 </li>
-              )}
+              )} */}
+              <button onClick={irMercadoPago}>Pagar</button>
             </ul>
           </div>
         </div>
       </div>
-      <TurnScreen/>
+     
     </div>
   );
 }

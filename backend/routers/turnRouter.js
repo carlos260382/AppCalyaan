@@ -25,7 +25,6 @@ turnRouter.get(
 turnRouter.post(
     '/',
     isAuth,
-    isSellerOrAdmin,
     expressAsyncHandler(async (req, res) => {
     if (req.body.length === 0) {
       res.status(400).send({ message: "No hay turno creado" });
@@ -57,8 +56,8 @@ turnRouter.put(
   
   
   expressAsyncHandler(async (req, res) => {
-    const turnId = req.params.id;
-    const turn = await Turn.findById(turnId);
+    //const turnId = req.params.id;
+    const turn = await Turn.findById(req.params.id);
     if (turn) {
       turn.status = true;
       const updatedTurn = await turn.save();
@@ -80,6 +79,7 @@ turnRouter.get(
     res.json(turn); 
 
    } catch (error) {
+     //console.log('este es el erroget', error)
     res.send(error)
 
    }}));

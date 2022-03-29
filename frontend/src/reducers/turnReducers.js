@@ -13,7 +13,11 @@ const {
   TURN_DELETE_REQUEST,
   TURN_DELETE_SUCCESS,
   TURN_DELETE_FAIL,
-  TURN_DELETE_RESET } = require('../constants/turnConstant');
+  TURN_DELETE_RESET,
+  TURN_GET_REQUEST,
+  TURN_GET_SUCCESS,
+  TURN_GET_FAIL,
+  TURN_GET_RESET } = require('../constants/turnConstant');
 
 
 export const turnCreateReducer = (state = {}, action) => {
@@ -66,6 +70,22 @@ export const turnCreateReducer = (state = {}, action) => {
         return state;
     }
   };
+
+  export const turnGetReducer = (state = {loading: true, turns: {}}, action) => {
+    switch (action.type) {
+      case TURN_GET_REQUEST:
+        return { loading: true };
+      case TURN_GET_SUCCESS:
+        return { loading: false, turns: action.payload.data, };
+      case TURN_GET_FAIL:
+        return { loading: false, error: action.payload };
+      case TURN_GET_RESET:
+        return {};
+      default:
+        return state;
+    }
+  };
+
 
   export const turnDeleteReducer = (state = {}, action) => {
     switch (action.type) {

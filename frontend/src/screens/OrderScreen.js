@@ -1,9 +1,10 @@
 import Axios from 'axios';
-import { PayPalButton } from 'react-paypal-button-v2';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
+import { listTurns } from '../actions/turnAction';
+//import { getTurn } from '../actions/turnAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
@@ -11,45 +12,49 @@ import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from '../constants/orderConstants';
-//import Calendar from '../components/Calendar';
-import TurnScreen from './TurnScreen';
-//import MercadoPagoForm from '../MercadoPago/components/MercadoPagoForm';
+
 
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id;
   console.log('estas son las props', props)
   const [sdkReady, setSdkReady] = useState(false);
+  //const [turnUser, setturnUser] = useState();
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error, } = orderDetails;
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  //const userSignin = useSelector((state) => state.userSignin);
+  //const { userInfo } = userSignin;
+
+  // const turnUser = useSelector((state) => state.turnGet);
+  // const { turns } = turnUser;
+  // console.log('este es turnUser', turns)
  
+  const turnList = useSelector((state) => state.turnList);
+  const { turns } = turnList;
+console.log('todos los turnos', turns)
+
+
   const orderPay = useSelector((state) => state.orderPay);
   const {
-    loading: loadingPay,
-    error: errorPay,
     success: successPay,
   } = orderPay;
   
  
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const {
-    loading: loadingDeliver,
-    error: errorDeliver,
     success: successDeliver,
   } = orderDeliver;
   
- const getTurn = (orderId)=> {
-    return async function () {
-        try {
-            let resul = await Axios.get(`http://localhost:5000/api/turn${orderId}`);
-            return resul.data
-        } catch (error) {
-            console.log(error);
-        }
-    };
-}
+//  const getTurn = (orderId)=> {
+//     return async function () {
+//         try {
+//             const {data} = await Axios.get(`http://localhost:5000/api/turn/${orderId}`);
+//             return data
+//         } catch (error) {
+//             console.log('este es el error', error);
+//         }
+//     };
+// }
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -75,6 +80,9 @@ export default function OrderScreen(props) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(detailsOrder(orderId));
+      dispatch(listTurns());
+      //getTurnsUser()
+      //dispatch(getTurn(orderId));
     } else {
       if (!order.isPaid) {
         if (!window.paypal) {
@@ -85,6 +93,11 @@ export default function OrderScreen(props) {
         }
       }
     }
+    
+    
+  
+
+    //setturnUser(getTurn(orderId))
   }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
 
   // const successPaymentHandler = (paymentResult) => {
@@ -100,6 +113,23 @@ const irMercadoPago=()=> {
   props.history.push(`/mercadoPago/${order._id}`)
 }
 
+if(turns) {
+  const turnUser = turns.find(e => e.orderId == orderId);
+  return {
+  turnDate : turnUser.day,
+  turnHour : turnUser.hour,
+  turnStatus : turnUser.status  
+   }
+
+//console.log('detallado', turnUser.turnDate)
+  
+}    
+// const turnDate = turnUser.day
+//     const turnHour = turnUser.hour
+//     const turnStatus = turnUser.status
+//console.log ('dia', turnDatail)
+//     console.log ('hora', turnHour)
+//     console.log ('stado', turnStatus)
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -248,6 +278,11 @@ const irMercadoPago=()=> {
             </ul>
           </div>
         </div>
+      </div>
+      <div>
+        <h3>Día y hora del Turno Seleccionado</h3>
+        <p>Fecha:</p>
+        <p>Hora: </p>
       </div>
      
     </div>

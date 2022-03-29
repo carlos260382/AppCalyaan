@@ -47,7 +47,8 @@ import {
 import { turnCreateReducer,
   turnListReducer, 
   turnUpdateReducer,
-  turnDeleteReducer } from './reducers/turnReducers'
+  turnDeleteReducer,
+  turnGetReducer } from './reducers/turnReducers'
 
 const initialState = {
   userSignin: {
@@ -101,7 +102,8 @@ const reducer = combineReducers({
   turnCreate: turnCreateReducer,
   turnList: turnListReducer,
   turnUpdate: turnUpdateReducer,
-  turnDelete: turnDeleteReducer
+  turnDelete: turnDeleteReducer,
+  turnGet: turnGetReducer
 
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

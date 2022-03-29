@@ -13,7 +13,10 @@ import { GET_TURNS,
   TURN_UPDATE_FAIL,
   TURN_DELETE_REQUEST,
   TURN_DELETE_SUCCESS,
-  TURN_DELETE_FAIL} from '../constants/turnConstant';
+  TURN_DELETE_FAIL,
+  TURN_GET_REQUEST,
+  TURN_GET_SUCCESS,
+  TURN_GET_FAIL} from '../constants/turnConstant';
 
 
 export const createTurn = (turn) => async (dispatch, getState) => {
@@ -95,46 +98,23 @@ export const deleteTurn = (id) => async (dispatch, getState) => {
   }
 };
 
-
-
-// !carlos
-export function getTurn(id) {
-    return async function (dispatch) {
-        try {
-            let resul = await Axios.get(`http://localhost:5000/api/turn`);
-            return dispatch({
-                type: GET_TURNS,
-                payload: resul.data,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-}
-
-// !carlos
-export const setTurn = (turn) => {
-    return async function () {
-        try {
-            let resul = await Axios.post('http://localhost:5000/api/turn', turn);
-            if (resul) alert(resul.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+export const getTurn = (id) => async (dispatch, getState) => {
+  dispatch({ type: TURN_GET_REQUEST, payload: id });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get(`http://localhost:5000/api/turn/${id}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: TURN_GET_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: TURN_GET_FAIL, error: message });
+  }
 };
 
-// !carlos
-export function getTurnDetail(id) {
-    return function (dispatch) {
-        Axios
-            .get(`http://localhost:5000/api/turn/${id}`)
-            .then((response) => {
-                return dispatch({
-                    type: GET_TURN_DETAIL,
-                    payload: response.data,
-                });
-            })
-            .catch((datos) => console.error(datos));
-    };
-}
+

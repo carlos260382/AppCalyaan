@@ -14,6 +14,9 @@ import cors from "cors";
 import turnRouter from "./routers/turnRouter.js";
 import mercadopago from "mercadopago";
 import { response } from "express";
+import webPush from 'web-push'
+//import { setRouting } from "./routers/pushRouter.js";
+import pushRoutes from "./routers/pushRouter.js";
 dotenv.config();
 
 const app = express();
@@ -21,6 +24,8 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+//setRouting(app);
 
 mongoose
   .connect(process.env.MONGODB_URL || "mongodb://localhost/calyaan", {
@@ -41,6 +46,7 @@ app.use("/api/products", productRouter);
 app.use("/api/services", serviceRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/turn", turnRouter);
+app.use("/pushRoutes", pushRoutes);
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
@@ -172,6 +178,16 @@ io.on("connection", (socket) => {
     }
   });
 });
+
+console.log('estas son las llaves', process.env.PUBLIC_VAPID_KEY, process.env.PRIVATE_VAPID_KEY, process.env.MAILTO )
+const { PUBLIC_VAPID_KEY, PRIVATE_VAPID_KEY, MAILTO } = process.env;
+
+webPush.setVapidDetails(
+  MAILTO,
+  PUBLIC_VAPID_KEY,
+  PRIVATE_VAPID_KEY
+);
+
 
 httpServer.listen(port, () => {
   console.log(`Serve at http://localhost:${port}`);

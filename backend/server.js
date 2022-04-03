@@ -16,7 +16,7 @@ import mercadopago from "mercadopago";
 import { response } from "express";
 import webPush from 'web-push'
 //import { setRouting } from "./routers/pushRouter.js";
-import pushRoutes from "./routers/pushRouter.js";
+import pushRouter from "./routers/pushRouter.js";
 dotenv.config();
 
 const app = express();
@@ -46,7 +46,7 @@ app.use("/api/products", productRouter);
 app.use("/api/services", serviceRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/turn", turnRouter);
-app.use("/pushRoutes", pushRoutes);
+app.use("/pushRouter", pushRouter);
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
@@ -180,13 +180,13 @@ io.on("connection", (socket) => {
 });
 
 console.log('estas son las llaves', process.env.PUBLIC_VAPID_KEY, process.env.PRIVATE_VAPID_KEY, process.env.MAILTO )
-const { PUBLIC_VAPID_KEY, PRIVATE_VAPID_KEY, MAILTO } = process.env;
+// const { PUBLIC_VAPID_KEY, PRIVATE_VAPID_KEY, MAILTO } = process.env;
 
-webPush.setVapidDetails(
-  MAILTO,
-  PUBLIC_VAPID_KEY,
-  PRIVATE_VAPID_KEY
-);
+// webPush.setVapidDetails(
+//   MAILTO,
+//   PUBLIC_VAPID_KEY,
+//   PRIVATE_VAPID_KEY
+// );
 
 
 httpServer.listen(port, () => {

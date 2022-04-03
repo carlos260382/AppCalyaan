@@ -1,7 +1,6 @@
 import Axios from 'axios';
 
-import { GET_TURNS, 
-  GET_TURN_DETAIL, 
+import { 
   TURN_CREATE_SUCCESS, 
   TURN_CREATE_REQUEST, 
   TURN_CREATE_FAIL, 

@@ -41,6 +41,7 @@ import MercadoPagoForm from './MercadoPago/components/MercadoPagoForm';
 import Landing from './screens/Landing';
 import TurnScreen from './screens/TurnScreen';
 import TurnListScreen from './screens/TurnListScreen';
+import worker from './webPush/worker';
 
 function App() {
   //const cart = useSelector((state) => state.cart);
@@ -204,7 +205,8 @@ function App() {
           <Route path="/orderTurn/:id" component={OrderScreenTurn}></Route>
           <Route path="/turnlist" component={TurnListScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-          <Route path="/mercadoPago/:id" component={MercadoPagoForm}></Route>      
+          <Route path="/mercadoPago/:id" component={MercadoPagoForm}></Route>
+          <Route path="/worker" component={worker}></Route>      
           
           <Route
             path="/search/name/:name?"

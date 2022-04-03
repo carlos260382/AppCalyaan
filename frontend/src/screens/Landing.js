@@ -5,13 +5,16 @@ import styles from './Landing.module.css';
 import service1 from '../assent/services1.jpg';
 import product1 from '../assent/Products1.jpg';
 import testimonio1 from '../assent/testimonio1.png';
-//import { oneSignals } from '../oneSignal/oneSignal.js';
-import OneSignal from 'react-onesignal';
+ import {subscription} from '../webPush/main.js';  
 
 export default function Landing (){
 
 	useEffect(()=>{
-		OneSignal.init({ appId: 'ecf9c95e-5e81-4a43-b8f9-b1bacca3746f' });
+		if ("serviceWorker" in navigator) {
+			subscription().catch(err => console.log(err));
+		  }
+
+		//subscription().catch(err => console.log('este es error subscription', err));
 
 	},[]) 
 return(

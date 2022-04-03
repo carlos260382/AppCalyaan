@@ -1,57 +1,41 @@
 import express from 'express';
-import webpush from 'web-push';
+import webpush from '../webpush.js';
 import expressAsyncHandler from 'express-async-handler';
-import { saveSubscription, getSubscriptions, removeSubscription } from '../db.js';
+//import { saveSubscription, getSubscriptions, removeSubscription } from '../db.js';
 import {
-    isAdmin,
     isAuth,
     isSellerOrAdmin,
-    mailgun,
-    payOrderEmailTemplate,
-  } from '../utils.js';
+    } from '../utils.js';
 
-//webpush.setVapidDetails(process.env.MAILTO, process.env.PUBLIC_VAPID_KEY, process.env.PRIVATE_VAPID_KEY);
-
-// export const setRouting = app => {
-//     for (const route of pushRoutes) {
-//       app[route.method](route.url, route.handler);
-//     }
-//   };
-
-const pushRoutes = express.Router();
-
-pushRoutes.post (
-'/register',
-isAuth,
-expressAsyncHandler(async (req, res) => {
-    const subscription = req.body;
-    const saved = await saveSubscription(subscription);
-    if (saved) res.status(200).json({ msg: 'Subscription saved!' });
-    else res.status(500).json({ err: 'Could not save subscription!' });
-}))
-
-pushRoutes.post (
-    '/send',
-    isAuth,
-    expressAsyncHandler(async (req, res) => {
-        const { title, url, body } = req.body;
-        const subscriptions = await getSubscriptions();
-        const data = JSON.stringify({
-          title,
-          payload: { title, body, url, icon: process.env.NOTIFICATION_ICON },
-          body: true
-        });
-        const sentSubscriptions = subscriptions.map(subscription =>
-          webpush
-            .sendNotification(subscription, data)
-            .then()
-            .catch(err => {
-              if (err.statusCode === 410) removeSubscription(subscription);
-            }));
+  const pushRouter = express.Router();
+    
+  let pushSubscripton;
   
-        await Promise.all(sentSubscriptions).then(() => {
-          res.status(200).json({ msg: 'Notifications sent!' });
-        });
-    }))
-
-export default pushRoutes;
+  pushRouter.post("/subscription", 
+  
+  expressAsyncHandler (async (req, res) => {
+    pushSubscripton = req.body;
+    console.log(pushSubscripton);
+  
+    // Server's Response
+    res.status(201).json();
+  }));
+  
+  pushRouter.post("/new-message", 
+  
+  expressAsyncHandler (async (req, res) => {
+    const { message } = req.body;
+    // Payload Notification
+    const payload = JSON.stringify({
+      title: "My Custom Notification",
+      message :"hello world",
+    });
+    res.status(200).json();
+    try {
+      await webpush.sendNotification(pushSubscripton, payload);
+    } catch (error) {
+      console.log(error);
+    }
+  }));
+  
+export default pushRouter;

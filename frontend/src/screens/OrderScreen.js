@@ -1,8 +1,7 @@
-import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
+import { detailsOrder } from '../actions/orderActions';
 import { listTurns } from '../actions/turnAction';
 //import { getTurn } from '../actions/turnAction';
 import LoadingBox from '../components/LoadingBox';
@@ -104,9 +103,9 @@ console.log('todos los turnos', turns)
   //   dispatch(payOrder(order, paymentResult));
   // };
   
-  const deliverHandler = () => {
-    dispatch(deliverOrder(order._id));
-  };
+  // const deliverHandler = () => {
+  //   dispatch(deliverOrder(order._id));
+  // };
 
   
 const irMercadoPago=()=> {
@@ -114,7 +113,7 @@ const irMercadoPago=()=> {
 }
 
 if(turns) {
-  const turnUser = turns.find(e => e.orderId == orderId);
+  const turnUser = turns.find(e => e.orderId === orderId);
   return {
   turnDate : turnUser.day,
   turnHour : turnUser.hour,

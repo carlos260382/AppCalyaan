@@ -15,7 +15,7 @@ import {
   
   expressAsyncHandler (async (req, res) => {
     pushSubscripton = req.body;
-    console.log(pushSubscripton);
+    console.log('esta es la pushsubscrition', pushSubscripton);
   
     // Server's Response
     res.status(201).json();

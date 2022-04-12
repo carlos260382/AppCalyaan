@@ -127,3 +127,42 @@ export const payOrderEmailTemplate = (order) => {
   </p>
   `;
 };
+
+export const orderHandlerIsPad = async (orderId, status, email)=>{
+  const order = await Order.findById(orderId).populate(
+    'user',
+    'email name'
+  );
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.paymentResult = {
+      orderId,
+      status,
+      email
+      //update_time: req.body.update_time,
+      //email_address: req.body.email_address,
+    };
+    const updatedOrder = await order.save();
+    mailgun()
+      .messages()
+      .send(
+        {
+          from: 'calyaan <ep3977752@gmail.com>',
+          to: `${order.user.name} <${order.user.email}>`,
+          subject: `New order ${order._id}`,
+          html: payOrderEmailTemplate(order),
+        },
+        (error, body) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(body);
+          }
+        }
+      );
+    res.send({ message: 'Order Paid', order: updatedOrder });
+  } else {
+    res.status(404).send({ message: 'Order Not Found' });
+  }
+}

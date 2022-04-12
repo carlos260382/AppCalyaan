@@ -54,10 +54,12 @@ app.get("/api/config/google", (req, res) => {
   res.send(process.env.GOOGLE_API_KEY || "");
 });
 
+let email;
 app.post("/process-payment", (req, res) => {
   mercadopago.configurations.setAccessToken('TEST-963807750333991-031716-1dd2ac29f3cc0f1a2a97f9a341d3fe80-226754364');
   console.log('este es lo q llega del body', req.body) 
-  const orderId= req.body.orderId 
+  const orderId= req.body.orderId
+   
   const payment_data = {
     transaction_amount: Number(req.body.transaction_amount),
     token: req.body.token,
@@ -72,6 +74,7 @@ app.post("/process-payment", (req, res) => {
         number: req.body.payer.identification.number,
       },
     },
+    email : payer.email
   };
     
   mercadopago.payment
@@ -81,14 +84,16 @@ app.post("/process-payment", (req, res) => {
         status: response.body.status,
         status_detail: response.body.status_detail,
         id: response.body.id,
-      });
-      console.log('este es el payment', payment_data)
-      console.log('respuesta de mercado pago', response.body.status)
-     
+      });   
 
 })
 console.log ('este es el orderId', orderId,)
+console.log('este es el payment', payment_data)
+console.log('respuesta de mercado pago', response.body.status)
 })
+
+
+
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

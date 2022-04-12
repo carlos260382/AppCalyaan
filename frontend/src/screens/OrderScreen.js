@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -15,8 +16,8 @@ import {
 
 
 export default function OrderScreen(props) {
-  const orderId = props.match.params.id;
-  console.log('estas son las props', props)
+  const id = props.match.params.id;
+  console.log('estas son las props', id)
   const [sdkReady, setSdkReady] = useState(false);
   //const [turnUser, setturnUser] = useState();
   const orderDetails = useSelector((state) => state.orderDetails);
@@ -33,6 +34,26 @@ export default function OrderScreen(props) {
 console.log('todos los turnos', turns)
 
 
+
+  
+  const turnUser = turns && turns.find(e => e.orderId === id);
+  //const {day, hour, status } = turnUser
+
+  //const turnDatail = { turnUser[0].day }  
+  
+  // && turnUser.map(e =>{
+  //   return {
+  //     day : e.day,
+  //     hour: e.hour,
+  //     status : e.status
+  //   }
+  // })
+
+  
+ // console.log('este es el turnodetail', turnUser.day )
+
+
+
   const orderPay = useSelector((state) => state.orderPay);
   const {
     success: successPay,
@@ -44,10 +65,10 @@ console.log('todos los turnos', turns)
     success: successDeliver,
   } = orderDeliver;
   
-//  const getTurn = (orderId)=> {
+//  const getTurn = (id)=> {
 //     return async function () {
 //         try {
-//             const {data} = await Axios.get(`http://localhost:5000/api/turn/${orderId}`);
+//             const {data} = await Axios.get(`http://localhost:5000/api/turn/${id}`);
 //             return data
 //         } catch (error) {
 //             console.log('este es el error', error);
@@ -74,14 +95,14 @@ console.log('todos los turnos', turns)
       !order ||
       successPay ||
       successDeliver ||
-      (order && order._id !== orderId)
+      (order && order._id !== id)
     ) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
-      dispatch(detailsOrder(orderId));
+      dispatch(detailsOrder(id));
       dispatch(listTurns());
       //getTurnsUser()
-      //dispatch(getTurn(orderId));
+      //dispatch(getTurn(id));
     } else {
       if (!order.isPaid) {
         if (!window.paypal) {
@@ -93,11 +114,11 @@ console.log('todos los turnos', turns)
       }
     }
     
-    
+    const turnUser = turns && turns.find(e => e.orderId === id);
   
 
-    //setturnUser(getTurn(orderId))
-  }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
+    //setturnUser(getTurn(id))
+  }, [dispatch, id, sdkReady, successPay, successDeliver, order, turns]);
 
   // const successPaymentHandler = (paymentResult) => {
   //   dispatch(payOrder(order, paymentResult));
@@ -112,17 +133,12 @@ const irMercadoPago=()=> {
   props.history.push(`/mercadoPago/${order._id}`)
 }
 
-if(turns) {
-  const turnUser = turns.find(e => e.orderId === orderId);
-  return {
-  turnDate : turnUser.day,
-  turnHour : turnUser.hour,
-  turnStatus : turnUser.status  
-   }
-
+if(turnUser)  { console.log('este es el dia', turnUser.day) }
 //console.log('detallado', turnUser.turnDate)
   
-}    
+
+
+
 // const turnDate = turnUser.day
 //     const turnHour = turnUser.hour
 //     const turnStatus = turnUser.status
@@ -273,15 +289,17 @@ if(turns) {
                   </button>
                 </li>
               )} */}
-              <button onClick={irMercadoPago}>Pagar</button>
+              {turnUser && turnUser.status? (<button onClick={irMercadoPago}>Pagar</button>):'Pendiente por aprobacion' }
+              
             </ul>
           </div>
         </div>
       </div>
       <div>
         <h3>Día y hora del Turno Seleccionado</h3>
-        <p>Fecha:</p>
-        <p>Hora: </p>
+        <p>Fecha: {turnUser? (turnUser.day):'' } </p>
+        <p>Hora: {turnUser? (turnUser.hour):'' }</p>
+        <p>Estado: {turnUser && turnUser.status? ('Aprobado'):'Pendiente' }</p>
       </div>
      
     </div>

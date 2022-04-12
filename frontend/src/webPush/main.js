@@ -2,11 +2,11 @@ const PUBLIC_VAPID_KEY = "BGE7BGaHbDaBTnUaBbWKdUVzFxmXjHR0d_TjDaYcenNzbcWdYku85C
 
 export const subscription = async () => {
   // Service Worker
-  console.log("Registering a Service worker");
-  const register = await navigator.serviceWorker.register("http://localhost:3000/worker.js", {
+ 
+  const register = await navigator.serviceWorker.register("/worker.js", {
     scope: "/"
   });
-  console.log("New Service Worker");
+  console.log("New Service Worker", register);
 
   // Listen Push Notifications
   console.log("Listening Push Notifications");

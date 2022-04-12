@@ -62,7 +62,7 @@ export default function ServiceScreen(props) {
           <div className="row top">
             <div className="col-2">
               <img
-                className="large"
+                className="medium"
                 src={service.image}
                 alt={service.name}
               ></img>

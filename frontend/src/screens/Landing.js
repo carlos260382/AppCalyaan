@@ -5,16 +5,15 @@ import styles from './Landing.module.css';
 import service1 from '../assent/services1.jpg';
 import product1 from '../assent/Products1.jpg';
 import testimonio1 from '../assent/testimonio1.png';
- import {subscription} from '../webPush/main.js';  
+import {subscription} from '../webPush/main.js'
 
 export default function Landing (){
-
 	useEffect(()=>{
 		if ("serviceWorker" in navigator) {
 			subscription().catch(err => console.log(err));
 		  }
 
-		//subscription().catch(err => console.log('este es error subscription', err));
+		subscription().catch(err => console.log('este es error subscription', err));
 
 	},[]) 
 return(

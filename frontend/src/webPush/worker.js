@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 
  const worker =() => {
 console.log('este es el Service Worker Works');

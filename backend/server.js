@@ -47,11 +47,12 @@ app.get("/api/config/paypal", (req, res) => {
 app.get("/api/config/google", (req, res) => {
   res.send(process.env.GOOGLE_API_KEY || "");
 });
-
 app.post("/process-payment", (req, res) => {
-  mercadopago.configurations.setAccessToken('TEST-963807750333991-031716-1dd2ac29f3cc0f1a2a97f9a341d3fe80-226754364');
-  console.log('este es lo q llega del body', req.body) 
-  const orderId= req.body.orderId 
+  mercadopago.configurations.setAccessToken(
+    "TEST-963807750333991-031716-1dd2ac29f3cc0f1a2a97f9a341d3fe80-226754364"
+  );
+  console.log("este es lo q llega del body", req.body);
+  const orderId = req.body.orderId;
   const payment_data = {
     transaction_amount: Number(req.body.transaction_amount),
     token: req.body.token,
@@ -67,122 +68,116 @@ app.post("/process-payment", (req, res) => {
       },
     },
   };
-  
 
-
-  
-  mercadopago.payment
-    .save(payment_data)
-    .then((response) => {
-      console.log(response);
-      return res.status(response.status).json({
-        status: response.body.status,
-        status_detail: response.body.status_detail,
-        id: response.body.id,
-      });
-      console.log('este es el payment', payment_data)
-      console.log('respuesta de mercado pago', response.body.status)
-      //console.log ('este es el orderId', orderId,)
-
-});
-
-const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-app.use(express.static(path.join(__dirname, "/frontend/build")));
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
-);
-app.get("/", (req, res) => {
-  res.send("Server is ready");
-});
-
-app.use((err, req, res, next) => {
-  res.status(500).send({ message: err.message });
-});
-
-const port = process.env.PORT || 5000;
-
-const httpServer = http.Server(app);
-const io = new Server(httpServer, { cors: { origin: "*" } });
-const users = [];
-
-io.on("connection", (socket) => {
-  console.log("connection", socket.id);
-  socket.on("disconnect", () => {
-    const user = users.find((x) => x.socketId === socket.id);
-    if (user) {
-      user.online = false;
-      console.log("Offline", user.name);
-      const admin = users.find((x) => x.isAdmin && x.online);
-      if (admin) {
-        io.to(admin.socketId).emit("updateUser", user);
-      }
-    }
+  mercadopago.payment.save(payment_data).then((response) => {
+    console.log(response);
+    return res.status(response.status).json({
+      status: response.body.status,
+      status_detail: response.body.status_detail,
+      id: response.body.id,
+    });
+    console.log("este es el payment", payment_data);
+    console.log("respuesta de mercado pago", response.body.status);
+    //console.log ('este es el orderId', orderId,)
   });
 
-  socket.on("onLogin", (user) => {
-    const updatedUser = {
-      ...user,
-      online: true,
-      socketId: socket.id,
-      messages: [],
-    };
-    const existUser = users.find((x) => x._id === updatedUser._id);
-    if (existUser) {
-      existUser.socketId = socket.id;
-      existUser.online = true;
-    } else {
-      users.push(updatedUser);
-    }
-    console.log("Online", user.name);
-    const admin = users.find((x) => x.isAdmin && x.online);
-    if (admin) {
-      io.to(admin.socketId).emit("updateUser", updatedUser);
-    }
-    if (updatedUser.isAdmin) {
-      io.to(updatedUser.socketId).emit("listUsers", users);
-    }
+  const __dirname = path.resolve();
+  app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
+  );
+  app.get("/", (req, res) => {
+    res.send("Server is ready");
   });
 
-  socket.on("onUserSelected", (user) => {
-    const admin = users.find((x) => x.isAdmin && x.online);
-    if (admin) {
-      const existUser = users.find((x) => x._id === user._id);
-      io.to(admin.socketId).emit("selectUser", existUser);
-    }
+  app.use((err, req, res, next) => {
+    res.status(500).send({ message: err.message });
   });
 
-  socket.on("onMessage", (message) => {
-    if (message.isAdmin) {
-      const user = users.find((x) => x._id === message._id && x.online);
+  const port = process.env.PORT || 5000;
+
+  const httpServer = http.Server(app);
+  const io = new Server(httpServer, { cors: { origin: "*" } });
+  const users = [];
+
+  io.on("connection", (socket) => {
+    console.log("connection", socket.id);
+    socket.on("disconnect", () => {
+      const user = users.find((x) => x.socketId === socket.id);
       if (user) {
-        io.to(user.socketId).emit("message", message);
-        user.messages.push(message);
+        user.online = false;
+        console.log("Offline", user.name);
+        const admin = users.find((x) => x.isAdmin && x.online);
+        if (admin) {
+          io.to(admin.socketId).emit("updateUser", user);
+        }
       }
-    } else {
+    });
+
+    socket.on("onLogin", (user) => {
+      const updatedUser = {
+        ...user,
+        online: true,
+        socketId: socket.id,
+        messages: [],
+      };
+      const existUser = users.find((x) => x._id === updatedUser._id);
+      if (existUser) {
+        existUser.socketId = socket.id;
+        existUser.online = true;
+      } else {
+        users.push(updatedUser);
+      }
+      console.log("Online", user.name);
       const admin = users.find((x) => x.isAdmin && x.online);
       if (admin) {
-        io.to(admin.socketId).emit("message", message);
-        const user = users.find((x) => x._id === message._id && x.online);
-        user.messages.push(message);
-      } else {
-        io.to(socket.id).emit("message", {
-          name: "Admin",
-          body: "Sorry. I am not online right now",
-        });
+        io.to(admin.socketId).emit("updateUser", updatedUser);
       }
-    }
-  });
-});
+      if (updatedUser.isAdmin) {
+        io.to(updatedUser.socketId).emit("listUsers", users);
+      }
+    });
 
-httpServer.listen(port, () => {
-  console.log(`Serve at http://localhost:${port}`);
+    socket.on("onUserSelected", (user) => {
+      const admin = users.find((x) => x.isAdmin && x.online);
+      if (admin) {
+        const existUser = users.find((x) => x._id === user._id);
+        io.to(admin.socketId).emit("selectUser", existUser);
+      }
+    });
+
+    socket.on("onMessage", (message) => {
+      if (message.isAdmin) {
+        const user = users.find((x) => x._id === message._id && x.online);
+        if (user) {
+          io.to(user.socketId).emit("message", message);
+          user.messages.push(message);
+        }
+      } else {
+        const admin = users.find((x) => x.isAdmin && x.online);
+        if (admin) {
+          io.to(admin.socketId).emit("message", message);
+          const user = users.find((x) => x._id === message._id && x.online);
+          user.messages.push(message);
+        } else {
+          io.to(socket.id).emit("message", {
+            name: "Admin",
+            body: "Sorry. I am not online right now",
+          });
+        }
+      }
+    });
+  });
+
+  httpServer.listen(port, () => {
+    console.log(`Serve at http://localhost:${port}`);
+  });
 });
 
 // app.listen(port, () => {
 //   console.log(`Serve at http://localhost:${port}`);
 // });
-
 
 // back_urls: {
 //   success: `http://localhost:3001/api/coins/pagos/${product.idaux}`,

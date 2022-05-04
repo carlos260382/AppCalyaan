@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
+.h1{
+    color: #2f4a5d;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.h2{
+color: #2f4a5d;
+font-family: 'Open Sans', sans-serif;
+}
+
+.img{
+    width: 10em;
+    height: 10em;
+    border: solid 2px #627C8E;
+    border-radius: 1em;
+    
+}
+
+.img-title i:hover{
+    transform: scale(1.25) rotate(100deg); 
+    color:#18d4ca;
+    
+  }
+  .img:hover{
+    transform: scale(1.05);
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+  }
+  .img-text{
+    height:80px;  
+  }
+  
+  .img::before, .img::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: scale3d(0, 0, 1);
+    transition: transform .3s ease-out 0s;
+    background: rgba(255, 255, 255, 0.1);
+    content: '';
+    pointer-events: none;
+  }
+  .img::before {
+    transform-origin: left top;
+  }
+  .img::after {
+    transform-origin: right bottom;
+  }
+  .img:hover::before, .img:hover::after, .img:focus::before, .img:focus::after {
+    transform: scale3d(1, 1, 1);
+  }
+
+.btn{
+    background-color:#627C8E;
+    color: white;
+    border: none;
+    border-radius: 1em;
+    padding: 1em;
+    font-size: 1em;
+    font-family: 'Open Sans', sans-serif;
+    cursor: pointer;
+    width: 70%;
+    margin-left: 15%;
+    transition: all .3s ease-in-out;
+  }
+
+  .btn:hover{
+    background-color:#18d4ca;
+  }
+
+  .btn:focus{
+    background-color:#18d4ca;
+  }
+
+  .btn:active{
+    background-color:#18d4ca;
+  }
+
+  .btn:disabled{
+    background-color:#18d4ca;
+  }
+
+  .btn:disabled:hover{
+    background-color:#18d4ca;
+  }

@@ -158,7 +158,7 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Envío</h2>
+                <h2>Realizado</h2>
                 <p>
                   <strong>Nombre:</strong> {order.shippingAddress.fullName} <br />
                   <strong>Direccion: </strong> {order.shippingAddress.address},

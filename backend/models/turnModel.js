@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 const turnSchema = new mongoose.Schema(
   {
     day: { type: String, required: true },
-    hour: { type: String, required: true, },
-    status:{ type: Boolean, default: false, },
-    orderId:{ type: String, required: true, }, 
+    hour: { type: String, required: true, unique:false },
+    status:{ type: Boolean, default: false },
+    orderId:{ type: String, required: true }, 
     user: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
     seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
     fullName: { type: String, required: true },

@@ -8,9 +8,10 @@ import { signout } from '../actions/userActions';
 import { listProductCategories } from '../actions/productActions';
 import LoadingBox from './LoadingBox';
 import MessageBox from './MessageBox';
-import styles from "./Navbar.module.css";
+import styles from "../style/Navbar.module.css";
 import logo from '../assent/logo.png'
-import carrito from '../assent/cart.svg'
+import carrito from '../assent/cart2.svg'
+
 
 function Navbar() {
     const cart = useSelector((state) => state.cart);
@@ -18,10 +19,31 @@ function Navbar() {
     const { cartItems } = cart;
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
+
     const dispatch = useDispatch();
     const signoutHandler = () => {
       dispatch(signout());
     };
+
+const handleClickInicio = ()=>{
+      window.location.replace('https://calyaan.com/')
+  }
+
+const handleClickService = ()=>{
+    window.location.replace('https://calyaan.com/empresarial/')
+}
+
+const handleClickBlog = ()=>{
+  window.location.replace('https://calyaan.com/blog/')
+}
+
+const handleClickNosotros = ()=>{
+  window.location.replace('https://calyaan.com/quienes-somos/')
+}
+
+const handleClickContacto = ()=>{
+  window.location.replace('https://calyaan.com/contactanos/')
+}
 
   const productCategoryList = useSelector((state) => state.productCategoryList);
   const {
@@ -34,47 +56,37 @@ function Navbar() {
   }, [dispatch]);
 
 return (
-    <div>
+    <div className={styles.all}>
     <div className={styles.container}>
-    <NavLink to="/Home">
+    <div className={styles.menu}>
+    <NavLink  to= "/" onClick = {handleClickInicio}>
         <h3> Inicio </h3>
       </NavLink>
-      <NavLink to="/Tienda">
-      <h3>Tienda</h3>
-      </NavLink>
-      <NavLink to="/Servicios">
+      <NavLink to= "/" onClick={handleClickService}>
       <h3>Servicios Corporativos</h3>
       </NavLink>
-      <NavLink to="/Blog">
+      <NavLink to= "/" onClick={handleClickBlog}>
       <h3> Blog</h3>
       </NavLink>
-      <NavLink to="/Nosotros">
+      <NavLink to= "/" onClick={handleClickNosotros}>
       <h3> Nosotros</h3>
       </NavLink>
-      <NavLink to="/Contacto">
+      <NavLink to= "/" onClick={handleClickContacto}>
       <h3> Contacto</h3>
       </NavLink>
     </div>
+    </div>
 
 
-    {/* <div>
-      <button
-        type="button"
-        className="open-sidebar"
-        onClick={() => setSidebarIsOpen(true)}
-      >
-        <i className="fa fa-bars"></i>
-      </button>
-      <Link className="brand" to="/">
-        
-      </Link>
-    </div> */}
-<div className={styles.container2}>    
+<div className={styles.container2}>
+<div className={styles.navbar}>    
 <div>
-<img src={logo} className={styles.logo}/>
+<NavLink to="/">
+<img src={logo} alt="Logo" />
+</NavLink>
 </div>
 
-    <div className={styles.search}>
+    <div>
       <Route
         render={({ history }) => (
           <SearchBox history={history}></SearchBox>
@@ -82,20 +94,20 @@ return (
       ></Route>
     </div>
 
-    <div className={styles.cart}>
+    <div className={styles.carrito}>
       <NavLink to="/cart">
-      <img src={carrito} alt="description" className={styles.carrito}/>
+      <img src={carrito} alt="description"/>
         {cartItems.length > 0 && (
-          <span className="badge">{cartItems.length}</span>
+          <span className={styles.badge}>{cartItems.length}</span>
         )}
       </NavLink>
 </div>
 
-<div className={styles.signin}> 
-      {userInfo ? (
+<div className={styles.signin}>
+{userInfo ? (
         <div className="dropdown">
-          <NavLink to="#">
-            {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+          <NavLink to="#" className={styles.nav}>
+            {userInfo.name} <i></i>{' '}
           </NavLink>
           <ul className="dropdown-content">
             <li>
@@ -112,19 +124,16 @@ return (
           </ul>
         </div>
       ) : (
-        <NavLink to="/signin">Iniciar sesión</NavLink>
+        <NavLink to="/signin"> <bottom className={styles.btn}>Iniciar sesión</bottom></NavLink>
       )}
       {userInfo && userInfo.isSeller && (
         <div className="dropdown">
-          <NavLink to="#admin">
-            Vendedor <i className="fa fa-caret-down"></i>
+          <NavLink to="#admin" className={styles.nav}>
+            Vendedor <i></i>
           </NavLink>
           <ul className="dropdown-content">
             <li>
               <NavLink to="/productlist/seller">Productos</NavLink>
-            </li>
-            <li>
-              <NavLink to="/servicelist">Servicios</NavLink>
             </li>
             <li>
               <NavLink to="/orderlist/seller">Pedidos</NavLink>
@@ -134,8 +143,8 @@ return (
       )}
       {userInfo && userInfo.isAdmin && (
         <div className="dropdown">
-          <NavLink to="#admin">
-            Admin <i className="fa fa-caret-down"></i>
+          <NavLink to="#admin" className={styles.nav}>
+            Admin <i></i>
           </NavLink>
           <ul className="dropdown-content">
             <li>
@@ -144,10 +153,7 @@ return (
             <li>
               <NavLink to="/productlist">Productos</NavLink>
             </li>
-            <li>
-              <NavLink to="/servicelist">Servicios</NavLink>
-            </li>
-            <li>
+           <li>
               <NavLink to="/orderlist">Pedidos</NavLink>
             </li>
             <li>
@@ -160,6 +166,23 @@ return (
         </div>
       )}
     </div>
+    </div>
+    <div className= {styles.container3}>
+         
+          <div>
+            <button
+              type="button"
+              className="open-sidebar"
+              onClick={() => setSidebarIsOpen(true)}
+            >
+              <i className="fa fa-bars"></i>
+            </button>
+            <NavLink className="brand" to="/">
+              
+            </NavLink>
+          </div>
+
+
     <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
@@ -190,8 +213,9 @@ return (
             )}
           </ul>
         </aside>
+        
 </div>
-
+</div>
   </div>
 
 

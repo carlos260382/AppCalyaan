@@ -54,9 +54,9 @@ app.get("/api/config/google", (req, res) => {
   res.send(process.env.GOOGLE_API_KEY || "");
 });
 
-let email;
+//let email;
 app.post("/process-payment", (req, res) => {
-  mercadopago.configurations.setAccessToken('TEST-963807750333991-031716-1dd2ac29f3cc0f1a2a97f9a341d3fe80-226754364');
+  mercadopago.configurations.setAccessToken('TEST-3056782519895007-031616-fb5176cd2a36b239664a8d595c1aa07e-226754364');
   console.log('este es lo q llega del body', req.body) 
   const orderId= req.body.orderId
    
@@ -74,7 +74,7 @@ app.post("/process-payment", (req, res) => {
         number: req.body.payer.identification.number,
       },
     },
-    email : payer.email
+    //email : payer.email
   };
     
   mercadopago.payment

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../style/Navbar.module.css'
 
 export default function SearchBox(props) {
   const [name, setName] = useState('');
@@ -7,16 +8,17 @@ export default function SearchBox(props) {
     props.history.push(`/search/name/${name}`);
   };
   return (
-    <form className="search" onSubmit={submitHandler}>
-      <div className="row">
+    <form  onSubmit={submitHandler}>
+      <div className= {styles.search}>
         <input
           type="text"
+          placeholder='Buscar productos'
           name="q"
           id="q"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)} className={styles.input}
         ></input>
-        <button className="primary" type="submit">
-          <i className="fa fa-search"></i>
+        <button className = {styles.btnSearch} type="submit">
+         Buscar
         </button>
       </div>
     </form>

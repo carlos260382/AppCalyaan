@@ -62,7 +62,7 @@ export default function MercadoPagoForm(props) {
        
         useEffect(() => {
             if (MercadoPago) {
-                const mp = new MercadoPago('TEST-8ac55fb7-8f59-435f-8f8d-50eff5ca2987');
+                const mp = new MercadoPago('TEST-b1149716-091a-44cc-82d0-20f7cf7075e8');
                
                 const cardForm = mp.cardForm({
                     amount: "100000.5",
@@ -97,9 +97,9 @@ export default function MercadoPagoForm(props) {
                                     // entry point backend
                                     method: "POST",
                                     headers: {
-                                        "Access-Control-Allow-Origin": "*",
-                                         "Access-Control-Request-Method":
-                                         "GET, POST, DELETE, PUT, OPTIONS",
+                                         "Access-Control-Allow-Origin": "*",
+                                        //  "Access-Control-Request-Method":
+                                        //  "GET, POST, DELETE, PUT, OPTIONS",
                                         "Content-Type": "application/json",
                                     },
                                     body: JSON.stringify({

@@ -26,30 +26,42 @@ turnRouter.post(
     '/',
     isAuth,
     expressAsyncHandler(async (req, res) => {
-    if (req.body.length === 0) {
-      res.status(400).send({ message: "No hay turno creado" });
-    } else {
-      const { service, day, seller, hour, status, orderId, user, country, postalCode, city, address, fullName  } = req.body;
-      const turn = new Turn({
-        day: day,
-        hour: hour,
-        seller: seller,
-        status: status,
-        orderId: orderId,
-        user: user,
-        fullName: fullName,
-        address: address,
-        city: city,
-        postalCode: postalCode,
-        country: country,
-        service: service,
+    try {
+      if (req.body.length === 0) {
+        res.status(400).send({ message: "No hay turno creado" });
+      } else {
+        const { service, day, seller, hour, status, orderId, user, country, postalCode, city, address, fullName  } = req.body;
+        const turn = new Turn({
+          day: day,
+          hour: hour,
+          seller: seller,
+          status: status,
+          orderId: orderId,
+          user: user,
+          fullName: fullName,
+          address: address,
+          city: city,
+          postalCode: postalCode,
+          country: country,
+          service: service,
+  
+        });
+        const createdTurn = await turn.save();
+        res.status(201).send({ message: "New Turn Created", turn: createdTurn });
+      }
 
-      });
-      const createdTurn = await turn.save();
-      res.status(201).send({ message: "New Turn Created", turn: createdTurn });
+    } catch (error) {
+      console.log (error)
+      res.status(404).alert("turno no fue creado", error)  
     }
+
   })
-);
+  );
+
+
+
+
+    
 
 turnRouter.put(
   '/:id',

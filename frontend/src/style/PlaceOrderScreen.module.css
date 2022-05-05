@@ -71,6 +71,7 @@ height: 40%;
     flex-direction: column;
     flex-wrap: wrap;
     gap: 1.5em;
+    width: 30em;
   }
 
   .form input, select{

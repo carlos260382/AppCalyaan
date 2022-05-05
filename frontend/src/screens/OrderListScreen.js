@@ -4,6 +4,7 @@ import { deleteOrder, listOrders } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { ORDER_DELETE_RESET } from '../constants/orderConstants';
+import styles from '../style/ProductListScreen.module.css'
 
 export default function OrderListScreen(props) {
   const sellerMode = props.match.path.indexOf('/seller') >= 0;
@@ -28,8 +29,10 @@ export default function OrderListScreen(props) {
       dispatch(deleteOrder(order._id));
     }
   };
+
+  console.log('usuario', orders)
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Pedidos</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
@@ -42,11 +45,10 @@ export default function OrderListScreen(props) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>USUARIO</th>
               <th>FECHA</th>
               <th>TOTAL</th>
               <th>PAGADO</th>
-              <th>ENTREGADO</th>
+              <th>REALIZADO</th>
               <th>ACCIONES</th>
             </tr>
           </thead>
@@ -54,19 +56,19 @@ export default function OrderListScreen(props) {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
-                <td>{order.user.name}</td>
+                {/* <td>{order.user.name}</td> */}
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
+                <td>{order.isPaid ? 'Pagado' : 'No'}</td>
                 <td>
                   {order.isDelivered
-                    ? order.deliveredAt.substring(0, 10)
+                    ? 'Realizado'
                     : 'No'}
                 </td>
                 <td>
                   <button
                     type="button"
-                    className="small"
+                    className= {styles.btn}
                     onClick={() => {
                       props.history.push(`/order/${order._id}`);
                     }}
@@ -75,7 +77,7 @@ export default function OrderListScreen(props) {
                   </button>
                   <button
                     type="button"
-                    className="small"
+                    className= {styles.btn}
                     onClick={() => deleteHandler(order)}
                   >
                     Eliminar

@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch} from "react-redux";
 import { updateTurn, deleteTurn } from "../actions/turnAction";
+import styles from '../style/ProductListScreen.module.css'
 
 export default function Turn(props) {
   const { turn } = props;
@@ -62,17 +63,17 @@ export default function Turn(props) {
         <td>
           <button
             type="button"
-            className="small"
+            className= {styles.btn}
             onClick={() => handleAcceptor(turn._id)}
           >
-            Aceptar servicio
+            Aceptar
           </button>
           <button
             type="button"
-            className="small"
+            className= {styles.btn}
             onClick={() => handleDelete(turn._id)}
           >
-            Eliminar Turno
+            Eliminar
           </button>
         </td>
       </tbody>

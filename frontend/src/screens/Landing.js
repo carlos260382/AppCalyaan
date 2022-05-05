@@ -39,22 +39,14 @@ return(
 </div>
 
 <h2>Como Funciona</h2>
-{/* <div>
-<h2>1. Para Productos:</h2>
-<ul>
-<li>Para productos al por mayor</li>
-<li>Para productos al por mayor</li>
-<li>Para productos al por mayor</li>
-</ul>
-</div> */}
 
 <div>
-<ul>
-<li>Escoge el servicio que deseas; entre la gran variedad de cuidado personal, belleza y salud.</li>
-<li>Agenda tu turno en los horarios y días disponibles.</li>
-<li>Realiza el pago a traves de nuestro servicio de pago seguro</li>
-<li>Disfruta tu servicio en casa</li>
-</ul>    
+
+<div>Escoge el servicio que deseas; entre la gran variedad de cuidado personal, belleza y salud</div>
+<div>Agenda tu turno en los horarios y días disponibles</div>
+<div>Realiza el pago a traves de nuestro servicio de pago seguro</div>
+<div>Disfruta tu servicio en casa</div>
+
 </div>
 {/* 
 <h2>Testimonios</h2>

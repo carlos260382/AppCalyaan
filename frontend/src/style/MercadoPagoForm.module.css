@@ -4,12 +4,23 @@
     column-gap:  1em;
     width: 100%;
     flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
 
 .form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     column-gap:  3em;
-    width: 100%;
+    width: 50%;
     flex-wrap: wrap;
+    background-color: #f8f8f8;
 }
+
+.form div, input {
+    border: solid 1px #ccc;
+    border-radius: 10px;
+    margin:0.5em 0.5em 0.5em 0.5em;
+}
+

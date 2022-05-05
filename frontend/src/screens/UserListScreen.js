@@ -4,6 +4,7 @@ import { deleteUser, listUsers } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { USER_DETAILS_RESET } from '../constants/userConstants';
+import styles from '../style/ProductListScreen.module.css'
 
 export default function UserListScreen(props) {
   const userList = useSelector((state) => state.userList);
@@ -29,7 +30,7 @@ export default function UserListScreen(props) {
     }
   };
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Users</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
@@ -62,15 +63,13 @@ export default function UserListScreen(props) {
                 <td>{user.isAdmin ? 'YES' : 'NO'}</td>
                 <td>
                   <button
-                    type="button"
-                    className="small"
+                    className= {styles.btn}
                     onClick={() => props.history.push(`/user/${user._id}/edit`)}
                   >
                     Editar
                   </button>
                   <button
-                    type="button"
-                    className="small"
+                    className= {styles.btn}
                     onClick={() => deleteHandler(user)}
                   >
                     Eliminar

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { signin } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import styles from '../style/SigninScreen.module.css'
 
 export default function SigninScreen(props) {
   const [email, setEmail] = useState('');
@@ -27,9 +28,9 @@ export default function SigninScreen(props) {
     }
   }, [props.history, redirect, userInfo]);
   return (
-    <div>
+<div className= {styles.container}>
       <form className="form" onSubmit={submitHandler}>
-        <div>
+        <div className={styles.inicio}>
           <h1>Iniciar sesión</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}

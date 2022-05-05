@@ -4,6 +4,7 @@ import { detailsUser, updateUserProfile } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
+import styles from '../style/ProfileScreen.module.css'
 
 export default function ProfileScreen() {
   const [name, setName] = useState('');
@@ -59,7 +60,7 @@ export default function ProfileScreen() {
     }
   };
   return (
-    <div>
+    <div className= {styles.container}>
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Perfil de Usuario</h1>

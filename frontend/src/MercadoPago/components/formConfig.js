@@ -3,6 +3,7 @@ export const formConfig = {
     cardholderName: {
         id: "form-checkout__cardholderName",
         placeholder: "Titular de la tarjeta",
+        
     },
     cardholderEmail: {
         id: "form-checkout__cardholderEmail",

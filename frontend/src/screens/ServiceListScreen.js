@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import styles from '../style/ProductListScreen.module.css'
 import {
   createService,
   deleteService,
@@ -76,10 +77,10 @@ console.log('este es el service', serviceList)
 console.log('este es el error', error)
 
 return (
-  <div>
+  <div className={styles.container}>
   <div className="row">
     <h1>Servicios</h1>
-    <button type="button" className="primary" onClick={createHandler}>
+    <button className= {styles.btnadd} onClick={createHandler}>
       Crear Servicios
     </button>
   </div>
@@ -117,7 +118,7 @@ return (
               <td>
                 <button
                   type="button"
-                  className="small"
+                  className= {styles.btn}
                   onClick={() =>
                     props.history.push(`/service/${service._id}/edit`)
                   }
@@ -126,7 +127,7 @@ return (
                 </button>
                 <button
                   type="button"
-                  className="small"
+                  className= {styles.btn}
                   onClick={() => deleteHandler(service)}
                 >
                   Eliminar

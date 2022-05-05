@@ -136,6 +136,9 @@ return (
               <NavLink to="/servicelist/seller">Servicios</NavLink>
             </li>
             <li>
+              <NavLink to="/turnlist">Turnos</NavLink>
+            </li>
+            <li>
               <NavLink to="/orderlist/seller">Pedidos</NavLink>
             </li>
           </ul>
@@ -152,6 +155,9 @@ return (
             </li>
             <li>
               <NavLink to="/servicelist">Servicios</NavLink>
+            </li>
+            <li>
+              <NavLink to="/turnlist">Turnos</NavLink>
             </li>
            <li>
               <NavLink to="/orderlist">Pedidos</NavLink>

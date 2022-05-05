@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingAddress } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
+import styles from '../style/ShippingAddressScreen.module.css'
 
 export default function ShippingAddressScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
@@ -144,7 +145,7 @@ export default function ShippingAddressScreen(props) {
         </div>
         <div>
           <label />
-          <button className="primary" type="submit">
+          <button className= {styles.btn} type="submit">
             Continuar
           </button>
         </div>

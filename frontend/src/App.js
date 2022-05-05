@@ -5,7 +5,7 @@ import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
-import HomeScreenService from './screens/HomeScreenService';
+//import HomeScreenService from './screens/HomeScreenService';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderScreenTurn from './screens/OrderScreenTurn';
@@ -150,7 +150,7 @@ function App() {
           ></SellerRoute>
 
           <Route path="/product" component={HomeScreen} exact></Route>
-          <Route path="/service" component={HomeScreenService} exact></Route>
+          <Route path="/service" component={SearchScreen} exact></Route>
           <Route path="/turn" component={TurnScreen} exact></Route>
         </main>
         <footer className="row center">

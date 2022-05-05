@@ -6,6 +6,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import styles from '../style/PlaceOrderScreen.module.css'
 
 export default function PlaceOrderScreen(props) {
   const cart = useSelector((state) => state.cart);
@@ -50,12 +51,12 @@ export default function PlaceOrderScreen(props) {
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
-      <div className="row top">
-        <div className="col-2">
+      <div className= {styles.container}>
+        <div className= {styles.col1}>
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Transporte</h2>
+                <h2>Información del solicitante</h2>
                 <p>
                   <strong>Nombre:</strong> {cart.shippingAddress.fullName} <br />
                   <strong>Dirección: </strong> {cart.shippingAddress.address},
@@ -66,15 +67,14 @@ export default function PlaceOrderScreen(props) {
             </li>
             <li>
               <div className="card card-body">
-                <h2>Pago</h2>
-                <p>
-                  <strong>Método:</strong> {cart.paymentMethod}
+                 <p>
+                  <strong>Método de pago:</strong> {cart.paymentMethod}
                 </p>
               </div>
             </li>
             <li>
               <div className="card card-body">
-                <h2>Encargar artículos</h2>
+                <h2>Servicios seleccionados</h2>
                 <ul>
                   {cart.cartItems.map((item) => (
                     <li key={item.product}>
@@ -103,8 +103,8 @@ export default function PlaceOrderScreen(props) {
             </li>
           </ul>
         </div>
-        <div className="col-1">
-          <div className="card card-body">
+        <div className={styles.check}>
+          <div>
             <ul>
               <li>
                 <h2>Resumen del pedido</h2>
@@ -138,10 +138,8 @@ export default function PlaceOrderScreen(props) {
                 </div>
               </li>
               <li>
-                <button
-                  type="button"
+                <button className= {styles.btn}
                   onClick={placeOrderHandler}
-                  className="primary block"
                   disabled={cart.cartItems.length === 0}
                 >
                   Realizar pedido

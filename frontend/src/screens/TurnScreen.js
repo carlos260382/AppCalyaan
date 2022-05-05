@@ -72,7 +72,7 @@ console.log('turno creado', turn)
 return (
     
     <form onSubmit={handleSubmit}>
-       <h1>Elije la fecha y hora para agendar su turno (solo aplica para solicitud de servicios y no de productos)</h1>
+       <h1>Elije la fecha y hora para agendar su turno</h1>
         <div>
             <label>Selecciona la Fecha</label>
             <input type="date" name="day" onChange={handleChange} />

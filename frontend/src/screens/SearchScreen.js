@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { listProducts } from '../actions/productActions';
+import { listService } from '../actions/serviceActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import Product from '../components/Product';
+import Service from '../components/Service.js';
 import Rating from '../components/Rating';
-import { prices, ratings } from '../utils';
+import styles from '../style/SearchScreen.module.css'
+import { ratings } from '../utils';
 
 export default function SearchScreen(props) {
   const {
@@ -19,18 +20,18 @@ export default function SearchScreen(props) {
     pageNumber = 1,
   } = useParams();
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
+  const serviceList = useSelector((state) => state.serviceList);
+  const { loading, error, services, page, pages } = serviceList;
 
-  const productCategoryList = useSelector((state) => state.productCategoryList);
+  const serviceCategoryList = useSelector((state) => state.serviceCategoryList);
   const {
     loading: loadingCategories,
     error: errorCategories,
     categories,
-  } = productCategoryList;
+  } = serviceCategoryList;
   useEffect(() => {
     dispatch(
-      listProducts({
+      listService({
         pageNumber,
         name: name !== 'all' ? name : '',
         category: category !== 'all' ? category : '',
@@ -54,32 +55,32 @@ export default function SearchScreen(props) {
   };
   return (
     <div>
-      <div className="row">
+      <div className={styles.container1}>
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          <div>{products.length} Resultados</div>
+          <div>{services.length} Resultados</div>
         )}
         <div>
-          Ordenar por{' '}
+          Ordenar servicios por{' '}
           <select
             value={order}
             onChange={(e) => {
               props.history.push(getFilterUrl({ order: e.target.value }));
             }}
           >
-            <option value="newest">LLegadas mas recientes</option>
-            <option value="lowest">Precio: Bajo a Alto</option>
-            <option value="highest">Precio: Alto a Bajo</option>
-            <option value="toprated">Promedio Opiniones del Cliente</option>
+            <option value="newest">Llegadas mas recientes</option>
+            <option value="lowest"> Del precio mas bajo al mas alto</option>
+            <option value="highest">Del precio mas alto al mas bajo</option>
+            <option value="toprated">Por Promedio de opiniones de clientes</option>
           </select>
         </div>
       </div>
-      <div className="row top">
-        <div className="col-1">
-          <h3>Departamento</h3>
+      <div className={styles.container2}>
+        <div className={styles.col1}>
+          <h3>Buscar servicios por categoria</h3>
           <div>
             {loadingCategories ? (
               <LoadingBox></LoadingBox>
@@ -92,7 +93,7 @@ export default function SearchScreen(props) {
                     className={'all' === category ? 'active' : ''}
                     to={getFilterUrl({ category: 'all' })}
                   >
-                    Ninguna
+                    Todas
                   </Link>
                 </li>
                 {categories.map((c) => (
@@ -108,7 +109,7 @@ export default function SearchScreen(props) {
               </ul>
             )}
           </div>
-          <div>
+          {/* <div>
             <h3>Precio</h3>
             <ul>
               {prices.map((p) => (
@@ -124,9 +125,9 @@ export default function SearchScreen(props) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
           <div>
-            <h3>Promedio Opinión del Cliente</h3>
+            <h3>Buscar por opinión del cliente</h3>
             <ul>
               {ratings.map((r) => (
                 <li key={r.name}>
@@ -141,19 +142,19 @@ export default function SearchScreen(props) {
             </ul>
           </div>
         </div>
-        <div className="col-3">
+        <div className={styles.col3}>
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
             <>
-              {products.length === 0 && (
+              {services.length === 0 && (
                 <MessageBox>No se Encontro Ningún Producto</MessageBox>
               )}
-              <div className="row center">
-                {products.map((product) => (
-                  <Product key={product._id} product={product}></Product>
+              <div className={styles.cards}>
+                {services.map((service) => (
+                  <Service key={service._id} service={service}></Service>
                 ))}
               </div>
               <div className="row center pagination">

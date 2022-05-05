@@ -6,6 +6,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
 import { SERVICE_REVIEW_CREATE_RESET } from '../constants/serviceConstants';
+import styles from '../style/ServiceScreen.module.css'
 
 export default function ServiceScreen(props) {
   const dispatch = useDispatch();
@@ -59,15 +60,14 @@ export default function ServiceScreen(props) {
       ) : (
         <div>
           <Link to="/">Volver al Resultado</Link>
-          <div className="row top">
-            <div className="col-2">
+          <div className= {styles.container1}>
+            <div className={styles.col1}>
               <img
-                className="medium"
                 src={service.image}
                 alt={service.name}
               ></img>
             </div>
-            <div className="col-1">
+            <div className= {styles.col2}>
               <ul>
                 <li>
                   <h1>{service.name}</h1>
@@ -81,18 +81,18 @@ export default function ServiceScreen(props) {
                 <li>Pirce : ${service.price}</li>
                 <li>
                   Description:
-                  <p>{service.description}</p>
+                  <p className={styles.p}>{service.description}</p>
                 </li>
               </ul>
             </div>
-            <div className="col-1">
+            <div className={styles.col3}>
               <div className="card card-body">
                 <ul>
                   <li>
                     Vendedor{' '}
                     <h2>
                       <Link to={`/seller/${service.seller._id}`}>
-                        {service.seller.seller.name}
+                        {service.seller.name}
                       </Link>
                     </h2>
                     <Rating
@@ -142,7 +142,7 @@ export default function ServiceScreen(props) {
                       <li>
                         <button
                           onClick={addToCartHandler}
-                          className="primary block"
+                          className= {styles.btn}
                         >
                           Agregar al carrito
                         </button>
@@ -153,8 +153,8 @@ export default function ServiceScreen(props) {
               </div>
             </div>
           </div>
-          <div>
-            <h2 id="reviews">Reseñas</h2>
+          <div className={styles.reseñas}>
+            <h2>Reseñas</h2>
             {service.reviews.length === 0 && (
               <MessageBox>No hay Reseñas</MessageBox>
             )}
@@ -167,13 +167,16 @@ export default function ServiceScreen(props) {
                   <p>{review.comment}</p>
                 </li>
               ))}
-              <li>
+            
+            </ul>
+              </div>
+              <div className= {styles.form}>
                 {userInfo ? (
-                  <form className="form" onSubmit={submitHandler}>
+                  <form onSubmit={submitHandler}>
                     <div>
-                      <h2>Escriba una Reseña</h2>
+                      <h2>Escribe una reseña</h2>
                     </div>
-                    <div>
+                    <div className= {styles.rating}>
                       <label htmlFor="rating">Rating</label>
                       <select
                         id="rating"
@@ -181,15 +184,15 @@ export default function ServiceScreen(props) {
                         onChange={(e) => setRating(e.target.value)}
                       >
                         <option value="">Select...</option>
-                        <option value="1">1- Malo</option>
-                        <option value="2">2- Mediano</option>
+                        <option value="1">1- Bajo</option>
+                        <option value="2">2- Medio</option>
                         <option value="3">3- Bueno</option>
                         <option value="4">4- Muy Bueno</option>
                         <option value="5">5- Excelente</option>
                       </select>
                     </div>
-                    <div>
-                      <label htmlFor="comment">Commentario</label>
+                    <div className= {styles.textarea}>
+                      <label htmlFor="comment">Comentario</label>
                       <textarea
                         id="comment"
                         value={comment}
@@ -198,8 +201,8 @@ export default function ServiceScreen(props) {
                     </div>
                     <div>
                       <label />
-                      <button className="primary" type="submit">
-                        Enviar
+                      <button className= {styles.btnForm} type="submit">
+                      Enviar
                       </button>
                     </div>
                     <div>
@@ -213,12 +216,10 @@ export default function ServiceScreen(props) {
                   </form>
                 ) : (
                   <MessageBox>
-                  Por favor <Link to="/signin">Inicie sesión</Link> Para escribir una reseña
+                    Por favor <Link to="/signin">Inicie sesión</Link> Para escribir una reseña
                   </MessageBox>
                 )}
-              </li>
-            </ul>
-          </div>
+                </div>          
         </div>
       )}
     </div>

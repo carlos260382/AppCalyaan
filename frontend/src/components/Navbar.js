@@ -5,7 +5,7 @@ import { NavLink, Route } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../actions/userActions';
-import { listProductCategories } from '../actions/productActions';
+import { listServiceCategories } from '../actions/serviceActions.js';
 import LoadingBox from './LoadingBox';
 import MessageBox from './MessageBox';
 import styles from "../style/Navbar.module.css";
@@ -45,14 +45,14 @@ const handleClickContacto = ()=>{
   window.location.replace('https://calyaan.com/contactanos/')
 }
 
-  const productCategoryList = useSelector((state) => state.productCategoryList);
+  const serviceCategoryList = useSelector((state) => state.serviceCategoryList);
   const {
     loading: loadingCategories,
     error: errorCategories,
     categories,
-  } = productCategoryList;
+  } = serviceCategoryList;
   useEffect(() => {
-    dispatch(listProductCategories());
+    dispatch(listServiceCategories());
   }, [dispatch]);
 
 return (
@@ -133,7 +133,7 @@ return (
           </NavLink>
           <ul className="dropdown-content">
             <li>
-              <NavLink to="/productlist/seller">Productos</NavLink>
+              <NavLink to="/servicelist/seller">Servicios</NavLink>
             </li>
             <li>
               <NavLink to="/orderlist/seller">Pedidos</NavLink>
@@ -151,7 +151,7 @@ return (
               <NavLink to="/dashboard">Dashboard</NavLink>
             </li>
             <li>
-              <NavLink to="/productlist">Productos</NavLink>
+              <NavLink to="/servicelist">Servicios</NavLink>
             </li>
            <li>
               <NavLink to="/orderlist">Pedidos</NavLink>

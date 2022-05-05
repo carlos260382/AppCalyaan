@@ -29,7 +29,7 @@ return(
 <div className={styles.Card}>
 <NavLink to="/service">
 <img src={service1} alt="" className={styles.service1}/>
-<h2>Servicios de Cuidado Personal y Belleza</h2>
+<h2>Servicios de Belleza y Cuidado Personal</h2>
 {/* <ul> 
    	<li>SPA/Yoga</li> 
    	<li>Peluqueria/Barberia</li> 

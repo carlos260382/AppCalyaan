@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { detailsOrder } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import styles from '../style/PlaceOrderScreen.module.css'
 
 import {
   ORDER_DELIVER_RESET,
@@ -68,15 +69,15 @@ export default function OrderScreen(props) {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div>
-      <h1>Pedido {order._id}</h1>
+    <div className= {styles.container}>
+      <h1>Solicitud # {order._id}</h1>
       <TurnScreen order = {order} />
       <div className="row top">
         <div className="col-2">
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Envío</h2>
+                <h2>Información del solicitante</h2>
                 <p>
                   <strong>Nombre:</strong> {order.shippingAddress.fullName} <br />
                   <strong>Direccion: </strong> {order.shippingAddress.address},
@@ -90,21 +91,6 @@ export default function OrderScreen(props) {
                   </MessageBox>
                 ) : (
                   <MessageBox variant="danger">No entregado</MessageBox>
-                )} */}
-              </div>
-            </li>
-            <li>
-              <div className="card card-body">
-                <h2>Pago</h2>
-                <p>
-                  <strong>Método:</strong> {order.paymentMethod}
-                </p>
-                {/* {order.isPaid ? (
-                  <MessageBox variant="success">
-                  Pagado en {order.paidAt}
-                  </MessageBox>
-                ) : (
-                  <MessageBox variant="danger">No pagado</MessageBox>
                 )} */}
               </div>
             </li>
@@ -147,11 +133,11 @@ export default function OrderScreen(props) {
               </li>
               <li>
                 <div className="row">
-                  <div>Elementos</div>
+                  <div>Servicios</div>
                   <div>${order.itemsPrice.toFixed(2)}</div>
                 </div>
               </li>
-              <li>
+              {/* <li>
                 <div className="row">
                   <div>Transporte</div>
                   <div>${order.shippingPrice.toFixed(2)}</div>
@@ -162,7 +148,7 @@ export default function OrderScreen(props) {
                   <div>Impuesto</div>
                   <div>${order.taxPrice.toFixed(2)}</div>
                 </div>
-              </li>
+              </li> */}
               <li>
                 <div className="row">
                   <div>

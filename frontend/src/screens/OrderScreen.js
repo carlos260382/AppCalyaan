@@ -7,6 +7,7 @@ import { listTurns } from '../actions/turnAction';
 //import { getTurn } from '../actions/turnAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import styles from '../style/OrderScreen.module.css'
 
 import {
   ORDER_DELIVER_RESET,
@@ -158,7 +159,6 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Realizado</h2>
                 <p>
                   <strong>Nombre:</strong> {order.shippingAddress.fullName} <br />
                   <strong>Direccion: </strong> {order.shippingAddress.address},
@@ -166,6 +166,7 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
                   {order.shippingAddress.postalCode},
                   {order.shippingAddress.country}
                 </p>
+                <h2>Estado del servicio</h2>
                 {order.isDelivered ? (
                   <MessageBox variant="success">
                   Servicio Realizado en {order.deliveredAt}
@@ -177,10 +178,10 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
             </li>
             <li>
               <div className="card card-body">
-                <h2>Pago</h2>
                 <p>
-                  <strong>Método:</strong> {order.paymentMethod}
+                  <strong>Método de pago:</strong> {order.paymentMethod}
                 </p>
+                <h2>Estado</h2>
                 {order.isPaid ? (
                   <MessageBox variant="success">
                   Pagado en {order.paidAt}
@@ -229,11 +230,11 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
               </li>
               <li>
                 <div className="row">
-                  <div>Elementos</div>
+                  <div>Servicios</div>
                   <div>${order.itemsPrice.toFixed(2)}</div>
                 </div>
               </li>
-              <li>
+              {/* <li>
                 <div className="row">
                   <div>Transporte</div>
                   <div>${order.shippingPrice.toFixed(2)}</div>
@@ -244,11 +245,11 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
                   <div>Impuesto</div>
                   <div>${order.taxPrice.toFixed(2)}</div>
                 </div>
-              </li>
+              </li> */}
               <li>
                 <div className="row">
                   <div>
-                    <strong>Total del pedido</strong>
+                    <strong>Valor total</strong>
                   </div>
                   <div>
                     <strong>${order.totalPrice.toFixed(2)}</strong>
@@ -289,13 +290,14 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
                   </button>
                 </li>
               )} */}
-              {turnUser && turnUser.status? (<button onClick={irMercadoPago}>Pagar</button>):'Pendiente por aprobacion' }
-              
+              <div className={styles.pay}>
+              {turnUser && turnUser.status? (<button className={styles.btn} onClick={irMercadoPago}>Pagar</button>):'Pendiente en ser aprobado el servicio por un profesional' }
+              </div>
             </ul>
           </div>
         </div>
       </div>
-      <div>
+      <div className= {styles.turn}>
         <h3>Día y hora del Turno Seleccionado</h3>
         <p>Fecha: {turnUser? (turnUser.day):'' } </p>
         <p>Hora: {turnUser? (turnUser.hour):'' }</p>

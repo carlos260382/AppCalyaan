@@ -4,6 +4,7 @@ import { formConfig } from "./formConfig";
 import Card from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import { useParams } from "react-router-dom";
+import styles from '../../style/MercadoPagoForm.module.css'
 //import useMercadoPago from "../hooks/useMercadoPago.js";
 //import { useSelector } from 'react-redux';
 //import OrderScreen from "../../screens/OrderScreen.js";
@@ -156,7 +157,7 @@ export default function MercadoPagoForm(props) {
 
 
     return (
-        <div className="container">
+        <div className= {styles.container}>
             <Card
                 cvc={state.cvc}
                 expiry={state.cardExpirationMonth + state.cardExpirationYear}
@@ -170,13 +171,14 @@ export default function MercadoPagoForm(props) {
 
                 //orderId={orderId}
             />
-
+            <div className={styles.form}>
             <form id="form-checkout">
                 <div className="form-control">
                     <input
                         type="tel"
                         name="cardNumber"
                         id="form-checkout__cardNumber"
+                        placeholder= "Número de la tarjeta"
                         onChange={handleInputChange}
                         onFocus={handleInputFocus}
                     />
@@ -186,6 +188,7 @@ export default function MercadoPagoForm(props) {
                         type="tel"
                         name="cardExpirationMonth"
                         id="form-checkout__cardExpirationMonth"
+                        placeholder= "Mes de vencimiento"
                         onChange={handleInputChange}
                         onFocus={handleInputFocus}
                     />
@@ -193,6 +196,7 @@ export default function MercadoPagoForm(props) {
                         type="tel"
                         name="cardExpirationYear"
                         id="form-checkout__cardExpirationYear"
+                        placeholder= "Año de vencimiento"
                         onChange={handleInputChange}
                         onFocus={handleInputFocus}
                     />
@@ -200,6 +204,7 @@ export default function MercadoPagoForm(props) {
                         type="tel"
                         name="cvc"
                         id="form-checkout__securityCode"
+                        placeholder= "Código de seguridad"
                         onChange={handleInputChange}
                         onFocus={handleInputFocus}
                     />
@@ -209,6 +214,7 @@ export default function MercadoPagoForm(props) {
                         type="text"
                         name="cardholderName"
                         id="form-checkout__cardholderName"
+                        placeholder= "Titular de la tarjeta"
                         onChange={handleInputChange}
                         onFocus={handleInputFocus}
                     />
@@ -216,6 +222,7 @@ export default function MercadoPagoForm(props) {
                         type="email"
                         name="cardholderEmail"
                         id="form-checkout__cardholderEmail"
+                        placeholder= "E-mail"
                         onFocus={handleInputFocus}
                     />
                 </div>
@@ -223,12 +230,14 @@ export default function MercadoPagoForm(props) {
                     <select
                         name="issuer"
                         id="form-checkout__issuer"
+                        placeholder= "Banco emisor"
                         on= 'true'
                         onChange={handleInputChange}
                     ></select>
                     <select
                         name="identificationType"
                         id="form-checkout__identificationType"
+                        placeholder= "Tipo de documento"
                         onChange={handleInputChange}
                     ></select>
                 </div>
@@ -237,6 +246,7 @@ export default function MercadoPagoForm(props) {
                         type="text"
                         name="identificationNumber"
                         id="form-checkout__identificationNumber"
+                        placeholder= "Número de documento"
                         onChange={handleInputChange}
                     />
                 </div>
@@ -244,6 +254,7 @@ export default function MercadoPagoForm(props) {
                     <select
                         name="installments"
                         id="form-checkout__installments"
+                        placeholder= "Cuotas"
                         onChange={handleInputChange}
                     ></select>
                 </div>
@@ -258,6 +269,7 @@ export default function MercadoPagoForm(props) {
             </form>
             {resultPayment && <p>{JSON.stringify(resultPayment)}</p>}
            
+        </div>
         </div>
     );
 }

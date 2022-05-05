@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTurn } from '../actions/turnAction.js'
+import styles from '../style/PlaceOrderScreen.module.css'
 //import { NavLink } from 'react-router-dom';
 //import styles from './Landing.module.css';
 
@@ -71,7 +72,7 @@ window.location.replace(`/order/${props.order._id}`);
 console.log('turno creado', turn)
 return (
     
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
        <h1>Elije la fecha y hora para agendar su turno</h1>
         <div>
             <label>Selecciona la Fecha</label>
@@ -86,15 +87,15 @@ return (
                 <option value="10:00 AM">10:00 AM</option>
                 <option value="11:00 AM">11:00 AM</option>
                 <option value="12:00 PM">12:00 PM</option>
-                <option value="1:00 PM">1:00 PM</option>
-                <option value="15:00 PM">15:00 PM</option>
-                <option value="16:00 PM">16:00 PM</option>
-                <option value="17:00 PM">17:00 PM</option>
-                <option value="18:00 PM">18:00 PM</option>
+                <option value="01:00 PM">01:00 PM</option>
+                <option value="02:00 PM">02:00 PM</option>
+                <option value="03:00 PM">03:00 PM</option>
+                <option value="04:00 PM">04:00 PM</option>
+                <option value="05:00 PM">05:00 PM</option>
             </select>
            
         </div>
-        <input type="submit" value="Enviar Turno" />
+        <input className={styles.btn} type="submit" value="Enviar Turno" />
     </form>
 );};
 

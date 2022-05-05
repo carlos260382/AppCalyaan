@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.container h2, h1, p, div, strong{
+  color: #2f4a5d;
+}
+
 .col1{
   margin-left: 3em;
   width: 50%;
@@ -55,4 +59,27 @@ height: 40%;
 
   .btn:disabled:hover{
     background-color:#18d4ca;
+  }
+
+  .form{
+    padding: 1em;
+    margin: 2em;
+    border: 0.1em #2f4a5d solid;
+    background-color: #f8f8f8;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1.5em;
+  }
+
+  .form input, select{
+    margin-left: 0.5em;
+    background-color: #627C8E;
+    color:#ffff
+  }
+
+  .form label{
+    display: flex;
+    color: #2f4a5d;
   }

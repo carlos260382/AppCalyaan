@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    column-gap:  1em;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    column-gap:  3em;
+    width: 100%;
+    flex-wrap: wrap;
+}

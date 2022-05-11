@@ -78,7 +78,7 @@ return (
     </div>
 
 
-<div className={styles.container2}>
+<div>
 <div className={styles.navbar}>    
 <div>
 <NavLink to="/">
@@ -93,7 +93,7 @@ return (
         )}
       ></Route>
     </div>
-
+<div className={styles.container2}>
     <div className={styles.carrito}>
       <NavLink to="/cart">
       <img src={carrito} alt="description"/>
@@ -171,6 +171,7 @@ return (
           </ul>
         </div>
       )}
+    </div>
     </div>
     </div>
     <div className= {styles.container3}>

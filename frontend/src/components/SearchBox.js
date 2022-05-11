@@ -12,9 +12,9 @@ export default function SearchBox(props) {
       <div className= {styles.search}>
         <input
           type="text"
-          placeholder='Buscar productos'
+          placeholder='Buscar servicios'
           name="q"
-          id="q"
+         
           onChange={(e) => setName(e.target.value)} className={styles.input}
         ></input>
         <button className = {styles.btnSearch} type="submit">

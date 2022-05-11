@@ -91,14 +91,14 @@ export default function ServiceScreen(props) {
                   <li>
                     Vendedor{' '}
                     <h2>
-                      <Link to={`/seller/${service.seller._id}`}>
+                      {/* <Link to={`/seller/${service.seller._id}`}>
                         {service.seller.name}
-                      </Link>
+                      </Link> */}
                     </h2>
-                    <Rating
+                    {/* <Rating
                       rating={service.seller.seller.rating}
                       numReviews={service.seller.seller.numReviews}
-                    ></Rating>
+                    ></Rating> */}
                   </li>
                   <li>
                     <div className="row">

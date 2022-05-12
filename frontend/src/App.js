@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
@@ -31,17 +31,15 @@ import { listProductCategories } from './actions/productActions';
 import MapScreen from './screens/MapScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
-import ChatBox from './components/ChatBox';
 import Navbar from './components/Navbar';
 import MercadoPagoForm from './MercadoPago/components/MercadoPagoForm';
 import Landing from './screens/Landing';
 import TurnScreen from './screens/TurnScreen';
 import TurnListScreen from './screens/TurnListScreen';
+import Footer from './components/Footer.js'
 import worker from './webPush/worker';
 
 function App() {
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
   const dispatch = useDispatch();
  
   useEffect(() => {
@@ -153,10 +151,11 @@ function App() {
           <Route path="/service" component={SearchScreen} exact></Route>
           <Route path="/turn" component={TurnScreen} exact></Route>
         </main>
-        <footer className="row center">
+        <Footer/>
+        {/* <footer className="row center">
           {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
           <div>Todos los derechos reservados</div>{' '}
-        </footer>
+        </footer> */}
     </BrowserRouter>
   );
 }

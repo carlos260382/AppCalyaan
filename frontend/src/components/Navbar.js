@@ -85,7 +85,7 @@ return (
 <img src={logo} alt="Logo" />
 </NavLink>
 </div>
-
+<div className={styles.container2}>
     <div>
       <Route
         render={({ history }) => (
@@ -93,7 +93,7 @@ return (
         )}
       ></Route>
     </div>
-<div className={styles.container2}>
+
     <div className={styles.carrito}>
       <NavLink to="/cart">
       <img src={carrito} alt="description"/>

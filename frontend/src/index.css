@@ -161,7 +161,7 @@ button.open-sidebar {
   cursor: pointer;
 }
 button.open-sidebar:hover {
-  border-color: #e05312;
+  border-color: #18d4cb3e;
 }
 aside ul {
   padding: 0;

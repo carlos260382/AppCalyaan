@@ -197,6 +197,13 @@ margin-right: 3vw;
         flex-direction: column;
         padding: 0 0 0 0;
         }
+
+        .navbar img{
+            margin-left: 3vw;
+            margin-right: 0vw;
+            margin-top: 0;
+            padding: 0 0 0 0;
+            }
         .container3{
             background-color: #ffffff;
         }
@@ -206,10 +213,12 @@ margin-right: 3vw;
             flex-direction: row;
             justify-content: center;
             padding-top: 1.3vw;
+            padding-left: 0;
+            padding-right: 0;
         }
 
         .navbar img {
-            padding-top: 1vw;
+            padding-top: vw;
         }
   
 }

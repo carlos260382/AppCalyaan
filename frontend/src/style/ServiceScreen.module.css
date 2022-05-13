@@ -1,9 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+.container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100vw;
+}
+
 .container1{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100vw;
 }
 
 .col1{
@@ -59,24 +69,41 @@
     display: flex;
     flex-direction: column;
     margin:1em 1em 1em 1em;
-    width: 45%;
+    width: 30em;
+    padding: 0 0 0 0;
     color:#2d495e;
     font-family: 'Open Sans', sans-serif;
     text-align: justify;
+    font-size: 1.5rem;
   }
+
+.col2 li, h1, p{
+  font-size: 1rem;
+}
+
+
+.reseñas li, strong, p{
+  font-size: 1.5em;
+}
 
   .p{
     font-weight:lighter;
     color:#2d495e;
     font-family: 'Open Sans';
     text-align: justify;
+    
   }
 
   .col3{
     display: flex;
     flex-direction: column;
-    margin:1em 1em 1em 1em;
-    width: 25%;
+    margin:1vw 1vw 1vw 1vw;
+    width: 25vw;
+    color:#2d495e;
+  }
+
+  .col3 div, h3{
+    font-size: 1rem;
     color:#2d495e;
   }
 
@@ -86,7 +113,7 @@
     border: none;
     border-radius: 1em;
     padding: 1em;
-    font-size: 1em;
+    font-size: 1rem;
     font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     width: 70%;
@@ -117,27 +144,27 @@
 
 
 
-  .form{
+  .form1{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: center;
-    width: 100%;
+    width: 100vw;
     color:#2d495e;
   }
 
-  .form form{
+  /* .form1 form{
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
     align-items: center;
-    row-gap: 1em;
+    row-gap: 1vw;
     width: 20%;
-  }
+  } */
 
-  .form h2{
+  .form1 h2, label{
     font-size: 1.5em;
     margin: 0em 0em 0em 0em;
     font-family: 'Open Sans', sans-serif;
@@ -180,14 +207,15 @@
   .rating{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 40vw;
   }
 
   .rating select{
     display: block;
     margin-bottom: 0.3em; 
     background-color: #627C8E;
-    color: white   
+    color: white; 
+    width: 40vw;  
     }
 
 
@@ -195,5 +223,25 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 1em;
-      width: 100%;
+      width: 40vw;
     }
+
+    @media (max-width: 991.98px) { 
+      .col3{
+        width: 50vw;
+      }
+      .form1 div{
+        width: 100vw;
+      }
+
+.textarea{
+  max-width: 40vw;
+  padding: 0 0 0 0;
+}
+  
+  }
+  
+  @media (max-width: 767.98px) { 
+ 
+    
+  }

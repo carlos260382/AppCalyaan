@@ -52,7 +52,7 @@ export default function ServiceScreen(props) {
 
   console.log ('servicio este es el detallado', serviceDetails )
   return (
-    <div>
+    <div className= {styles.container}>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -102,13 +102,13 @@ export default function ServiceScreen(props) {
                   </li>
                   <li>
                     <div className="row">
-                      <div>Precio</div>
+                      <div><h3>Precio</h3></div>
                       <div className="price">${service.price}</div>
                     </div>
                   </li>
                   <li>
                     <div className="row">
-                      <div>Estado</div>
+                      <div><h3>Estado</h3></div>
                       <div>
                         {service.countInStock > 0 ? (
                           <span className="success">Disponible</span>
@@ -122,7 +122,7 @@ export default function ServiceScreen(props) {
                     <>
                       <li>
                         <div className="row">
-                          <div>Cant.</div>
+                          <div><h3>Cantidad</h3></div>
                           <div>
                             <select
                               value={qty}
@@ -170,7 +170,7 @@ export default function ServiceScreen(props) {
             
             </ul>
               </div>
-              <div className= {styles.form}>
+              <div className= {styles.form1}>
                 {userInfo ? (
                   <form onSubmit={submitHandler}>
                     <div>

@@ -54,14 +54,14 @@ export default function SearchScreen(props) {
     return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
   };
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.container1}>
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          <div>{services.length} Resultados</div>
+          <div>{services.length} Resultados </div>
         )}
         <div>
           Ordenar servicios por{' '}
@@ -150,7 +150,7 @@ export default function SearchScreen(props) {
           ) : (
             <>
               {services.length === 0 && (
-                <MessageBox>No se Encontro Ningún Producto</MessageBox>
+                <MessageBox>No se Encontro Ningún Servicio</MessageBox>
               )}
               <div className={styles.cards}>
                 {services.map((service) => (

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { detailsOrder } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import styles from '../style/PlaceOrderScreen.module.css'
+import styles from '../style/OrderScreenTurn.module.css'
 
 import {
   ORDER_DELIVER_RESET,
@@ -69,8 +69,9 @@ export default function OrderScreen(props) {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div className= {styles.container}>
+    <div>
       <h1>Solicitud # {order._id}</h1>
+      <div className= {styles.container}>
       <TurnScreen order = {order} />
       <div className="row top">
         <div className="col-2">
@@ -162,6 +163,7 @@ export default function OrderScreen(props) {
             </ul>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

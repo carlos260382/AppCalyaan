@@ -29,15 +29,16 @@ export default function CartScreen(props) {
     props.history.push('/signin?redirect=shipping');
   };
   return (
-    <div className="row top">
-    <div className="col-2">
-      <h1 className= {styles.h1}>Carrito de Compras</h1>
+    <div className= {styles.container}>
+          <h1 className= {styles.h1}>Carrito de Compras</h1>
+          <div className= {styles.col1}>
       {error && <MessageBox variant="danger">{error}</MessageBox>}
       {cartItems.length === 0 ? (
         <MessageBox>
           Carrito esta vacio <Link to="/">Ir a Tienda</Link>
         </MessageBox>
       ) : (
+        
         <ul>
           {cartItems.map((item) => (
             <li key={item.product}>
@@ -49,10 +50,10 @@ export default function CartScreen(props) {
                     className= {styles.img}
                   ></img>
                 </div>
-                <div className="min-30">
+                <div className={styles.nameProduc} >
                   <Link to={`/product/${item.product}`}>{item.name}</Link>
                 </div>
-                <div>
+                <div className= {styles.selec}>
                   <select
                     value={item.qty}
                     onChange={(e) =>
@@ -68,9 +69,9 @@ export default function CartScreen(props) {
                     ))}
                   </select>
                 </div>
-                <div>${item.price}</div>
+                <div className= {styles.price}>${item.price}</div>
                 <div>
-                  <button
+                  <button className={styles.btnDelet}
                     type="button"
                     onClick={() => removeFromCartHandler(item.product)}
                   >
@@ -83,7 +84,7 @@ export default function CartScreen(props) {
         </ul>
       )}
     </div>
-    <div className="col-1">
+    <div className= {styles.col2}>
       <div className="card card-body">
         <ul>
           <li>

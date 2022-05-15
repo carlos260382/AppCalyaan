@@ -4,7 +4,7 @@ import { deleteUser, listUsers } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { USER_DETAILS_RESET } from '../constants/userConstants';
-import styles from '../style/ProductListScreen.module.css'
+import styles from '../style/ServiceListScreen.module.css'
 
 export default function UserListScreen(props) {
   const userList = useSelector((state) => state.userList);

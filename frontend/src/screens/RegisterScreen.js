@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { register } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import styles from '../style/SigninScreen.module.css'
 
 export default function RegisterScreen(props) {
   const [name, setName] = useState('');
@@ -33,7 +34,7 @@ export default function RegisterScreen(props) {
     }
   }, [props.history, redirect, userInfo]);
   return (
-    <div>
+    <div className={styles.container}>
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Crear una cuenta</h1>

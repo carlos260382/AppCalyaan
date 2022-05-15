@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
 
+.container{
+  width: 100vw;
+}
+
+.container h1{
+  font-size: 1em;
+}
+
 .inicio{
 color: #2d495e;
 font-family: 'Open Sans', sans-serif;

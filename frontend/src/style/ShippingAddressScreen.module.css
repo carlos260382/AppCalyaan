@@ -1,3 +1,7 @@
+.container{
+  width: 100vw;
+}
+
 .btn{
     background-color:#627C8E;
     color: white;

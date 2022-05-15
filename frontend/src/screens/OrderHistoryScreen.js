@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listOrderMine } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import styles from '../style/ServiceListScreen.module.css'
 
 export default function OrderHistoryScreen(props) {
   const orderMineList = useSelector((state) => state.orderMineList);
@@ -12,7 +13,7 @@ export default function OrderHistoryScreen(props) {
     dispatch(listOrderMine());
   }, [dispatch]);
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Historial de pedidos</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -45,7 +46,7 @@ export default function OrderHistoryScreen(props) {
                 <td>
                   <button
                     type="button"
-                    className="small"
+                    className={styles.btn}
                     onClick={() => {
                       props.history.push(`/order/${order._id}`);
                     }}

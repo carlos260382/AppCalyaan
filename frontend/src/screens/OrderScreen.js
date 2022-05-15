@@ -154,8 +154,8 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
   ) : (
     <div>
       <h1>Pedido {order._id}</h1>
-      <div className="row top">
-        <div className="col-2">
+      <div className={styles.container}>
+        <div>
           <ul>
             <li>
               <div className="card card-body">
@@ -172,7 +172,7 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
                   Servicio Realizado en {order.deliveredAt}
                   </MessageBox>
                 ) : (
-                  <MessageBox variant="danger">Servicio no realizado</MessageBox>
+                  <MessageBox variant="danger">Pendiente por realizar</MessageBox>
                 )}
               </div>
             </li>
@@ -187,7 +187,7 @@ if(turnUser)  { console.log('este es el dia', turnUser.day) }
                   Pagado en {order.paidAt}
                   </MessageBox>
                 ) : (
-                  <MessageBox variant="danger">No pagado</MessageBox>
+                  <MessageBox variant="danger">Pendiente por pago</MessageBox>
                 )}
               </div>
             </li>

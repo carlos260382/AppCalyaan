@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
 .container{
-color: #2f4a5d;
-font-family: 'Open Sans', sans-serif;
-margin-left: 3em;
-
+  display: flex;
+  flex-direction: row;
+  column-gap:  3vw;
+  flex-wrap: wrap;
+   width: 100vw;
+   height: auto;
+   margin-bottom: 3vw;
 }
+
+.container h2, h1, p, div, strong{
+  color: red;
+  font-size: 1.5rem;
+}
+
 
 .check{
     border: solid 1px #2f4a5d;
@@ -64,4 +73,19 @@ margin-left: 3em;
     border-radius: 0.5rem;
     width: 20em;
     height: 12em;
+  }
+
+  @media (max-width: 767.98px) { 
+    .container h2, h1, p, div, strong{
+      color: #2f4a5d;
+      font-size: 1.3rem;
+    }
+  
+  }
+  
+  @media (max-width: 575.98px) {
+    .container h2, h1, p, div, strong{
+      color: #2f4a5d;
+      font-size: 1rem;
+    }
   }

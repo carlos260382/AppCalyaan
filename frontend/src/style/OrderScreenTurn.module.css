@@ -1,0 +1,88 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    column-gap:  3vw;
+    flex-wrap: wrap;
+     width: 100vw;
+     height: auto;
+     margin-bottom: 3vw;
+  }
+  
+  .container h2, h1, p, div, strong{
+    color: #2f4a5d;
+    font-size: 1.5rem;
+  }
+  
+   
+  .btn{
+      background-color:#627C8E;
+      color: white;
+      border: none;
+      border-radius: 1em;
+      padding: 1em;
+      font-size: 1em;
+      font-family: 'Open Sans', sans-serif;
+      cursor: pointer;
+      width: 60%;
+      margin-left: 18%;
+      transition: all .3s ease-in-out;
+    }
+  
+    .btn:hover{
+      background-color:#18d4ca;
+    }
+  
+    .btn:focus{
+      background-color:#18d4ca;
+    }
+  
+    .btn:active{
+      background-color:#18d4ca;
+    }
+  
+    .btn:disabled{
+      background-color:#18d4ca;
+    }
+  
+    .btn:disabled:hover{
+      background-color:#18d4ca;
+    }
+  
+    .form{
+      padding: 1em;
+      margin: 2em;
+      border: 0.1em #2f4a5d solid;
+      background-color: #f8f8f8;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 1.5em;
+      width: 30em;
+    }
+  
+    .form input, select{
+      margin-left: 0.5em;
+      background-color: #627C8E;
+      color:#ffff
+    }
+  
+    .form label{
+      display: flex;
+      color: #2f4a5d;
+    }
+  
+    @media (max-width: 767.98px) { 
+      .container h2, h1, p, div, strong{
+        color: #2f4a5d;
+        font-size: 1.3rem;
+      }
+    
+    }
+    
+    @media (max-width: 575.98px) {
+      .container h2, h1, p, div, strong{
+        color: #2f4a5d;
+        font-size: 1rem;
+      }
+    }

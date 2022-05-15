@@ -78,15 +78,15 @@ export default function ServiceScreen(props) {
                     numReviews={service.numReviews}
                   ></Rating>
                 </li>
-                <li>Pirce : ${service.price}</li>
+                <li>Price : ${service.price}</li>
                 <li>
                   Description:
                   <p className={styles.p}>{service.description}</p>
                 </li>
               </ul>
             </div>
-            <div className={styles.col3}>
-              <div className="card card-body">
+            
+              <div className={styles.col3}>
                 <ul>
                   <li>
                     Vendedor{' '}
@@ -102,13 +102,13 @@ export default function ServiceScreen(props) {
                   </li>
                   <li>
                     <div className="row">
-                      <div><h3>Precio</h3></div>
+                      <div>Precio</div>
                       <div className="price">${service.price}</div>
                     </div>
                   </li>
                   <li>
                     <div className="row">
-                      <div><h3>Estado</h3></div>
+                      <div>Estado</div>
                       <div>
                         {service.countInStock > 0 ? (
                           <span className="success">Disponible</span>
@@ -122,7 +122,7 @@ export default function ServiceScreen(props) {
                     <>
                       <li>
                         <div className="row">
-                          <div><h3>Cantidad</h3></div>
+                          <div>Cantidad</div>
                           <div>
                             <select
                               value={qty}
@@ -151,7 +151,6 @@ export default function ServiceScreen(props) {
                   )}
                 </ul>
               </div>
-            </div>
           </div>
           <div className={styles.reseñas}>
             <h2>Reseñas</h2>

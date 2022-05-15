@@ -19,10 +19,12 @@
 }
 
 .container h2, h3, ul, li{
-    font-size: 1vw;
+    font-size: 1em;
     color: #fff;
     font-family: 'Open Sans', sans-serif;
     }
+
+
 .container button  {
 background-color: transparent;
 border: none;
@@ -41,3 +43,19 @@ border: none;
     justify-content: flex-end;
      }
     
+     @media (max-width: 767.98px) { 
+        .container h2, h3, ul, li{
+            font-size: 0.8em;
+            
+            }
+
+    }
+ 
+    
+    @media (max-width: 575.98px) {
+        .container h2, h3, ul, li{
+            font-size: 0.7em;
+            
+            }
+    
+     }

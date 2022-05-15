@@ -4,7 +4,7 @@ import { deleteOrder, listOrders } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { ORDER_DELETE_RESET } from '../constants/orderConstants';
-import styles from '../style/ProductListScreen.module.css'
+import styles from '../style/ServiceListScreen.module.css'
 
 export default function OrderListScreen(props) {
   const sellerMode = props.match.path.indexOf('/seller') >= 0;

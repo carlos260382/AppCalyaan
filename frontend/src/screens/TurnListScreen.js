@@ -6,6 +6,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { listTurns } from '../actions/turnAction';
+import styles from '../style/ServiceListScreen.module.css'
 //import { listTopSellers } from '../actions/userActions';
 //import { Link } from 'react-router-dom';
 
@@ -26,7 +27,7 @@ export default function TurnListScreen() {
     //dispatch(listTopSellers());
   }, [dispatch]);
   return (
-    <div>
+    <div className={styles.container}>
       <h2>Lista de Turnos</h2>
       {/* {loadingSellers ? (
         <LoadingBox></LoadingBox>

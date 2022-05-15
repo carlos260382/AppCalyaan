@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch} from "react-redux";
 import { updateTurn, deleteTurn } from "../actions/turnAction";
-import styles from '../style/ProductListScreen.module.css'
+import styles from '../style/ServiceListScreen.module.css'
 
 export default function Turn(props) {
   const { turn } = props;

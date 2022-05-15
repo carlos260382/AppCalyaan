@@ -120,7 +120,7 @@ export default function ProfileScreen() {
             </div>
             {user.isSeller && (
               <>
-                <h2>Vendedor</h2>
+                <h1>Vendedor</h1>
                 <div>
                   <label htmlFor="sellerName">Nombre del Vendedor</label>
                   <input

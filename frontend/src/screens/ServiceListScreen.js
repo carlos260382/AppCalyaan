@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import styles from '../style/ProductListScreen.module.css'
+import styles from '../style/ServiceListScreen.module.css'
 import {
   createService,
   deleteService,
@@ -99,7 +99,7 @@ return (
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th className={styles.none}>ID</th>
             <th>NOMBRE</th>
             <th>PRECIO</th>
             <th>CATEGORIA</th>
@@ -110,7 +110,7 @@ return (
         <tbody>
           {services.map((service) => (
             <tr key={service._id}>
-              <td>{service._id}</td>
+              <td className={styles.none}>{service._id}</td>
               <td>{service.name}</td>
               <td>{service.price}</td>
               <td>{service.category}</td>

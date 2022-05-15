@@ -1,13 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
 
+.container{
+  display: flex;
+  flex-direction: row;
+  column-gap:  3vw;
+  flex-wrap: wrap;
+   width: 100vw;
+   height: auto;
+   margin-bottom: 3vw;
+}
+
+
 .container h1{
     color: #2d495e;
     font-family: 'Open Sans', sans-serif;
-}
+    font-size: 1rem;
+    margin-right: 2vw;
+  }
 
-.container th {
+.container th, td, p {
     color: #2d495e;
     font-family: 'Open Sans', sans-serif;
+    font-size: 1vw;
 }
 
 .btn{
@@ -76,4 +90,22 @@
 
   .container button:disabled:hover{
     background-color:#18d4ca;
+  }
+
+  @media (max-width: 767.98px) { 
+    .btn{
+      width: 5vw;
+      font-size: 0.5vw;
+   }
+
+}
+
+
+  
+
+  
+  
+  @media (max-width: 575.98px) {
+
+
   }

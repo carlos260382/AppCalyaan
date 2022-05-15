@@ -53,10 +53,12 @@ column-gap: 4vw;
 }
 
 .navbar img{
-width: 10vw;
-height: 7vw;
+width: 9em;
+height: 6em;
 margin-left: 3vw;
 margin-right: 3vw;
+margin-top: 1vw;
+margin-bottom: 1vw;
 }
 
 .container2{

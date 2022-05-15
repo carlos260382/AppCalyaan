@@ -49,9 +49,9 @@ export default function PlaceOrderScreen(props) {
 
  
   return (
-    <div>
+    <div className= {styles.container}>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
-      <div className= {styles.container}>
+      <div className={styles.container1}>
         <div className= {styles.col1}>
           <ul>
             <li>

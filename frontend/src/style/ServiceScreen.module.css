@@ -79,11 +79,13 @@
 
 .col2 li, h1, p{
   font-size: 1rem;
+  color:#2d495e;
 }
 
 
 .reseñas li, strong, p{
   font-size: 1.5em;
+  color:#2d495e;
 }
 
   .p{
@@ -95,17 +97,27 @@
   }
 
   .col3{
+    border: 0.1rem #c0c0c0 solid;
+    background-color: #f8f8f8;
+    border-radius: 0.5rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     margin:1vw 1vw 1vw 1vw;
     width: 25vw;
     color:#2d495e;
+    padding: 0;
   }
 
-  .col3 div, h3{
+  .col3 div, h3, li, ul, h2{
     font-size: 1rem;
     color:#2d495e;
   }
+  .col3 h2{
+    font-size: 1rem;
+    color:#2d495e;
+  }
+
 
   .btn{
     background-color:#627C8E;

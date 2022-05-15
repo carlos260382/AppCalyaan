@@ -97,7 +97,7 @@ export default function SearchScreen(props) {
                   </Link>
                 </li>
                 {categories.map((c) => (
-                  <li key={c}>
+                  <li key={c} className={styles.category}>
                     <Link
                       className={c === category ? 'active' : ''}
                       to={getFilterUrl({ category: c })}

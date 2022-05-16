@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTurn } from '../actions/turnAction.js'
-import styles from '../style/OrderScreenTurn.module.css'
+import styles from '../style/PlaceOrderScreen.module.css'
+//import { NavLink } from 'react-router-dom';
+//import styles from './Landing.module.css';
 
 export default function TurnScreen (props, order){
 //console.log('order', order)    

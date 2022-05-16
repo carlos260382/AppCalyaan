@@ -14,7 +14,7 @@ import cors from "cors";
 import turnRouter from "./routers/turnRouter.js";
 import mercadopago from "mercadopago";
 import { response } from "express";
-import webPush from 'web-push'
+//import webPush from 'web-push';
 //import { setRouting } from "./routers/pushRouter.js";
 import pushRouter from "./routers/pushRouter.js";
 dotenv.config();
@@ -28,7 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 //setRouting(app);
 
 mongoose
-  .connect(process.env.MONGODB_URL || "mongodb://localhost/calyaan", {
+  .connect(process.env.MONGODB_URL, {
+    // || "mongodb://localhost/calyaan", {
     useNewUrlParser: true,
     useUnifiedTopology: false,
     useCreateIndex: true,

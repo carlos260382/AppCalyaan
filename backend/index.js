@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
-import productRouter from "./routers/productRouter.js";
+//import productRouter from "./routers/productRouter.js";
 import serviceRouter from "./routers/serviceRouter.js";
 import userRouter from "./routers/userRouter.js";
 import orderRouter from "./routers/orderRouter.js";
@@ -14,8 +14,6 @@ import cors from "cors";
 import turnRouter from "./routers/turnRouter.js";
 import mercadopago from "mercadopago";
 import { response } from "express";
-//import webPush from 'web-push';
-//import { setRouting } from "./routers/pushRouter.js";
 import pushRouter from "./routers/pushRouter.js";
 dotenv.config();
 
@@ -25,14 +23,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//setRouting(app);
+
 
 mongoose
-  .connect(process.env.MONGODB_URL, {
-    // || "mongodb://localhost/calyaan", {
+  .connect("mongodb+srv://carlosdev:armenia2022@cluster0.pypko.mongodb.net/?retryWrites=true&w=majority", {
+     //|| "mongodb://localhost/calyaan", {
     useNewUrlParser: true,
-    useUnifiedTopology: false,
+    useUnifiedTopology: true,
     useCreateIndex: true,
+  
   })
   .then(() => {
     console.log("esta conectado base datos");
@@ -43,19 +42,16 @@ mongoose
 
 app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);
-app.use("/api/products", productRouter);
+//app.use("/api/products", productRouter);
 app.use("/api/services", serviceRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/turn", turnRouter);
 app.use("/pushRouter", pushRouter);
-app.get("/api/config/paypal", (req, res) => {
-  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
-});
+
 app.get("/api/config/google", (req, res) => {
   res.send(process.env.GOOGLE_API_KEY || "");
 });
 
-//let email;
 app.post("/process-payment", (req, res) => {
   mercadopago.configurations.setAccessToken('TEST-3056782519895007-031616-fb5176cd2a36b239664a8d595c1aa07e-226754364');
   console.log('este es lo q llega del body', req.body) 
@@ -75,7 +71,7 @@ app.post("/process-payment", (req, res) => {
         number: req.body.payer.identification.number,
       },
     },
-    //email : payer.email
+    
   };
     
   mercadopago.payment
@@ -88,8 +84,6 @@ app.post("/process-payment", (req, res) => {
       });   
 
 })
-console.log ('este es el orderId', orderId,)
-console.log('este es el payment', payment_data)
 console.log('respuesta de mercado pago', response.body.status)
 })
 
@@ -185,7 +179,7 @@ io.on("connection", (socket) => {
   });
 });
 
-console.log('estas son las llaves', process.env.PUBLIC_VAPID_KEY, process.env.PRIVATE_VAPID_KEY, process.env.MAILTO )
+
 // const { PUBLIC_VAPID_KEY, PRIVATE_VAPID_KEY, MAILTO } = process.env;
 
 // webPush.setVapidDetails(
@@ -199,14 +193,3 @@ httpServer.listen(port, () => {
   console.log(`Serve at http://localhost:${port}`);
 });
 
-// app.listen(port, () => {
-//   console.log(`Serve at http://localhost:${port}`);
-// });
-
-
-// back_urls: {
-//   success: `http://localhost:3001/api/coins/pagos/${product.idaux}`,
-//   failure: "http://localhost:3001/api/coins/buy",
-//   pending: "http://localhost:3001/api/coins/buy",
-// },
-// auto_return: "approved",

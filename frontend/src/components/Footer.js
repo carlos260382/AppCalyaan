@@ -35,11 +35,11 @@ const handleClickProfesional = ()=>{
 
 
 const handleClickInstagram = ()=>{
-    window.location.replace('https://www.youtube.com/channel/UCJNVxAjRm23sU7Q8ylvYxWA')}
+    window.location.replace('https://www.instagram.com/accounts/login/?next=/calyaancol/')}
 const handleClickFacebook = ()=>{
     window.location.replace('https://www.facebook.com/Calyaan-105376747798392')}
 const handleClickYoutube = ()=>{
-    window.location.replace('https://www.instagram.com/accounts/login/?next=/calyaancol/')}
+    window.location.replace('https://www.youtube.com/channel/UCJNVxAjRm23sU7Q8ylvYxWA')}
 const handleClickPinteres = ()=>{
     window.location.replace('https://co.pinterest.com/calyaancol/_created/')}
 

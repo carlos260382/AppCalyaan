@@ -4,6 +4,7 @@ import Chart from 'react-google-charts';
 import { summaryOrder } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import styles from '../style/DashboardScreen.module.css'
 
 export default function DashboardScreen() {
   const orderSummary = useSelector((state) => state.orderSummary);
@@ -13,7 +14,7 @@ export default function DashboardScreen() {
     dispatch(summaryOrder());
   }, [dispatch]);
   return (
-    <div>
+    <div className={styles.container}>
       <div className="row">
         <h1>Dashboard</h1>
       </div>
@@ -77,7 +78,7 @@ export default function DashboardScreen() {
           </div>
           <div>
             <h2>Categorias</h2>
-            {summary.productCategories.length === 0 ? (
+            {summary.serviceCategories.length === 0 ? (
               <MessageBox>Sin Categorias</MessageBox>
             ) : (
               <Chart
@@ -87,7 +88,7 @@ export default function DashboardScreen() {
                 loader={<div>Grafico de Cargas</div>}
                 data={[
                   ['Category', 'Products'],
-                  ...summary.productCategories.map((x) => [x._id, x.count]),
+                  ...summary.serviceCategories.map((x) => [x._id, x.count]),
                 ]}
               />
             )}

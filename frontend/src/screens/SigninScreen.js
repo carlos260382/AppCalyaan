@@ -57,13 +57,13 @@ export default function SigninScreen(props) {
         </div>
         <div>
           <label />
-          <button className="primary" type="submit">
+          <button type="submit">
           Iniciar sesión
           </button>
         </div>
         <div>
           <label />
-          <div>
+          <div className={styles.register}>
           Nuevo cliente?{' '}
             <Link to={`/register?redirect=${redirect}`}>
             Crea tu cuenta

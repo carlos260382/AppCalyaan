@@ -2,20 +2,27 @@
 
 .container{
   width: 100vw;
+  margin-top: 5vw;
 }
 
-.container h1{
+/* .container h1{
   font-size: 1em;
-}
+} */
 
 .inicio{
 color: #2d495e;
 font-family: 'Open Sans', sans-serif;
 }
 
-.container label{
+.container h1, label{
 color: #2d495e;
 font-family: 'Open Sans', sans-serif;
+}
+
+.register{
+  color: #2d495e;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.5em;
 }
 
 .container button{
@@ -24,7 +31,7 @@ font-family: 'Open Sans', sans-serif;
     border: none;
     border-radius: 1em;
     padding: 1em;
-    font-size: 1em;
+    font-size: 1.5em;
     font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     width: 70%;

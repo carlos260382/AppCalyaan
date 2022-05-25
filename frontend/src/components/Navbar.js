@@ -127,8 +127,9 @@ return (
         <NavLink to="/signin"> <bottom className={styles.btn}>Iniciar sesión</bottom></NavLink>
       )}
       {userInfo && userInfo.isSeller && (
+        <div className={styles.nav}>
         <div className="dropdown">
-          <NavLink to="#admin" className={styles.nav}>
+          <NavLink to="#admin">
             Vendedor <i></i>
           </NavLink>
           <ul className="dropdown-content">
@@ -142,6 +143,7 @@ return (
               <NavLink to="/orderlist/seller">Pedidos</NavLink>
             </li>
           </ul>
+        </div>
         </div>
       )}
       {userInfo && userInfo.isAdmin && (

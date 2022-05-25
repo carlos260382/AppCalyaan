@@ -8,6 +8,7 @@
    width: 100vw;
    height: auto;
    margin-bottom: 3vw;
+   margin-top: 4em;
 }
 
 
@@ -97,15 +98,14 @@
       width: 5vw;
       font-size: 0.5vw;
    }
+   .container{
+    margin-top: 3em;
+  }
 
 }
-
-
   
-
-  
-  
-  @media (max-width: 575.98px) {
-
-
+@media (max-width: 575.98px) {
+    .container{
+      margin-top: 4em;
+    }
   }

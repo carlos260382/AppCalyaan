@@ -4,21 +4,21 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
 import CartScreen from './screens/CartScreen';
-import HomeScreen from './screens/HomeScreen';
+//import HomeScreen from './screens/HomeScreen';
 //import HomeScreenService from './screens/HomeScreenService';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderScreenTurn from './screens/OrderScreenTurn';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
-import ProductListScreen from './screens/ProductListScreen';
+//import ProductListScreen from './screens/ProductListScreen';
 import ServiceListScreen from './screens/ServiceListScreen';
-import ProductScreen from './screens/ProductScreen';
+//import ProductScreen from './screens/ProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
-import ProductEditScreen from './screens/ProductEditScreen';
+//import ProductEditScreen from './screens/ProductEditScreen';
 import ServiceScreen from './screens/ServiceScreen';
 import ServiceEditScreen from './screens/ServiceEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
@@ -27,7 +27,7 @@ import UserEditScreen from './screens/UserEditScreen';
 import SellerRoute from './components/SellerRoute';
 import SellerScreen from './screens/SellerScreen';
 import SearchScreen from './screens/SearchScreen';
-import { listProductCategories } from './actions/productActions';
+import { listServiceCategories } from './actions/serviceActions';
 import MapScreen from './screens/MapScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
@@ -43,7 +43,7 @@ function App() {
   const dispatch = useDispatch();
  
   useEffect(() => {
-    dispatch(listProductCategories());
+    dispatch(listServiceCategories());
   }, [dispatch]);
   return (
     <BrowserRouter>
@@ -54,9 +54,9 @@ function App() {
           <Route path="/" component={Landing} exact></Route>
           <Route path="/seller/:id" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
-          <Route path="/product/:id" component={ProductScreen} exact></Route>
+          {/* <Route path="/product/:id" component={ProductScreen} exact></Route> */}
           <Route path="/service/:id" component={ServiceScreen} exact></Route>
-          <Route path="/product/:id/edit" component={ProductEditScreen} exact></Route>
+          {/* <Route path="/product/:id/edit" component={ProductEditScreen} exact></Route> */}
           <Route path="/service/:id/edit" component={ServiceEditScreen} exact></Route>
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
@@ -95,16 +95,16 @@ function App() {
             component={ProfileScreen}
           ></PrivateRoute>
           <PrivateRoute path="/map" component={MapScreen}></PrivateRoute>
-          <AdminRoute
+          {/* <AdminRoute
             path="/productlist"
             component={ProductListScreen}
             exact
-          ></AdminRoute>
-          <AdminRoute
+          ></AdminRoute> */}
+          {/* <AdminRoute
             path="/productlist/pageNumber/:pageNumber"
             component={ProductListScreen}
             exact
-          ></AdminRoute>
+          ></AdminRoute> */}
           <AdminRoute
             path="/servicelist"
             component={ServiceListScreen}
@@ -133,10 +133,10 @@ function App() {
           ></AdminRoute>
           <AdminRoute path="/support" component={SupportScreen}></AdminRoute>
 
-          <SellerRoute
+          {/* <SellerRoute
             path="/productlist/seller"
             component={ProductListScreen}
-          ></SellerRoute>
+          ></SellerRoute> */}
           <SellerRoute
             path="/servicelist/seller"
             component={ServiceListScreen}
@@ -147,7 +147,7 @@ function App() {
             component={OrderListScreen}
           ></SellerRoute>
 
-          <Route path="/product" component={HomeScreen} exact></Route>
+          {/* <Route path="/product" component={HomeScreen} exact></Route> */}
           <Route path="/service" component={SearchScreen} exact></Route>
           <Route path="/turn" component={TurnScreen} exact></Route>
         </main>

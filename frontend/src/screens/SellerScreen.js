@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions';
-import { detailsUser } from '../actions/userActions';
+import { listService } from '../actions/serviceActions.js';
+import { detailsUser } from '../actions/userActions.js';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import Product from '../components/Product';
+import Service from '../components/Service.js';
 import Rating from '../components/Rating';
 
 export default function SellerScreen(props) {
@@ -12,17 +12,17 @@ export default function SellerScreen(props) {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
-  const productList = useSelector((state) => state.productList);
+  const serviceList = useSelector((state) => state.serviceList);
   const {
-    loading: loadingProducts,
-    error: errorProducts,
-    products,
-  } = productList;
+    loading: loadingService,
+    error: errorService,
+    services,
+  } = serviceList;
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(detailsUser(sellerId));
-    dispatch(listProducts({ seller: sellerId }));
+    dispatch(listService({ seller: sellerId }));
   }, [dispatch, sellerId]);
   return (
     <div className="row top">
@@ -61,16 +61,16 @@ export default function SellerScreen(props) {
         )}
       </div>
       <div className="col-3">
-        {loadingProducts ? (
+        {loadingService ? (
           <LoadingBox></LoadingBox>
-        ) : errorProducts ? (
-          <MessageBox variant="danger">{errorProducts}</MessageBox>
+        ) : errorService ? (
+          <MessageBox variant="danger">{errorService}</MessageBox>
         ) : (
           <>
-            {products.length === 0 && <MessageBox>No se encontró ningún producto</MessageBox>}
+            {services.length === 0 && <MessageBox>No se encontró ningún servicio</MessageBox>}
             <div className="row center">
-              {products.map((product) => (
-                <Product key={product._id} product={product}></Product>
+              {services.map((service) => (
+                <Service key={service._id} service={service}></Service>
               ))}
             </div>
           </>

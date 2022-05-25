@@ -11,15 +11,6 @@ import {
   orderPayReducer,
   orderSummaryReducer,
 } from './reducers/orderReducers';
-import {
-  productCategoryListReducer,
-  productCreateReducer,
-  productDeleteReducer,
-  productDetailsReducer,
-  productListReducer,
-  productReviewCreateReducer,
-  productUpdateReducer,
-} from './reducers/productReducers';
 
 import {
   serviceCategoryListReducer,
@@ -67,8 +58,6 @@ const initialState = {
   },
 };
 const reducer = combineReducers({
-  productList: productListReducer,
-  productDetails: productDetailsReducer,
   serviceList: serviceListReducer,
   serviceDetails: serviceDetailsReducer,
   cart: cartReducer,
@@ -81,9 +70,6 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
   userUpdate: userUpdateReducer,
-  productCreate: productCreateReducer,
-  productUpdate: productUpdateReducer,
-  productDelete: productDeleteReducer,
   serviceCreate: serviceCreateReducer,
   serviceUpdate: serviceUpdateReducer,
   serviceDelete: serviceDeleteReducer,
@@ -93,8 +79,6 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userTopSellersList: userTopSellerListReducer,
-  productCategoryList: productCategoryListReducer,
-  productReviewCreate: productReviewCreateReducer,
   serviceCategoryList: serviceCategoryListReducer,
   serviceReviewCreate: serviceReviewCreateReducer,
   userAddressMap: userAddressMapReducer,

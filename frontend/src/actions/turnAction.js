@@ -24,7 +24,7 @@ export const createTurn = (turn) => async (dispatch, getState) => {
     const {
       userSignin: { userInfo },
     } = getState();
-    const { data } = await Axios.post('http://localhost:5000/api/turn', turn, {
+    const { data } = await Axios.post('https://calyaanapi.herokuapp.com/api/turn', turn, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -50,7 +50,7 @@ export const listTurns = () => async (dispatch) => {
   });
   try {
     const  data  = await Axios.get(
-      'http://localhost:5000/api/turn'
+      'https://calyaanapi.herokuapp.com/api/turn'
     );
     dispatch({ type: TURN_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -64,7 +64,7 @@ export const updateTurn = (id) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.put(`http://localhost:5000/api/turn/${id}`, {
+    const { data } = await Axios.put(`https://calyaanapi.herokuapp.com/api/turn/${id}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: TURN_UPDATE_SUCCESS, payload: data });
@@ -84,7 +84,7 @@ export const deleteTurn = (id) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = Axios.delete(`http://localhost:5000/api/turn/${id}`, {
+    const { data } = Axios.delete(`https://calyaanapi.herokuapp.com/api/turn/${id}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: TURN_DELETE_SUCCESS, payload:data });
@@ -103,7 +103,7 @@ export const getTurn = (id) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(`http://localhost:5000/api/turn/${id}`, {
+    const { data } = await Axios.get(`https://calyaanapi.herokuapp.com/api/turn/${id}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: TURN_GET_SUCCESS, payload: data });

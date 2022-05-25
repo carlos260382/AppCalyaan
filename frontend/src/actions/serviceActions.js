@@ -38,7 +38,7 @@ export const listService = ({
   });
   try {
     const { data } = await Axios.get(
-      `http://localhost:5000/api/services?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+      `https://calyaanapi.herokuapp.com/api/services?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
     );
     dispatch({ type: SERVICE_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -51,7 +51,7 @@ export const listServiceCategories = () => async (dispatch) => {
     type: SERVICE_CATEGORY_LIST_REQUEST,
   });
   try {
-    const { data } = await Axios.get(`http://localhost:5000/api/services/categories`);
+    const { data } = await Axios.get(`https://calyaanapi.herokuapp.com/api/services/categories`);
     dispatch({ type: SERVICE_CATEGORY_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: SERVICE_CATEGORY_LIST_FAIL, payload: error.message });
@@ -61,7 +61,7 @@ export const listServiceCategories = () => async (dispatch) => {
 export const detailsService = (serviceId) => async (dispatch) => {
   dispatch({ type: SERVICE_DETAILS_REQUEST, payload: serviceId });
   try {
-    const { data } = await Axios.get(`http://localhost:5000/api/services/${serviceId}`);
+    const { data } = await Axios.get(`https://calyaanapi.herokuapp.com/api/services/${serviceId}`);
     dispatch({ type: SERVICE_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -80,7 +80,7 @@ export const createService = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.post(
-      'http://localhost:5000/api/services',
+      'https://calyaanapi.herokuapp.com/api/services',
       {},
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -104,7 +104,7 @@ export const updateService = (service) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.put(`http://localhost:5000/api/services/${service._id}`, service, {
+    const { data } = await Axios.put(`https://calyaanapi.herokuapp.com/api/services/${service._id}`, service, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: SERVICE_UPDATE_SUCCESS, payload: data });
@@ -122,7 +122,7 @@ export const deleteService = (serviceId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = Axios.delete(`http://localhost:5000/api/services/${serviceId}`, {
+    const { data } = Axios.delete(`https://calyaanapi.herokuapp.com/api/services/${serviceId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: SERVICE_DELETE_SUCCESS, payload:data });
@@ -144,7 +144,7 @@ export const createReview = (serviceId, review) => async (
   } = getState();
   try {
     const { data } = await Axios.post(
-      `http://localhost:5000/api/services/${serviceId}/reviews`,
+      `https://calyaanapi.herokuapp.com/api/services/${serviceId}/reviews`,
       review,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },

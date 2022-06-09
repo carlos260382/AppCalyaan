@@ -18,7 +18,7 @@ export const subscription = async () => {
   console.log('esta es la subscription', subscription);
 
   // Send Notification
-  await fetch("http://localhost:5000/pushRouter/subscription", {
+  await fetch(`${process.env.REACT_APP_API_BASE_URL}/pushRouter/subscription`, {
     method: "POST",
     body: JSON.stringify(subscription),
     headers: {

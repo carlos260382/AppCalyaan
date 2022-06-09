@@ -26,12 +26,10 @@ app.use(express.urlencoded({ extended: true }));
 
 
 mongoose
-  .connect("mongodb+srv://carlosdev:armenia2022@cluster0.pypko.mongodb.net/?retryWrites=true&w=majority", {
-     //|| "mongodb://localhost/calyaan", {
+  .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-  
   })
   .then(() => {
     console.log("esta conectado base datos");
@@ -42,18 +40,17 @@ mongoose
 
 app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);
-//app.use("/api/products", productRouter);
 app.use("/api/services", serviceRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/turn", turnRouter);
 app.use("/pushRouter", pushRouter);
 
-app.get("/api/config/google", (req, res) => {
-  res.send(process.env.GOOGLE_API_KEY || "");
-});
+// app.get("/api/config/google", (req, res) => {
+//   res.send(process.env.GOOGLE_API_KEY || "");
+// });
 
 app.post("/process-payment", (req, res) => {
-  mercadopago.configurations.setAccessToken('TEST-3056782519895007-031616-fb5176cd2a36b239664a8d595c1aa07e-226754364');
+  mercadopago.configurations.setAccessToken(process.env.ACCESS_TOKEN_MERCADO_PAGO);
   console.log('este es lo q llega del body', req.body) 
   const orderId= req.body.orderId
    
@@ -74,21 +71,20 @@ app.post("/process-payment", (req, res) => {
     
   };
     
-  mercadopago.payment
+ return mercadopago.payment
     .save(payment_data)
-    .then((response) => {
+    .then((response) => 
+    {console.log('respuesta de mercado pago', response.body.status)
       return res.status(response.status).json({
         status: response.body.status,
         status_detail: response.body.status_detail,
         id: response.body.id,
+
       });   
 
 })
-console.log('respuesta de mercado pago', response.body.status)
+
 })
-
-
-
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
@@ -187,9 +183,10 @@ io.on("connection", (socket) => {
 //   PUBLIC_VAPID_KEY,
 //   PRIVATE_VAPID_KEY
 // );
-
+ 
+console.log(process.env.ACCESS_TOKEN_MERCADO_PAGO)
 
 httpServer.listen(port, () => {
-  console.log(`Serve at http://localhost:${port}`);
+  console.log(`Serve at :${port}`);
 });
 

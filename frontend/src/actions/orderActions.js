@@ -32,7 +32,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     const {
       userSignin: { userInfo },
     } = getState();
-    const { data } = await Axios.post('https://calyaanapi.herokuapp.com/api/orders', order, {
+    const { data } = await Axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/orders`, order, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -58,7 +58,7 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(`https://calyaanapi.herokuapp.com/api/orders/${orderId}`, {
+    const { data } = await Axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/orders/${orderId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
@@ -71,16 +71,16 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
   }
 };
 
-export const payOrder = (order, paymentResult) => async (
+export const payOrder = (order, resultPayment) => async (
   dispatch,
   getState
 ) => {
-  dispatch({ type: ORDER_PAY_REQUEST, payload: { order, paymentResult } });
+  dispatch({ type: ORDER_PAY_REQUEST, payload: { order, resultPayment } });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = Axios.put(`https://calyaanapi.herokuapp.com/api/orders/${order._id}/pay`, paymentResult, {
+    const { data } = Axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/orders/${order}/pay`, resultPayment, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
@@ -98,7 +98,7 @@ export const listOrderMine = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get('https://calyaanapi.herokuapp.com/api/orders/mine', {
+    const { data } = await Axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/orders/mine`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -118,7 +118,7 @@ export const listOrders = ({ seller = '' }) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(`https://calyaanapi.herokuapp.com/api/orders?seller=${seller}`, {
+    const { data } = await Axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/orders?seller=${seller}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     console.log(data);
@@ -137,7 +137,7 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = Axios.delete(`https://calyaanapi.herokuapp.com/api/orders/${orderId}`, {
+    const { data } = Axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/orders/${orderId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
@@ -157,7 +157,7 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = Axios.put(
-      `https://calyaanapi.herokuapp.com/api/orders/${orderId}/deliver`,
+      `${process.env.REACT_APP_API_BASE_URL}/api/orders/${orderId}/deliver`,
       {},
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -179,7 +179,7 @@ export const summaryOrder = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get('https://calyaanapi.herokuapp.com/api/orders/summary', {
+    const { data } = await Axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/orders/summary`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_SUMMARY_SUCCESS, payload: data });

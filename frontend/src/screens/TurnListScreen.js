@@ -13,7 +13,7 @@ import styles from '../style/ServiceListScreen.module.css'
 export default function TurnListScreen() {
   const dispatch = useDispatch();
   const turnList = useSelector((state) => state.turnList);
-  const { loading, error, turns } = turnList;
+  const { loadingTurn, error, turns } = turnList;
 
   // const userTopSellersList = useSelector((state) => state.userTopSellersList);
   // const {
@@ -49,7 +49,7 @@ export default function TurnListScreen() {
         </>
       )} */}
       
-      {loading ? (
+      {loadingTurn ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>

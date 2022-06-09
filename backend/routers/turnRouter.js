@@ -11,7 +11,7 @@ const turnRouter = express.Router();
 turnRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    console.log("este es el get turn");
+    //console.log("este es el get turn");
 
     try {
       let turns = await Turn.find();
@@ -30,6 +30,7 @@ turnRouter.post(
       if (req.body.length === 0) {
         res.status(400).send({ message: "No hay turno creado" });
       } else {
+        console.log('este es el body', req.body)
         const { service, day, seller, hour, status, orderId, user, country, postalCode, city, address, fullName  } = req.body;
         const turn = new Turn({
           day: day,
@@ -58,22 +59,17 @@ turnRouter.post(
   })
   );
 
-
-
-
-    
-
 turnRouter.put(
   '/:id',
-  
-  
+
   expressAsyncHandler(async (req, res) => {
     //const turnId = req.params.id;
-    const turn = await Turn.findById(req.params.id);
-    if (turn) {
+   const turn = await Turn.findById(req.params.id);
+   if (turn) {
       turn.status = true;
       const updatedTurn = await turn.save();
       res.send({ message: 'Turno Aceptado', Turn: updatedTurn });
+      
     } else {
       res.status(404).send({ message: 'Turn Not Found' });
     }
@@ -82,8 +78,8 @@ turnRouter.put(
 
 turnRouter.get(
   '/:id',
-  
-  
+  isAuth,
+  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const orderId = req.params.id;
    try {
@@ -96,9 +92,6 @@ turnRouter.get(
 
    }}));
     
-
-
-
 
 turnRouter.delete(
   '/:id',
@@ -114,69 +107,5 @@ turnRouter.delete(
     }
   })
 );
-
-
-//     try {
-//         const newTurn = {
-//             day,
-//             hour,
-//         };
-
-//         console.log('req -> ' + day, hour);
-//         const turnCreated = await Turn.save(newTurn);
-
-//         const idUser = await User.findOne({ where: { dni } });
-//         console.log('findOneUser -> ' + JSON.stringify(idUser));
-
-//         turnCreated.addUser(idUser?.id);
-
-//         // const transporter = nodemailer.createTransport({
-//         //     host: 'smtp.gmail.com',
-//         //     port: 465,
-//         //     secure: true,
-//         //     auth: {
-//         //         user: 'spotyfoty2@gmail.com',
-//         //         pass: 'vjqkenpthvvquuyy',
-//         //     },
-//         // });
-
-//         // const mailOptions = {
-//         //     from: 'Remitente',
-//         //     to: email,
-//         //     subject: '¡Nuevo Turno!',
-//         //     text: `Nuevo turno el dia ${dia} de ${horario} en ${centro}`,
-//         // };
-
-//         // await transporter.sendMail(mailOptions, (err, info) => {
-//         //     if (err) {
-//         //         console.log(err);
-//         //     } else {
-//         //         console.log('Email enviado');
-//         //     }
-//         // });
-
-//         return res.json({ message: 'New Turn created!', user: newTurn });
-//     } catch (err) {
-//         console.log(err);
-
-//         return res.json({
-//             message: 'Turn already exists!',
-//         });
-//     }
-// });
-
-// turnRouter.put('/:id', (req, res, next) => {
-//     const { id } = req.params;
-//     const body = req.body;
-//     Turn.update(body, {
-//         where: {
-//             id,
-//         },
-//     })
-//         .then(() => {
-//             res.send('se modificó satisfactoriamente');
-//         })
-//         .catch((error) => next(error));
-// });
 
 export default turnRouter;

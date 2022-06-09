@@ -3,33 +3,35 @@ import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
 import User from '../models/userModel.js';
 import Service from '../models/serviceModel.js';
-import {
-  isAdmin,
-  isAuth,
-  isSellerOrAdmin,
-  mailgun,
-  payOrderEmailTemplate,
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+import {isAdmin, isAuth, isSellerOrAdmin,
+  //mailgun,
+  //payOrderEmailTemplate,
 } from '../utils.js';
 
+dotenv.config();
+
 const orderRouter = express.Router();
+
 orderRouter.get(
-  '/',
+  "/",
   isAuth,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    const seller = req.query.seller || '';
+    const seller = req.query.seller || "";
     const sellerFilter = seller ? { seller } : {};
 
     const orders = await Order.find({ ...sellerFilter }).populate(
-      'user',
-      'name'
+      "user",
+      "name"
     );
     res.send(orders);
   })
 );
 
 orderRouter.get(
-  '/summary',
+  "/summary",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -38,7 +40,7 @@ orderRouter.get(
         $group: {
           _id: null,
           numOrders: { $sum: 1 },
-          totalSales: { $sum: '$totalPrice' },
+          totalSales: { $sum: "$totalPrice" },
         },
       },
     ]);
@@ -53,9 +55,9 @@ orderRouter.get(
     const dailyOrders = await Order.aggregate([
       {
         $group: {
-          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
           orders: { $sum: 1 },
-          sales: { $sum: '$totalPrice' },
+          sales: { $sum: "$totalPrice" },
         },
       },
       { $sort: { _id: 1 } },
@@ -63,7 +65,7 @@ orderRouter.get(
     const serviceCategories = await Service.aggregate([
       {
         $group: {
-          _id: '$category',
+          _id: "$category",
           count: { $sum: 1 },
         },
       },
@@ -122,8 +124,10 @@ orderRouter.get(
 
 orderRouter.put(
   '/:id/pay',
-  isAuth,
-  expressAsyncHandler(async (req, res) => {
+   async (req, res) => {
+    console.log('este es el req body', req.body)
+    try {
+     
     const order = await Order.findById(req.params.id).populate(
       'user',
       'email name'
@@ -138,29 +142,57 @@ orderRouter.put(
         email_address: req.body.email_address,
       };
       const updatedOrder = await order.save();
-      mailgun()
-        .messages()
-        .send(
-          {
-            from: 'calyaan <ep3977752@gmail.com>',
-            to: `${order.user.name} <${order.user.email}>`,
-            subject: `New order ${order._id}`,
-            html: payOrderEmailTemplate(order),
-          },
-          (error, body) => {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log(body);
-            }
-          }
-        );
       res.send({ message: 'Order Paid', order: updatedOrder });
+     
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'ep3977752@gmail.com',
+            pass: process.env.KEY_NODEMAILER,
+        },
+    });
+console.log('esta es la order para email', order )
+    const mailOptions = {
+        from: 'Remitente',
+        to: order.user.email,
+        subject: 'pago exitoso',
+        text: `¡Gracias ${order.user.name}, has realizado el pago de tu servicio exitosamente`,
+    };
+
+    await transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Email enviado');
+        }
+    });
+
+      // mailgun()
+      //   .messages()
+      //   .send(
+      //     {
+      //       from: 'calyaan <ep3977752@gmail.com>',
+      //       to: `${order.user.name} <${order.user.email}>`,
+      //       subject: `New order ${order._id}`,
+      //       html: payOrderEmailTemplate(order),
+      //     },
+      //     (error, body) => {
+      //       if (error) {
+      //         console.log(error);
+      //       } else {
+      //         console.log(body);
+      //       }
+      //     }
+      //   );
+     
     } else {
       res.status(404).send({ message: 'Order Not Found' });
     }
-  })
-);
+  } catch (error) {
+    console.log('error send email pay order', error)
+  }});
 
 orderRouter.delete(
   '/:id',

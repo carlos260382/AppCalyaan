@@ -22,7 +22,7 @@ export default function SearchScreen(props) {
   const dispatch = useDispatch();
   const serviceList = useSelector((state) => state.serviceList);
   const { loading, error, services, page, pages } = serviceList;
-
+  console.log('serviceList', serviceList)
   const serviceCategoryList = useSelector((state) => state.serviceCategoryList);
   const {
     loading: loadingCategories,

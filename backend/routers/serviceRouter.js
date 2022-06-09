@@ -18,7 +18,8 @@ const serviceRouter = express.Router();
 serviceRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 3;
+    console.log('esto llega del body', req.query)
+    const pageSize = 6;
     const page = Number(req.query.pageNumber) || 1;
     const name = req.query.name || '';
     const category = req.query.category || '';
@@ -61,11 +62,11 @@ serviceRouter.get(
       ...ratingFilter,
     })
 
-    console.log('este es el servicio', services)
-      //.populate('seller', 'seller.name seller.logo')
-      //.sort(sortOrder)
-      //.skip(pageSize * (page - 1))
-      //.limit(pageSize);
+    //console.log('este es el servicio', services)
+      .populate('seller', 'seller.name seller.logo')
+      .sort(sortOrder)
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
     res.send({ services, page, pages: Math.ceil(count / pageSize) });
   })
   

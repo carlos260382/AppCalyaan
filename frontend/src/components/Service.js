@@ -5,7 +5,7 @@ import styles from '../style/SearchScreen.module.css'
 
 export default function Service(props) {
     const { service } = props;
-  console.log('estos son los servicios', service)
+  //console.log('estos son los servicios', service)
     return (
       <div key={service._id} className= {styles.card}>
       <Link to={`/service/${service._id}`}>

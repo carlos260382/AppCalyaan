@@ -23,11 +23,11 @@ const {
 export const turnCreateReducer = (state = {}, action) => {
     switch (action.type) {
       case TURN_CREATE_REQUEST:
-        return { loading: true };
+        return { loadingTurn: true };
       case TURN_CREATE_SUCCESS:
-        return { loading: false, success: true, turn: action.payload };
+        return { loadingTurn: false, success: true, turn: action.payload };
       case TURN_CREATE_FAIL:
-        return { loading: false, error: action.payload };
+        return { loadingTurn: false, error: action.payload };
       case TURN_CREATE_RESET:
         return {};
       default:
@@ -36,21 +36,21 @@ export const turnCreateReducer = (state = {}, action) => {
   };
 
   export const turnListReducer = (
-    state = { loading: true, turns: [] },
+    state = { loadingTurn: true, turns: [] },
     action
   ) => {
     switch (action.type) {
       case TURN_LIST_REQUEST:
-        return { loading: true };
+        return { loadingTurn: true };
       case TURN_LIST_SUCCESS:
         return {
-          loading: false,
+          loadingTurn: false,
           turns: action.payload.data,
           // pages: action.payload.pages,
           // page: action.payload.page,
         };
       case TURN_LIST_FAIL:
-        return { loading: false, error: action.payload };
+        return { loadingTurn: false, error: action.payload };
       default:
         return state;
     }
@@ -59,11 +59,11 @@ export const turnCreateReducer = (state = {}, action) => {
   export const turnUpdateReducer = (state = {}, action) => {
     switch (action.type) {
       case TURN_UPDATE_REQUEST:
-        return { loading: true };
+        return { loadingTurn: true };
       case TURN_UPDATE_SUCCESS:
-        return { loading: false, success: true };
+        return { loadingTurn: false, success: true };
       case TURN_UPDATE_FAIL:
-        return { loading: false, error: action.payload };
+        return { loadingTurn: false, error: action.payload };
       case TURN_UPDATE_RESET:
         return {};
       default:
@@ -71,14 +71,14 @@ export const turnCreateReducer = (state = {}, action) => {
     }
   };
 
-  export const turnGetReducer = (state = {loading: true, turns: {}}, action) => {
+  export const turnGetReducer = (state = {loadingTurn: true, turns: {}}, action) => {
     switch (action.type) {
       case TURN_GET_REQUEST:
-        return { loading: true };
+        return { loadingTurn: true };
       case TURN_GET_SUCCESS:
-        return { loading: false, turns: action.payload.data, };
+        return { loadingTurn: false, turns: action.payload.data, };
       case TURN_GET_FAIL:
-        return { loading: false, error: action.payload };
+        return { loadingTurn: false, error: action.payload };
       case TURN_GET_RESET:
         return {};
       default:
@@ -90,11 +90,11 @@ export const turnCreateReducer = (state = {}, action) => {
   export const turnDeleteReducer = (state = {}, action) => {
     switch (action.type) {
       case TURN_DELETE_REQUEST:
-        return { loading: true };
+        return { loadingTurn: true };
       case TURN_DELETE_SUCCESS:
-        return { loading: false, success: true };
+        return { loadingTurn: false, success: true };
       case TURN_DELETE_FAIL:
-        return { loading: false, error: action.payload };
+        return { loadingTurn: false, error: action.payload };
       case TURN_DELETE_RESET:
         return {};
       default:

@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { createTurn } from '../actions/turnAction.js'
+import { useHistory} from "react-router-dom";
+//import { createTurn } from '../actions/turnAction.js'
 import styles from '../style/PlaceOrderScreen.module.css'
-//import { NavLink } from 'react-router-dom';
-//import styles from './Landing.module.css';
+import {TURN_CREATE_REQUEST, TURN_CREATE_SUCCESS, TURN_CREATE_FAIL}  from '../constants/turnConstant.js'
+import Axios from 'axios';
+
 
 export default function TurnScreen (props, order){
-//console.log('order', order)    
-console.log('props de screen', props)
-//console.log('servicios desde props', props.orderItems[0].name)
+const history = useHistory();
+//console.log('props de screen', props)
+
 const service = props.order.orderItems.map((service)=>{
 return {
     name: service.name,
@@ -17,18 +19,14 @@ return {
     qty: service.qty
 }});
 
-console.log('servicios', service)
-console.log('servicios desde props', props.order.orderItems)
+// console.log('servicios', service)
+// console.log('servicios desde props', props.order.orderItems)
 
 
 const userSignin = useSelector((state) => state.userSignin);
 const { userInfo } = userSignin;
 const dispatch = useDispatch();
 console.log('informacion de usuario', userInfo)
-
-//const turnCreate = useSelector((state) => state.turnCreate);
-
-//const { loading, success, error, order } = turnCreate;
 
 const [turn, setTurn] = useState({
     seller: props.order.seller,        
@@ -56,19 +54,39 @@ const handleChange = (e) => {
 
 const handleSubmit = async (e) => {
     e.preventDefault();
-   if (dispatch (createTurn(turn))) 
-   alert('Turno creado con exito')
-//   props.history.push(`/order/${order._id}`)
-window.location.replace(`/order/${props.order._id}`); 
+    //dispatch({ type: TURN_CREATE_REQUEST, payload: turn });
+    try {
+    //   const {
+    //     userSignin: { userInfo },
+    //   } = getState();
+      const { data } = await Axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/turn`, turn, {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      dispatch({ type: TURN_CREATE_SUCCESS, payload: data.turn });
+
+      if (data){
+        alert('Turno creado con exito')
+        history.push(`/order/${props.order._id}`)
+
+      }    
+      //dispatch({ type: CART_EMPTY });
+      //localStorage.removeItem('cartItems');
+    } catch (error) {
+      dispatch({
+        type: TURN_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+
+    //(dispatch (createTurn(turn))) 
+
 };
 
-// useEffect(() => {
-//     if (success) {
-//       props.history.push(`/order/${order._id}`)
-//       //props.history.push(`/order/${order._id}`);
-//       //dispatch({ type: TURN_CREATE_RESET });
-//     }
-//   }, [dispatch, success]);
 console.log('turno creado', turn)
 return (
     
@@ -95,7 +113,9 @@ return (
             </select>
            
         </div>
+        
         <input className={styles.btn} type="submit" value="Enviar Turno" />
+        
     </form>
 );};
 

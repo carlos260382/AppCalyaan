@@ -4,9 +4,12 @@ import { formConfig } from "./formConfig";
 import Card from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import { useParams } from "react-router-dom";
-import styles from '../../style/MercadoPagoForm.module.css'
+import styles from '../../style/MercadoPagoForm.module.css';
+import { payOrder} from '../../actions/orderActions.js';
+import { useDispatch } from 'react-redux';
+import { detailsOrder } from '../../actions/orderActions.js';
 //import useMercadoPago from "../hooks/useMercadoPago.js";
-//import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 //import OrderScreen from "../../screens/OrderScreen.js";
 
 //import axios from "../../../node_modules/axios/index.js";
@@ -27,11 +30,18 @@ const INITIAL_STATE = {
 
 
 export default function MercadoPagoForm(props) {
-    console.log ('este son las props',props)
     const { id } = useParams();
     console.log('este es el id', id)    
     const [state, setState] = useState(INITIAL_STATE);
     const resultPayment = useMercadoPago();
+    const dispatch = useDispatch();
+
+   const orderDetails = useSelector((state) => state.orderDetails);
+    const { order} = orderDetails;
+   
+    
+ 
+
   
     const handleInputChange = (e) => {
         setState({
@@ -49,9 +59,7 @@ export default function MercadoPagoForm(props) {
          
         const [resultPayment, setResultPayment] = useState(undefined);
      
-        //const orderDetails = useSelector((state) => state.orderDetails);
-        //const { order, loading, error } = orderDetails;
-    
+
         // const userSignin = useSelector((state) => state.userSignin);
         // const { userInfo } = userSignin;
     
@@ -60,13 +68,28 @@ export default function MercadoPagoForm(props) {
             "MercadoPago"
         );
             
+
+        //     let price=''
+        // if (order)  price = order.totalPrice
+        //         const value= price.toString()
        
         useEffect(() => {
+            if (!order || (order && order._id !== id)) {
+                dispatch(detailsOrder(id));
+            }   
+            
+            let price=''
+            if (order)  price = order.totalPrice
+                const value= price.toString()
+            
             if (MercadoPago) {
-                const mp = new MercadoPago('TEST-b1149716-091a-44cc-82d0-20f7cf7075e8');
+               
+                
+                console.log('pago', value)
+                const mp = new MercadoPago('TEST-6b20445a-c8e0-464b-8db9-eb32c1630a6a');
                
                 const cardForm = mp.cardForm({
-                    amount: "100000.5",
+                    amount: value,
                     autoMount: true,
                     form: formConfig,
                     callbacks: {
@@ -93,14 +116,14 @@ export default function MercadoPagoForm(props) {
                             } = cardForm.getCardFormData();
                             
                             fetch(
-                                `http://localhost:5000/process-payment`,
+                                `${process.env.REACT_APP_API_BASE_URL}/process-payment`,
                                 {
                                     // entry point backend
                                     method: "POST",
                                     headers: {
-                                         "Access-Control-Allow-Origin": "*",
-                                        //  "Access-Control-Request-Method":
-                                        //  "GET, POST, DELETE, PUT, OPTIONS",
+                                        "Access-Control-Allow-Origin": "*",
+                                        "Access-Control-Request-Method":
+                                        "GET, POST, DELETE, PUT, OPTIONS",
                                         "Content-Type": "application/json",
                                     },
                                     body: JSON.stringify({
@@ -122,9 +145,13 @@ export default function MercadoPagoForm(props) {
                                 }
                             )
                                 .then((res) => res.json())
-                                .then((data) => setResultPayment(data) )
+                                .then((data) => { 
+                                    setResultPayment(data)
+                                    dispatch(payOrder(id, resultPayment))
+                                })                          
                                 .catch((err) => {
                                     setResultPayment(err);
+
                                 });
                                 //props.history.push(`/order/${id}`)
                                   
@@ -144,13 +171,13 @@ export default function MercadoPagoForm(props) {
                 });
             }
             
-        }, [MercadoPago]);
+        }, [MercadoPago, resultPayment]);
         console.log('resultado pago', resultPayment)
        
         return resultPayment;
         
     }
-    //dispatch(payOrder(orderId, resultPayment))
+   
     
 
 

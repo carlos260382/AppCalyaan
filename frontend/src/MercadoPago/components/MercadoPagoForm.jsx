@@ -3,16 +3,13 @@ import useScript from "../hooks/useScript.js";
 import { formConfig } from "./formConfig";
 import Card from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styles from '../../style/MercadoPagoForm.module.css';
 import { payOrder} from '../../actions/orderActions.js';
 import { useDispatch } from 'react-redux';
 import { detailsOrder } from '../../actions/orderActions.js';
-//import useMercadoPago from "../hooks/useMercadoPago.js";
 import { useSelector } from 'react-redux';
-//import OrderScreen from "../../screens/OrderScreen.js";
 
-//import axios from "../../../node_modules/axios/index.js";
 
 const INITIAL_STATE = {
     cvc: "",
@@ -35,20 +32,18 @@ export default function MercadoPagoForm(props) {
     const [state, setState] = useState(INITIAL_STATE);
     const resultPayment = useMercadoPago();
     const dispatch = useDispatch();
+    const history = useHistory();
 
-   const orderDetails = useSelector((state) => state.orderDetails);
+    const orderDetails = useSelector((state) => state.orderDetails);
     const { order} = orderDetails;
-   
-    
  
-
   
     const handleInputChange = (e) => {
         setState({
             ...state,
             [e.target.dataset.name || e.target.name]: e.target.value,
         });
-        console.log('este es el stado', state)
+        //console.log('este es el stado', state)
     };
 
     const handleInputFocus = (e) => {
@@ -67,12 +62,7 @@ export default function MercadoPagoForm(props) {
             "https://sdk.mercadopago.com/js/v2",
             "MercadoPago"
         );
-            
-
-        //     let price=''
-        // if (order)  price = order.totalPrice
-        //         const value= price.toString()
-       
+             
         useEffect(() => {
             if (!order || (order && order._id !== id)) {
                 dispatch(detailsOrder(id));
@@ -83,8 +73,7 @@ export default function MercadoPagoForm(props) {
                 const value= price.toString()
             
             if (MercadoPago) {
-               
-                
+                               
                 console.log('pago', value)
                 const mp = new MercadoPago('TEST-6b20445a-c8e0-464b-8db9-eb32c1630a6a');
                
@@ -146,15 +135,15 @@ export default function MercadoPagoForm(props) {
                             )
                                 .then((res) => res.json())
                                 .then((data) => { 
-                                    setResultPayment(data)
-                                    dispatch(payOrder(id, resultPayment))
+                                    setResultPayment(data);
+                                    if(resultPayment.status === 'approved')dispatch(payOrder(id, resultPayment));
+                                    //handlerGoTo();
                                 })                          
                                 .catch((err) => {
                                     setResultPayment(err);
 
                                 });
-                                //props.history.push(`/order/${id}`)
-                                  
+                                                                 
                         },
                         onFetching: (resource) => {
                             console.log("Fetching resource: ", resource);
@@ -171,6 +160,7 @@ export default function MercadoPagoForm(props) {
                 });
             }
             
+            if(resultPayment) handlerGoTo()
         }, [MercadoPago, resultPayment]);
         console.log('resultado pago', resultPayment)
        
@@ -178,10 +168,47 @@ export default function MercadoPagoForm(props) {
         
     }
    
-    
+const handlerGoTo = ()=>{
 
+if (resultPayment.status === 'approved' && resultPayment.status_detail === 'accredited'){
+    alert('Pago realizado con exito')
+    history.push(`/order/${order._id}`)
+}
+if(resultPayment.status === 'rejected' && resultPayment.status_detail === 'cc_rejected_other_reason'){ 
+    alert('Pago rechazado por error general, vuelva a intentarlo verificando sus datos')
+    history.push(`/mercadoPago/${order._id}`)
+}
 
+if(resultPayment.status === 'in_process'&& resultPayment.status_detail === 'pending_contingency'){ 
+    alert('Pago pendiente por ser procesado')
+    history.push(`/order/${order._id}`)
+}
 
+if(resultPayment.status === 'rejected' && resultPayment.status_detail === 'cc_rejected_call_for_authorize' ){ 
+    alert('Pago Rechazado con validación para autorizar')
+    history.push(`/order/${order._id}`)
+}
+
+if(resultPayment.status === 'rejected' && resultPayment.status_detail === 'cc_rejected_insufficient_amount'){ 
+    alert('Pago Rechazado por importe insuficiente, pruebe con otra tarjeta')
+    history.push(`/order/${order._id}`)
+}
+
+if(resultPayment.status === 'rejected' && resultPayment.status_detail === 'cc_rejected_bad_filled_security_code'){ 
+    alert('Pago Rechazado por código de seguridad inválido	')
+    history.push(`/order/${order._id}`)
+}
+
+if(resultPayment.status === 'rejected' && resultPayment.status_detail === 'cc_rejected_bad_filled_date'){ 
+    alert('Pago Rechazado por problema en la fecha de vencimiento')
+    history.push(`/order/${order._id}`)
+}
+
+if(resultPayment.status === 'rejected' && resultPayment.status_detail === 'cc_rejected_bad_filled_other'){ 
+    alert('Pago Rechazado debido a un error de formulario')
+    history.push(`/order/${order._id}`)
+}
+};
 
     return (
         <div className= {styles.container}>
@@ -294,7 +321,7 @@ export default function MercadoPagoForm(props) {
                     Cargando...
                 </progress>
             </form>
-            {resultPayment && <p>{JSON.stringify(resultPayment)}</p>}
+            {/* {resultPayment && (<button className={styles.btn} onClick={handlerGoTo}>Revisar Estado del Pago</button>)} */}
            
         </div>
         </div>

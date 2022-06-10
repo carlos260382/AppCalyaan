@@ -62,7 +62,7 @@ export default function OrderScreen(props) {
 // const irMercadoPago=()=> {
 //   props.history.push(`/mercadoPago/${order._id}`)
 // }
-
+console.log ('es order de turn escreen', order)
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -110,7 +110,7 @@ export default function OrderScreen(props) {
                           ></img>
                         </div>
                         <div className="min-30">
-                          <Link to={`/product/${item.product}`}>
+                          <Link to={`/service/${item.product}`}>
                             {item.name}
                           </Link>
                         </div>

@@ -12,7 +12,7 @@ import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from '../constants/orderConstants';
-import MercadoPagoForm from '../MercadoPago/components/MercadoPagoForm';
+
 
 
 
@@ -28,7 +28,7 @@ export default function OrderScreen(props) {
   const { turns, loadingTurn } = turnList;
   //console.log('lista turnos', turnList)
 
-  //const turnUser = turns && turns.find(e => e.orderId === id);
+  const turnUser = turns && turns.find(e => e.orderId === id);
   //console.log('este es el turno filtrado', turnUser)
   const orderPay = useSelector((state) => state.orderPay);
   const {
@@ -73,7 +73,7 @@ export default function OrderScreen(props) {
      
   }, [dispatch, id, sdkReady, successPay, successDeliver, order, turns, loadingTurn ]);
 
-  const turnUser = turns && turns.find(e => e.orderId === id);
+  //const turnUser = turns && turns.find(e => e.orderId === id);
   console.log('este es turn Filter', turnUser)
 
   const irMercadoPago=()=> {
@@ -94,7 +94,7 @@ if (order)console.log('la order gral', order)
         <h3>Día y hora del Turno Seleccionado</h3>
         <p>Fecha: {turnUser? (turnUser.day):'' } </p>
         <p>Hora: {turnUser? (turnUser.hour):'' }</p>
-        <p>Estado: {turnUser && turnUser.status? ('Aprobado'):'Pendiente' }</p>
+        <p>Estado: {turnUser && turnUser.status? ('Turno Aprobado'):'Turno Pendiente' }</p>
       </div>
         <div>
           <ul>
@@ -125,7 +125,7 @@ if (order)console.log('la order gral', order)
                 <h2>Estado</h2>
                 {order.isPaid ? (
                   <MessageBox variant="success">
-                  Pagado en {order.paidAt}
+                  Pagado el dia {order.paidAt}
                   </MessageBox>
                 ) : (
                   <MessageBox variant="danger">Pendiente por pago</MessageBox>
@@ -232,7 +232,7 @@ if (order)console.log('la order gral', order)
                 </li>
               )} */}
               <div className={styles.pay}>
-              {turnUser && turnUser.status  ? (<button className={styles.btn} onClick={irMercadoPago}>Pagar</button>):'Pendiente en ser aprobado el servicio por un profesional' }
+              {turnUser && turnUser.status?(<button className={styles.btn} onClick={irMercadoPago}>Pagar</button>):'Pendiente en ser aprobado el servicio por un profesional'}
               </div>
             </ul>
           </div>

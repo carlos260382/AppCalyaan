@@ -125,7 +125,7 @@ orderRouter.get(
 orderRouter.put(
   '/:id/pay',
    async (req, res) => {
-    console.log('este es el req body', req.body)
+    //console.log('este es el req body', req.params)
     try {
      
     const order = await Order.findById(req.params.id).populate(

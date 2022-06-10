@@ -184,7 +184,7 @@ io.on("connection", (socket) => {
 //   PRIVATE_VAPID_KEY
 // );
  
-console.log(process.env.ACCESS_TOKEN_MERCADO_PAGO)
+
 
 httpServer.listen(port, () => {
   console.log(`Serve at :${port}`);

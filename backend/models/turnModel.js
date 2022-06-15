@@ -1,14 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const turnSchema = new mongoose.Schema(
   {
     day: { type: String, required: true },
-    hour: { type: String, required: true, unique:false },
-    status:{ type: Boolean, default: false },
-    orderId:{ type: String, required: true }, 
-    user: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
-    seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
+    hour: { type: String, required: true, unique: false },
+    status: { type: Boolean, default: false },
+    orderId: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
+    seller: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
     fullName: { type: String, required: true },
+    emailUser: { type: String, required: true },
     address: { type: String, required: true },
     city: { type: String, required: true },
     postalCode: { type: String, required: true },
@@ -18,7 +19,7 @@ const turnSchema = new mongoose.Schema(
         name: { type: String, required: true },
         qty: { type: Number, required: true },
         price: { type: Number, required: true },
-      }
+      },
     ],
     lat: Number,
     lng: Number,
@@ -27,5 +28,5 @@ const turnSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const Turn = mongoose.model('Turn', turnSchema);
+const Turn = mongoose.model("Turn", turnSchema);
 export default Turn;

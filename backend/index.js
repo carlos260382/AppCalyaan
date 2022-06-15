@@ -23,8 +23,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
@@ -45,15 +43,17 @@ app.use("/api/orders", orderRouter);
 app.use("/api/turn", turnRouter);
 app.use("/pushRouter", pushRouter);
 
-// app.get("/api/config/google", (req, res) => {
-//   res.send(process.env.GOOGLE_API_KEY || "");
-// });
+app.get("/api/config/google", (req, res) => {
+  res.send(process.env.GOOGLE_API_KEY || "");
+});
 
 app.post("/process-payment", (req, res) => {
-  mercadopago.configurations.setAccessToken(process.env.ACCESS_TOKEN_MERCADO_PAGO);
-  console.log('este es lo q llega del body', req.body) 
-  const orderId= req.body.orderId
-   
+  mercadopago.configurations.setAccessToken(
+    process.env.ACCESS_TOKEN_MERCADO_PAGO
+  );
+  console.log("este es lo q llega del body", req.body);
+  const orderId = req.body.orderId;
+
   const payment_data = {
     transaction_amount: Number(req.body.transaction_amount),
     token: req.body.token,
@@ -68,23 +68,17 @@ app.post("/process-payment", (req, res) => {
         number: req.body.payer.identification.number,
       },
     },
-    
   };
-    
- return mercadopago.payment
-    .save(payment_data)
-    .then((response) => 
-    {console.log('respuesta de mercado pago', response.body.status)
-      return res.status(response.status).json({
-        status: response.body.status,
-        status_detail: response.body.status_detail,
-        id: response.body.id,
 
-      });   
-
-})
-
-})
+  return mercadopago.payment.save(payment_data).then((response) => {
+    console.log("respuesta de mercado pago", response.body.status);
+    return res.status(response.status).json({
+      status: response.body.status,
+      status_detail: response.body.status_detail,
+      id: response.body.id,
+    });
+  });
+});
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
@@ -175,7 +169,6 @@ io.on("connection", (socket) => {
   });
 });
 
-
 // const { PUBLIC_VAPID_KEY, PRIVATE_VAPID_KEY, MAILTO } = process.env;
 
 // webPush.setVapidDetails(
@@ -183,10 +176,7 @@ io.on("connection", (socket) => {
 //   PUBLIC_VAPID_KEY,
 //   PRIVATE_VAPID_KEY
 // );
- 
-
 
 httpServer.listen(port, () => {
   console.log(`Serve at :${port}`);
 });
-

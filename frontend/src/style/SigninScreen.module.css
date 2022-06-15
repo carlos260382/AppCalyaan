@@ -1,61 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
 
-.container{
-  width: 100vw;
-  margin-top: 5vw;
+.container {
+	width: 100vw;
+	margin-top: 5vw;
 }
 
 /* .container h1{
   font-size: 1em;
 } */
 
-.inicio{
-color: #2d495e;
-font-family: 'Open Sans', sans-serif;
+.inicio {
+	color: #2d495e;
+	font-family: 'Open Sans', sans-serif;
 }
 
-.container h1, label{
-color: #2d495e;
-font-family: 'Open Sans', sans-serif;
+.container h1,
+label {
+	color: #2d495e;
+	font-family: 'Open Sans', sans-serif;
 }
 
-.register{
-  color: #2d495e;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.5em;
+.register {
+	color: #2d495e;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.5em;
 }
 
-.container button{
-    background-color:#627C8E;
-    color: white;
-    border: none;
-    border-radius: 1em;
-    padding: 1em;
-    font-size: 1.5em;
-    font-family: 'Open Sans', sans-serif;
-    cursor: pointer;
-    width: 70%;
-    margin-left: 15%;
-    transition: all .3s ease-in-out;
-
+.container button {
+	background-color: #627c8e;
+	color: white;
+	border: none;
+	border-radius: 1em;
+	padding: 1em;
+	font-size: 1.5em;
+	font-family: 'Open Sans', sans-serif;
+	cursor: pointer;
+	width: 70%;
+	margin-left: 15%;
+	transition: all 0.3s ease-in-out;
 }
 
-.container button:hover{
-    background-color:#18d4ca;
-  }
+.container button:hover {
+	background-color: #18d4ca;
+}
 
-  .container button:focus{
-    background-color:#18d4ca;
-  }
+.container button:focus {
+	background-color: #18d4ca;
+}
 
-  .container button:active{
-    background-color:#18d4ca;
-  }
+.container button:active {
+	background-color: #18d4ca;
+}
 
-  .container button:disabled{
-    background-color:#18d4ca;
-  }
+.container button:disabled {
+	background-color: #18d4ca;
+}
 
-  .container button:disabled:hover{
-    background-color:#18d4ca;
-  }
+.container button:disabled:hover {
+	background-color: #18d4ca;
+}

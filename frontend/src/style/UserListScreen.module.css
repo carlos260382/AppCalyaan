@@ -1,61 +1,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
 
-.container h1{
-    color: #2d495e;
-    font-family: 'Open Sans', sans-serif;
-    margin-top: 2em;
+.container h1 {
+	color: #2d495e;
+	font-family: 'Open Sans', sans-serif;
+	margin-top: 2em;
 }
 
 .container th {
-    color: #2d495e;
-    font-family: 'Open Sans', sans-serif;
+	color: #2d495e;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .container td {
-    color: #2d495e;
-    font-family: 'Open Sans', sans-serif;
+	color: #2d495e;
+	font-family: 'Open Sans', sans-serif;
 }
-.btn{
-    background-color:#627C8E;
-    color: white;
-    border: none;
-    border-radius: 1em;
-    padding: 0.5em;
-    font-size: 1em;
-    font-family: 'Open Sans', sans-serif;
-    cursor: pointer;
-    width: 5em;
-    transition: all .3s ease-in-out;
-
+.btn {
+	background-color: #627c8e;
+	color: white;
+	border: none;
+	border-radius: 1em;
+	padding: 0.5em;
+	font-size: 1em;
+	font-family: 'Open Sans', sans-serif;
+	cursor: pointer;
+	width: 5em;
+	transition: all 0.3s ease-in-out;
 }
 
-.btn:hover{
-    background-color:#18d4ca;
-  }
+.btn:hover {
+	background-color: #18d4ca;
+}
 
-  .btn:focus{
-    background-color:#18d4ca;
-  }
+.btn:focus {
+	background-color: #18d4ca;
+}
 
-  .btn:active{
-    background-color:#18d4ca;
-  }
+.btn:active {
+	background-color: #18d4ca;
+}
 
-  .btn:disabled{
-    background-color:#18d4ca;
-  }
+.btn:disabled {
+	background-color: #18d4ca;
+}
 
-  .btn:disabled:hover{
-    background-color:#18d4ca;
-  }
-  @media (max-width: 767.98px) { 
-    .container{
-         margin-top: 3em;
-       }
-     }
-     
-     @media (max-width: 575.98px) {
-      .container{
-         margin-top: 4em;
-       }
-     }
+.btn:disabled:hover {
+	background-color: #18d4ca;
+}
+@media (max-width: 767.98px) {
+	.container {
+		margin-top: 3em;
+	}
+}
+
+@media (max-width: 575.98px) {
+	.container {
+		margin-top: 4em;
+	}
+}

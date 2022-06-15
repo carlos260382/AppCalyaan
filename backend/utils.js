@@ -1,5 +1,9 @@
-import jwt from 'jsonwebtoken';
-import mg from 'mailgun-js';
+import jwt from "jsonwebtoken";
+import mg from "mailgun-js";
+import User from "./models/userModel.js";
+import dotenv from "dotenv";
+import nodemailer from "nodemailer";
+dotenv.config();
 
 export const generateToken = (user) => {
   return jwt.sign(
@@ -10,9 +14,9 @@ export const generateToken = (user) => {
       isAdmin: user.isAdmin,
       isSeller: user.isSeller,
     },
-    process.env.JWT_SECRET || 'somethingsecret',
+    process.env.JWT_SECRET || "somethingsecret",
     {
-      expiresIn: '30d',
+      expiresIn: "30d",
     }
   );
 };
@@ -23,10 +27,10 @@ export const isAuth = (req, res, next) => {
     const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
     jwt.verify(
       token,
-      process.env.JWT_SECRET || 'somethingsecret',
+      process.env.JWT_SECRET || "somethingsecret",
       (err, decode) => {
         if (err) {
-          res.status(401).send({ message: 'Invalid Token' });
+          res.status(401).send({ message: "Invalid Token" });
         } else {
           req.user = decode;
           next();
@@ -34,28 +38,28 @@ export const isAuth = (req, res, next) => {
       }
     );
   } else {
-    res.status(401).send({ message: 'No Token' });
+    res.status(401).send({ message: "No Token" });
   }
 };
 export const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
-    res.status(401).send({ message: 'Invalid Admin Token' });
+    res.status(401).send({ message: "Invalid Admin Token" });
   }
 };
 export const isSeller = (req, res, next) => {
   if (req.user && req.user.isSeller) {
     next();
   } else {
-    res.status(401).send({ message: 'Invalid Seller Token' });
+    res.status(401).send({ message: "Invalid Seller Token" });
   }
 };
 export const isSellerOrAdmin = (req, res, next) => {
   if (req.user && (req.user.isSeller || req.user.isAdmin)) {
     next();
   } else {
-    res.status(401).send({ message: 'Invalid Admin/Seller Token' });
+    res.status(401).send({ message: "Invalid Admin/Seller Token" });
   }
 };
 
@@ -89,7 +93,7 @@ export const payOrderEmailTemplate = (order) => {
     </tr>
   `
     )
-    .join('\n')}
+    .join("\n")}
   </tbody>
   <tfoot>
   <tr>
@@ -128,41 +132,98 @@ export const payOrderEmailTemplate = (order) => {
   `;
 };
 
-export const orderHandlerIsPad = async (orderId, status, email)=>{
-  const order = await Order.findById(orderId).populate(
-    'user',
-    'email name'
-  );
+export const orderHandlerIsPad = async (orderId, status, email) => {
+  const order = await Order.findById(orderId).populate("user", "email name");
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
     order.paymentResult = {
       orderId,
       status,
-      email
+      email,
       //update_time: req.body.update_time,
       //email_address: req.body.email_address,
     };
     const updatedOrder = await order.save();
-    mailgun()
-      .messages()
-      .send(
-        {
-          from: 'calyaan <ep3977752@gmail.com>',
-          to: `${order.user.name} <${order.user.email}>`,
-          subject: `New order ${order._id}`,
-          html: payOrderEmailTemplate(order),
-        },
-        (error, body) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log(body);
-          }
-        }
-      );
-    res.send({ message: 'Order Paid', order: updatedOrder });
+    // mailgun()
+    //   .messages()
+    //   .send(
+    //     {
+    //       from: "calyaan <ep3977752@gmail.com>",
+    //       to: `${order.user.name} <${order.user.email}>`,
+    //       subject: `New order ${order._id}`,
+    //       html: payOrderEmailTemplate(order),
+    //     },
+    //     (error, body) => {
+    //       if (error) {
+    //         console.log(error);
+    //       } else {
+    //         console.log(body);
+    //       }
+    //     }
+    //   );
+    res.send({ message: "Order Paid", order: updatedOrder });
   } else {
-    res.status(404).send({ message: 'Order Not Found' });
+    res.status(404).send({ message: "Order Not Found" });
   }
-}
+};
+
+export const sendMailForgotPassword = async (req, res) => {
+  if (req.body.email == "") {
+    res.status(400).send({
+      message: "email is required",
+    });
+  }
+  try {
+    const user = await User.findOne({
+      where: { email: req.body.email },
+    });
+
+    if (!user) {
+      return res.status(403).send({
+        message: "email not found",
+      });
+    }
+
+    const token = jwt.sign(
+      { _id: user._id },
+      process.env.JWT_SECRET || "somethingsecret",
+      { expiresIn: "1d" }
+    );
+    user.update({
+      tokenResetPassword: token,
+    });
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "ep3977752@gmail.com",
+        pass: process.env.KEY_NODEMAILER,
+      },
+    });
+
+    const emailPort = process.env.PORT || "http://localhost:5000";
+
+    const mailOptions = {
+      from: "Remitente",
+      to: user.email,
+      subject: "Enlace para recuperar su cuenta en Calyaan.com",
+      text: `${emailPort}/api/users/resetPassword/${user._id}/${token}, `,
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Email enviado");
+        res.status(200).json("email to recover account has been sent");
+      }
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "an error occurred",
+    });
+  }
+};

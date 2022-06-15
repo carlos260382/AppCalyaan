@@ -19,7 +19,7 @@ serviceRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
     console.log('esto llega del body', req.query)
-    const pageSize = 8;
+    const pageSize = 9;
     const page = Number(req.query.pageNumber) || 1;
     const name = req.query.name || '';
     const category = req.query.category || '';

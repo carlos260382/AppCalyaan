@@ -10,10 +10,12 @@ import MessageBox from './MessageBox';
 import styles from '../style/Navbar.module.css';
 import logo from '../assent/logo.png';
 import carrito from '../assent/cart2.svg';
+import lupa from '../assent/lupa.png';
 
 function Navbar() {
 	const cart = useSelector(state => state.cart);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+	const [searchIsOpen, setsearchIsOpen] = useState(false);
 	const { cartItems } = cart;
 	const userSignin = useSelector(state => state.userSignin);
 	const { userInfo } = userSignin;
@@ -51,11 +53,18 @@ function Navbar() {
 	} = serviceCategoryList;
 	useEffect(() => {
 		dispatch(listServiceCategories());
+		setsearchIsOpen(false);
 	}, [dispatch]);
 
 	return (
 		<div className={styles.all}>
 			<div className={styles.container}>
+				<div className={styles.logo}>
+					<NavLink to='/'>
+						<img src={logo} alt='Logo' />
+					</NavLink>
+				</div>
+
 				<div className={styles.menu}>
 					<NavLink to='/' onClick={handleClickInicio}>
 						<h3> Inicio </h3>
@@ -73,153 +82,160 @@ function Navbar() {
 						<h3> Contacto</h3>
 					</NavLink>
 				</div>
+
+				<div className={styles.signin}>
+					{userInfo ? (
+						<div className='dropdown'>
+							<NavLink to='#' className={styles.nav}>
+								{userInfo.name} <i></i>{' '}
+							</NavLink>
+							<ul className='dropdown-content'>
+								<li>
+									<NavLink to='/profile'>Perfil de Usuario</NavLink>
+								</li>
+								<li>
+									<NavLink to='/orderhistory'>Historial de pedidos</NavLink>
+								</li>
+								<li>
+									<NavLink to='#signout' onClick={signoutHandler}>
+										Desconectar
+									</NavLink>
+								</li>
+							</ul>
+						</div>
+					) : (
+						<NavLink to='/signin'>
+							{' '}
+							<div className={styles.btn}>Iniciar sesión</div>
+						</NavLink>
+					)}
+					{userInfo && userInfo.isSeller && (
+						<div className={styles.nav}>
+							<div className='dropdown'>
+								<NavLink to='#admin'>
+									Vendedor <i></i>
+								</NavLink>
+								<ul className='dropdown-content'>
+									<li>
+										<NavLink to='/servicelist/seller'>Servicios</NavLink>
+									</li>
+									<li>
+										<NavLink to='/turnlist'>Turnos</NavLink>
+									</li>
+									<li>
+										<NavLink to='/orderlist/seller'>Pedidos</NavLink>
+									</li>
+								</ul>
+							</div>
+						</div>
+					)}
+					{userInfo && userInfo.isAdmin && (
+						<div className='dropdown'>
+							<NavLink to='#admin' className={styles.nav}>
+								Admin <i></i>
+							</NavLink>
+							<ul className='dropdown-content'>
+								<li>
+									<NavLink to='/dashboard'>Dashboard</NavLink>
+								</li>
+								<li>
+									<NavLink to='/servicelist'>Servicios</NavLink>
+								</li>
+								<li>
+									<NavLink to='/turnlist'>Turnos</NavLink>
+								</li>
+								<li>
+									<NavLink to='/orderlist'>Pedidos</NavLink>
+								</li>
+								<li>
+									<NavLink to='/userlist'>Usuarios</NavLink>
+								</li>
+								<li>
+									<NavLink to='/support'>Soporte</NavLink>
+								</li>
+							</ul>
+						</div>
+					)}
+				</div>
+				<div className={styles.carrito}>
+					<NavLink to='/cart'>
+						<img src={carrito} alt='description' />
+						{cartItems.length > 0 && (
+							<span className={styles.badge}>{cartItems.length}</span>
+						)}
+					</NavLink>
+				</div>
+
+				<div className={styles.contenSearch}>
+					{searchIsOpen ? (
+						<Route
+							render={({ history }) => (
+								<SearchBox history={history}></SearchBox>
+							)}
+						></Route>
+					) : (
+						<button type='button' onClick={() => setsearchIsOpen(true)}>
+							<img src={lupa} />
+						</button>
+					)}
+				</div>
+			</div>
+
+			<div className={styles.container1}>
+				{loadingCategories ? (
+					<LoadingBox></LoadingBox>
+				) : errorCategories ? (
+					<MessageBox variant='danger'>{errorCategories}</MessageBox>
+				) : (
+					categories.map(c => (
+						<li key={c}>
+							<NavLink to={`/search/category/${c}`}>{c}</NavLink>
+						</li>
+					))
+				)}
 			</div>
 
 			<div>
-				<div className={styles.navbar}>
-					<div>
-						<NavLink to='/'>
-							<img src={logo} alt='Logo' />
-						</NavLink>
-					</div>
-					<div className={styles.container2}>
-						<div>
-							<Route
-								render={({ history }) => (
-									<SearchBox history={history}></SearchBox>
-								)}
-							></Route>
-						</div>
-
-						<div className={styles.carrito}>
-							<NavLink to='/cart'>
-								<img src={carrito} alt='description' />
-								{cartItems.length > 0 && (
-									<span className={styles.badge}>{cartItems.length}</span>
-								)}
-							</NavLink>
-						</div>
-
-						<div className={styles.signin}>
-							{userInfo ? (
-								<div className='dropdown'>
-									<NavLink to='#' className={styles.nav}>
-										{userInfo.name} <i></i>{' '}
-									</NavLink>
-									<ul className='dropdown-content'>
-										<li>
-											<NavLink to='/profile'>Perfil de Usuario</NavLink>
-										</li>
-										<li>
-											<NavLink to='/orderhistory'>Historial de pedidos</NavLink>
-										</li>
-										<li>
-											<NavLink to='#signout' onClick={signoutHandler}>
-												Desconectar
-											</NavLink>
-										</li>
-									</ul>
-								</div>
-							) : (
-								<NavLink to='/signin'>
-									{' '}
-									<div className={styles.btn}>Iniciar sesión</div>
-								</NavLink>
-							)}
-							{userInfo && userInfo.isSeller && (
-								<div className={styles.nav}>
-									<div className='dropdown'>
-										<NavLink to='#admin'>
-											Vendedor <i></i>
-										</NavLink>
-										<ul className='dropdown-content'>
-											<li>
-												<NavLink to='/servicelist/seller'>Servicios</NavLink>
-											</li>
-											<li>
-												<NavLink to='/turnlist'>Turnos</NavLink>
-											</li>
-											<li>
-												<NavLink to='/orderlist/seller'>Pedidos</NavLink>
-											</li>
-										</ul>
-									</div>
-								</div>
-							)}
-							{userInfo && userInfo.isAdmin && (
-								<div className='dropdown'>
-									<NavLink to='#admin' className={styles.nav}>
-										Admin <i></i>
-									</NavLink>
-									<ul className='dropdown-content'>
-										<li>
-											<NavLink to='/dashboard'>Dashboard</NavLink>
-										</li>
-										<li>
-											<NavLink to='/servicelist'>Servicios</NavLink>
-										</li>
-										<li>
-											<NavLink to='/turnlist'>Turnos</NavLink>
-										</li>
-										<li>
-											<NavLink to='/orderlist'>Pedidos</NavLink>
-										</li>
-										<li>
-											<NavLink to='/userlist'>Usuarios</NavLink>
-										</li>
-										<li>
-											<NavLink to='/support'>Soporte</NavLink>
-										</li>
-									</ul>
-								</div>
-							)}
-						</div>
-					</div>
-				</div>
-				<div className={styles.container3}>
-					<div>
-						<button
-							type='button'
-							className='open-sidebar'
-							onClick={() => setSidebarIsOpen(true)}
-						>
-							<i className='fa fa-bars'></i>
-						</button>
-						<NavLink className='brand' to='/'></NavLink>
-					</div>
-
-					<aside className={sidebarIsOpen ? 'open' : ''}>
-						<ul className='categories'>
-							<li>
-								<strong>Categorias</strong>
-								<button
-									onClick={() => setSidebarIsOpen(false)}
-									className='close-sidebar'
-									type='button'
-								>
-									<i className='fa fa-close'></i>
-								</button>
-							</li>
-							{loadingCategories ? (
-								<LoadingBox></LoadingBox>
-							) : errorCategories ? (
-								<MessageBox variant='danger'>{errorCategories}</MessageBox>
-							) : (
-								categories.map(c => (
-									<li key={c}>
-										<NavLink
-											to={`/search/category/${c}`}
-											onClick={() => setSidebarIsOpen(false)}
-										>
-											{c}
-										</NavLink>
-									</li>
-								))
-							)}
-						</ul>
-					</aside>
-				</div>
+				<button
+					type='button'
+					className='open-sidebar'
+					onClick={() => setSidebarIsOpen(true)}
+				>
+					<i className='fa fa-bars'></i>
+				</button>
+				<NavLink className='brand' to='/'></NavLink>
 			</div>
+
+			<aside className={sidebarIsOpen ? 'open' : ''}>
+				<ul className='categories'>
+					<li>
+						<strong>Categorias</strong>
+						<button
+							onClick={() => setSidebarIsOpen(false)}
+							className='close-sidebar'
+							type='button'
+						>
+							<i className='fa fa-close'></i>
+						</button>
+					</li>
+					{loadingCategories ? (
+						<LoadingBox></LoadingBox>
+					) : errorCategories ? (
+						<MessageBox variant='danger'>{errorCategories}</MessageBox>
+					) : (
+						categories.map(c => (
+							<li key={c}>
+								<NavLink
+									to={`/search/category/${c}`}
+									onClick={() => setSidebarIsOpen(false)}
+								>
+									{c}
+								</NavLink>
+							</li>
+						))
+					)}
+				</ul>
+			</aside>
 		</div>
 	);
 }

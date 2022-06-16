@@ -39,6 +39,7 @@ import TurnScreen from './screens/TurnScreen';
 import TurnListScreen from './screens/TurnListScreen';
 import Footer from './components/Footer.js';
 import recoverPasswordScreen from './screens/recoverPasswordScreen.js';
+import ResetPasswordScreen from './screens/ResetPasswordScreen.js';
 // import worker from './webPush/worker';
 
 function App() {
@@ -67,6 +68,10 @@ function App() {
 				<Route
 					path='/recoverPassword'
 					component={recoverPasswordScreen}
+				></Route>
+				<Route
+					path='/resetPassword/:id/:number'
+					component={ResetPasswordScreen}
 				></Route>
 				<Route path='/register' component={RegisterScreen}></Route>
 				<Route path='/shipping' component={ShippingAddressScreen}></Route>

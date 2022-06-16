@@ -204,3 +204,26 @@ export const listTopSellers = () => async dispatch => {
 		dispatch({ type: USER_TOPSELLERS_LIST_FAIL, payload: message });
 	}
 };
+
+export const recoverPassword = (password, id, number) => async dispatch => {
+	dispatch({ type: USER_REGISTER_REQUEST, payload: { password } });
+	try {
+		const { data } = await Axios.put(
+			`${process.env.REACT_APP_API_BASE_URL}/api/users/recoverPassword/${id}/${number}`,
+			{
+				password,
+			}
+		);
+		// dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+		// dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
+		localStorage.setItem('userInfo', JSON.stringify(data));
+	} catch (error) {
+		dispatch({
+			type: USER_REGISTER_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		});
+	}
+};

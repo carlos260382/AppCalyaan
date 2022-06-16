@@ -145,85 +145,73 @@ export const orderHandlerIsPad = async (orderId, status, email) => {
       //email_address: req.body.email_address,
     };
     const updatedOrder = await order.save();
-    // mailgun()
-    //   .messages()
-    //   .send(
-    //     {
-    //       from: "calyaan <ep3977752@gmail.com>",
-    //       to: `${order.user.name} <${order.user.email}>`,
-    //       subject: `New order ${order._id}`,
-    //       html: payOrderEmailTemplate(order),
-    //     },
-    //     (error, body) => {
-    //       if (error) {
-    //         console.log(error);
-    //       } else {
-    //         console.log(body);
-    //       }
-    //     }
-    //   );
+
     res.send({ message: "Order Paid", order: updatedOrder });
   } else {
     res.status(404).send({ message: "Order Not Found" });
   }
 };
 
-export const sendMailForgotPassword = async (req, res) => {
-  if (req.body.email == "") {
-    res.status(400).send({
-      message: "email is required",
-    });
-  }
-  try {
-    const user = await User.findOne({
-      where: { email: req.body.email },
-    });
-
-    if (!user) {
-      return res.status(403).send({
-        message: "email not found",
-      });
-    }
-
-    const token = jwt.sign(
-      { _id: user._id },
-      process.env.JWT_SECRET || "somethingsecret",
-      { expiresIn: "1d" }
-    );
-    user.update({
-      tokenResetPassword: token,
-    });
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: "ep3977752@gmail.com",
-        pass: process.env.KEY_NODEMAILER,
-      },
-    });
-
-    const emailPort = process.env.PORT || "http://localhost:5000";
-
-    const mailOptions = {
-      from: "Remitente",
-      to: user.email,
-      subject: "Enlace para recuperar su cuenta en Calyaan.com",
-      text: `${emailPort}/api/users/resetPassword/${user._id}/${token}, `,
-    };
-
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Email enviado");
-        res.status(200).json("email to recover account has been sent");
-      }
-    });
-  } catch (error) {
-    res.status(500).send({
-      message: "an error occurred",
-    });
-  }
+export const random = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+// export const sendMailForgotPassword = async (req, res) => {
+//   if (req.body.email == "") {
+//     res.status(400).send({
+//       message: "email is required",
+//     });
+//   }
+//   try {
+//     const user = await User.findOne({
+//       where: { email: req.body.email },
+//     });
+
+//     if (!user) {
+//       return res.status(403).send({
+//         message: "email not found",
+//       });
+//     }
+
+//     const token = jwt.sign(
+//       { _id: user._id },
+//       process.env.JWT_SECRET || "somethingsecret",
+//       { expiresIn: "1d" }
+//     );
+//     user.update({
+//       tokenResetPassword: token,
+//     });
+
+//     const transporter = nodemailer.createTransport({
+//       host: "smtp.gmail.com",
+//       port: 465,
+//       secure: true,
+//       auth: {
+//         user: "ep3977752@gmail.com",
+//         pass: process.env.KEY_NODEMAILER,
+//       },
+//     });
+
+//     const emailPort = process.env.PORT || "http://localhost:5000";
+
+//     const mailOptions = {
+//       from: "Remitente",
+//       to: user.email,
+//       subject: "Enlace para recuperar su cuenta en Calyaan.com",
+//       text: `${emailPort}/api/users/resetPassword/${user._id}/${token}, `,
+//     };
+
+//     transporter.sendMail(mailOptions, (err, info) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log("Email enviado");
+//         res.status(200).json("email to recover account has been sent");
+//       }
+//     });
+//   } catch (error) {
+//     res.status(500).send({
+//       message: "an error occurred",
+//     });
+//   }
+// };

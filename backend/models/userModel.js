@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import { random } from "../utils.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -14,10 +15,15 @@ const userSchema = new mongoose.Schema(
       rating: { type: Number, default: 0, required: true },
       numReviews: { type: Number, default: 0, required: true },
     },
+    numberPassword: {
+      type: Number,
+      default: random(100000, 999999),
+      required: false,
+    },
   },
   {
     timestamps: true,
   }
 );
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;

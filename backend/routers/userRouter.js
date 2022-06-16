@@ -2,8 +2,12 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 //import data from '../data.js';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import nodemailer from "nodemailer";
 import User from "../models/userModel.js";
-import { generateToken, isAdmin, isAuth } from "../utils.js";
+import { generateToken, isAdmin, isAuth, random } from "../utils.js";
+dotenv.config();
 
 const userRouter = express.Router();
 
@@ -50,6 +54,7 @@ userRouter.post(
 userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
+    const keyNumber = random(100000, 999999);
     const user = new User({
       name: req.body.name,
       email: req.body.email,
@@ -62,6 +67,7 @@ userRouter.post(
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
       isSeller: user.isSeller,
+      numberPassword: keyNumber,
       token: generateToken(createdUser),
     });
   })
@@ -167,57 +173,47 @@ userRouter.post(
       });
     }
     try {
-      const user = await User.find({ email: req.body.email });
+      const [user] = await User.find({ email: req.body.email });
+
       console.log("usuario encontrado", user);
 
       if (!user) {
         return res.status(403).send({
           message: "email not found",
         });
-      } else {
-        const token = jwt.sign(
-          { _id: user._id },
-          process.env.JWT_SECRET || "somethingsecret",
-          { expiresIn: "1d" }
-        );
-        //aca no ingresa
-        console.log("este es el token", token);
-        user.update(
-          { email: req.body.email },
-          {
-            $set: { tokenResetPassword: token },
-          }
-        );
-
-        const transporter = nodemailer.createTransport({
-          host: "smtp.gmail.com",
-          port: 465,
-          secure: true,
-          auth: {
-            user: "ep3977752@gmail.com",
-            pass: process.env.KEY_NODEMAILER,
-          },
-        });
-
-        const emailPort = process.env.PORT || "http://localhost:5000";
-        console.log("el puerto", emailPort);
-
-        const mailOptions = {
-          from: "Remitente",
-          to: user.email,
-          subject: "Enlace para recuperar su cuenta en Calyaan.com",
-          text: `${emailPort}/api/users/resetPassword/${user._id}/${token}, `,
-        };
-
-        transporter.sendMail(mailOptions, (err, info) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("Email enviado");
-            res.status(200).json("email to recover account has been sent");
-          }
-        });
       }
+
+      console.log("numero password del user", user.numberPassword);
+
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: "ep3977752@gmail.com",
+          pass: process.env.KEY_NODEMAILER,
+        },
+      });
+
+      //const emailPort = process.env.PORT || "5000";
+
+      //const { email, _id } = user;
+
+      const mailOptions = {
+        from: "Remitente",
+        to: user.email,
+        subject: "Enlace para recuperar su cuenta en Calyaan.com",
+        text: `http://localhost:3000/resetPassword/${user._id}/${user.numberPassword}, `,
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Email enviado");
+          res.status(200).json("email to recover account has been sent");
+        }
+      });
     } catch (error) {
       res.status(500).send({
         message: "an error occurred",
@@ -225,5 +221,55 @@ userRouter.post(
     }
   })
 );
+
+// userRouter.post(
+//   "/resetPassword:id:token",
+//   expressAsyncHandler(async (req, res) => {})
+// );
+
+userRouter.put("/recoverPassword/:id/:number", async (req, res) => {
+  console.log("lo que llega por body", req.body);
+  console.log("lo que llega por params", req.params);
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return res.status(403).send({
+      message: "user not found",
+    });
+  }
+  console.log("usuario encontrado", user);
+
+  if (user.numberPassword != req.params.number) {
+    return res.status(401).send({
+      message: "numberPassword not match",
+    });
+  }
+
+  user.password = bcrypt.hashSync(req.body.password, 8);
+  const updatedUser = await user.save();
+  res.send({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    isAdmin: updatedUser.isAdmin,
+    isSeller: user.isSeller,
+    token: generateToken(updatedUser),
+  });
+
+  // const user = new User({
+  //   name: req.body.name,
+  //   email: req.body.email,
+  //   password: bcrypt.hashSync(req.body.password, 8),
+  // });
+  // const createdUser = await user.save();
+  // res.send({
+  //   _id: createdUser._id,
+  //   name: createdUser.name,
+  //   email: createdUser.email,
+  //   isAdmin: createdUser.isAdmin,
+  //   isSeller: user.isSeller,
+  //   numberPassword: keyNumber,
+  //   token: generateToken(createdUser),
+  // });
+});
 
 export default userRouter;

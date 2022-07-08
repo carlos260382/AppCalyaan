@@ -1,29 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200&display=swap');
 
 .container {
 	display: flex;
 	width: 100vw;
 	height: 55vh;
 	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: space-around;
 	align-items: flex-start;
 	align-content: center;
+	padding-top: 2vw;
 	background-color: #494949;
 }
 
-.container img {
-	width: 3vw;
-	height: 3vw;
+.logo{
+	width: 12vw;
+	height: 12vw;
+	margin: 0 0 0 0;
+	}
+	
+.logo img{
+		width: 12vw;
+		height: 9vw;
+	}
+
+.container1{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 61vw;
+}
+
+.footer2{
+width: 20vw;
+
+}
+
+.footer3{
+	margin-right: 2vw;
+	width: 20vw;
+}
+
+
+.footer4 {
+	display: column;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-content: flex-end;
+	width: 20vw;
+	height: auto;
 }
 
 .container h2,
-h3,
-ul,
-li {
-	font-size: 1em;
+h3
+ {
+	font-size: 1.1em;
+	font-style: normal;
 	color: #fff;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'josefin sans';
+	font-weight: 100;
+}
+
+
+.container ul
+li {
+	font-size: 1.5em;
+	font-style: normal;
+	color: #fff;
+	font-family: 'josefin sans';
+	font-weight: 100;
 }
 
 .container button {
@@ -31,11 +76,24 @@ li {
 	border: none;
 }
 
-.footer4 {
+
+
+.btn{
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-end;
-	align-content: flex-end;
+}
+
+.btn a{
+	display: flex;
+	flex-direction: row;
+	
+
+}
+
+.btn img{
+	width: 2em;
+	height: 2em;
+	padding-right: 1em;
 }
 
 .footer5 {
@@ -44,25 +102,126 @@ li {
 	justify-content: flex-end;
 }
 
-@media (max-width: 767.98px) {
-	.container h2,
-	h3,
-	ul,
-	li {
-		font-size: 1em;
+.Footer5{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-content: flex-start;
+	width: 20%;
+	align-items: flex-start;
+}
+.imgW{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5%;
+}
+
+.imgW img{
+	width: 20px;
+	height: 20px;
+	margin-right: 3px;
+}
+
+
+@media (max-width: 768px) {
+	.container{
+		padding: 0;
+	}
+
+.container1{
+	width: 60vw;
+}
+.container ul
+li {
+	font-size: 1.2em;
+	}
+	.container
+h3
+ {
+	font-size: 1em;
 	}
 }
 
 @media (max-width: 575.98px) {
-	.container h2,
-	h3,
-	ul,
+	.container{
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-right: 1em;
+		height: auto;
+		padding: 0 0 0 0;
+	}
+	.container1 {
+		width: 70vw;
+		justify-content: flex-start;
+		flex-wrap: wrap;
+		column-gap: 0;
+	}
+	.container 
+	ul
 	li {
-		font-size: 0.8em;
+		font-size: 0.7em;
+		font-weight: 400;
 	}
 
-	.container img {
-		width: 5vw;
-		height: 5vw;
+	.container
+	h3 {
+		font-size: 0.7em;
+		font-weight: 400;
 	}
+
+	.btn{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		width: 100vw;
+	}
+
+	.btn button{
+		padding-left: 1em;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	
+
+}
+
+.btn button{
+	width: 30%;
+	padding: 0.1em;
+	column-gap: 0;
+}
+
+.btn img{
+	width: 1em;
+	height: 1em;
+	padding-right: 0em;
+}
+
+.btn h3{
+	font-size: 0.5em;
+} 
+.footer5{
+	width: auto;
+}
+.footer4{
+	width: 90vw;
+	justify-content: space-around;
+	align-items:flex-start;
+	align-content: center;
+
+}
+
+	.logo{
+		margin-top: 2vw;
+		width: 30vw;
+		height: 20vw;
+		}
+
+		.logo img{
+			width: 90%;
+			height: auto;
+		}
 }

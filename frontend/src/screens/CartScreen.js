@@ -52,7 +52,7 @@ export default function CartScreen(props) {
 										></img>
 									</div>
 									<div className={styles.nameProduc}>
-										<Link to={`/product/${item.product}`}>{item.name}</Link>
+										<Link to={`/service/${item.product}`}>{item.name}</Link>
 									</div>
 									<div className={styles.selec}>
 										<select

@@ -1,66 +1,100 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-const-assign */
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import LoadingBox from '../components/LoadingBox.js';
+import MessageBox from '../components/MessageBox.js';
+
 import styles from '../style/Landing.module.css';
-import service1 from '../assent/services1.jpg';
-// import product1 from '../assent/Products1.jpg';
-// import testimonio1 from '../assent/testimonio1.png';
-// import {subscription} from '../webPush/main.js'
+import catBarberia from '../assent/catBarberia.png';
+import catDepilacion from '../assent/catDepilacion.png';
+import catMaquillaje from '../assent/catMaquillaje.png';
+import catMasajes from '../assent/catMasaje.png';
+import catPeluqueria from '../assent/catPeluqueria.png';
+import catUñas from '../assent/catUñas.png';
+import catSpa from '../assent/catSpa.jpg';
+import catYoga from '../assent/catYoga.jpg';
+import entrarPng from '../assent/entrar.png';
+
+// import service1 from '../assent/services1.jpg';
 
 export default function Landing() {
-	// useEffect(()=>{
-	// 	if ("serviceWorker" in navigator) {
-	// 		subscription().catch(err => console.log(err));
-	// 	  }
+	const serviceCategoryList = useSelector(state => state.serviceCategoryList);
+	const {
+		loading: loadingCategories,
+		error: errorCategories,
+		categories,
+	} = serviceCategoryList;
 
-	// 	subscription().catch(err => console.log('este es error subscription', err));
+	console.log('categoria', categories);
+	const images = {
+		Barbería: catBarberia,
+		Depilación: catDepilacion,
+		Maquillaje: catMaquillaje,
+		Masajes: catMasajes,
+		Peluquería: catPeluqueria,
+		Spa: catSpa,
+		Uñas: catUñas,
+		Yoga: catYoga,
+	};
 
-	// },[])
+	const categoriesImage = categories?.map(c => ({ name: c, image: images[c] }));
+	console.log('categoriesImage', categoriesImage);
 	return (
 		<div className={styles.container}>
-			{/* <div className={styles.Card1}>
-<NavLink to="/product">
-<img src={product1} alt="" className={styles.product1}/>
-<h2>Productos de Belleza y Salud</h2>
-</NavLink>
-</div> */}
-
-			<div className={styles.Card}>
-				<NavLink to='/service'>
-					<img src={service1} alt='' className={styles.service1} />
-					<h2>Servicios de Belleza y Cuidado Personal</h2>
-				</NavLink>
+			<h1>Servicios</h1>
+			<div className={styles.container1}>
+				{loadingCategories ? (
+					<LoadingBox></LoadingBox>
+				) : errorCategories ? (
+					<MessageBox variant='danger'>{errorCategories}</MessageBox>
+				) : (
+					categoriesImage?.map(c => (
+						<li key={c.name} className={styles.li}>
+							<NavLink
+								to={`/search/category/${c.name}`}
+								className={styles.card}
+							>
+								<img src={c.image} alt='' className={styles.img} />
+								<div className={styles.textCard}>
+									<h2>{c.name}</h2>
+									<div className={styles.textIcon}>
+										<span>Ver mas</span>
+										<img src={entrarPng} alt='' className={styles.entrarPng} />
+									</div>
+								</div>
+							</NavLink>
+						</li>
+					))
+				)}
 			</div>
 
-			<h2>Como Funciona</h2>
+			<h1>Como Funciona</h1>
 
 			<div className={styles.steps}>
-				<div>
+				<div className={styles.steps1}>
 					{' '}
-					<h3>Paso 1</h3>Escoge el servicio que deseas; entre belleza y cuidado
-					personal
+					<span className={styles.text}>Escoge el servicio</span>
+					<span className={styles.arrow}></span>
 				</div>
-				<div>
+				<div className={styles.steps1}>
 					{' '}
-					<h3>Paso 2</h3> Agenda tu turno en los horarios y días disponibles
+					<span className={styles.text}>Agenda tu turno</span>
+					<span className={styles.arrow}></span>
 				</div>
-				<div>
+				<div className={styles.steps1}>
 					{' '}
-					<h3>Paso 3</h3> Realiza el pago a traves de nuestro servicio de pago
-					seguro
+					<span className={styles.text}>Realiza el pago</span>
+					<span className={styles.arrow}></span>
 				</div>
-				<div>
+				<div className={styles.steps2}>
 					{' '}
-					<h3>Paso 4</h3> Disfruta tu servicio en casa
+					<span>Disfruta tu servicio en casa</span>
 				</div>
 			</div>
-			{/* 
-<h2>Testimonios</h2>
-<div>
-<img src={testimonio1} alt="" className={styles.testimonio1}/>
-<p>Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica </p>
-</div> */}
 		</div>
 	);
 }

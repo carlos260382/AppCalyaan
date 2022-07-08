@@ -7,6 +7,7 @@ import { detailsUser, updateUser } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { USER_UPDATE_RESET } from '../constants/userConstants';
+import styles from '../style/UserEditScreen.module.css';
 
 export default function UserEditScreen(props) {
 	const userId = props.match.params.id;
@@ -39,7 +40,7 @@ export default function UserEditScreen(props) {
 			setIsSeller(user.isSeller);
 			setIsAdmin(user.isAdmin);
 		}
-	// eslint-disable-next-line react/prop-types
+		// eslint-disable-next-line react/prop-types
 	}, [dispatch, props.history, successUpdate, user, userId]);
 
 	const submitHandler = e => {
@@ -48,8 +49,8 @@ export default function UserEditScreen(props) {
 		dispatch(updateUser({ _id: userId, name, email, isSeller, isAdmin }));
 	};
 	return (
-		<div>
-			<form className='form' onSubmit={submitHandler}>
+		<div className={styles.container}>
+			<form className={styles.form} onSubmit={submitHandler}>
 				<div>
 					<h1>Editar Usuario {name}</h1>
 					{loadingUpdate && <LoadingBox></LoadingBox>}
@@ -102,9 +103,7 @@ export default function UserEditScreen(props) {
 							></input>
 						</div>
 						<div>
-							<button type='submit' className='primary'>
-								Actualizar
-							</button>
+							<button type='submit'>Actualizar</button>
 						</div>
 					</>
 				)}

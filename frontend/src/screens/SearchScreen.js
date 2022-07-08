@@ -8,6 +8,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Service from '../components/Service.js';
 import Rating from '../components/Rating';
+
 import styles from '../style/SearchScreen.module.css';
 import { ratings } from '../utils';
 
@@ -57,16 +58,17 @@ export default function SearchScreen(props) {
 	};
 	return (
 		<div className={styles.container}>
-			<div className={styles.container1}>
-				{loading ? (
-					<LoadingBox></LoadingBox>
-				) : error ? (
-					<MessageBox variant='danger'>{error}</MessageBox>
-				) : (
-					<div>{services.length} Resultados </div>
-				)}
-				<div>
-					Ordenar servicios por{' '}
+			<div className={styles.contenSearch}>
+				<div className={styles.container1}>
+					{/* {loading ? (
+						<LoadingBox></LoadingBox>
+					) : error ? (
+						<MessageBox variant='danger'>{error}</MessageBox>
+					) : (
+						<div>{services.length} Resultados </div>
+					)} */}
+
+					<h3> Ordenar los servicios por </h3>
 					<select
 						value={order}
 						onChange={e => {

@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
 .container {
 	display: flex;
 	flex-direction: row;
+    justify-content: center;
 	column-gap: 1vw;
 	flex-wrap: wrap;
 	width: 100vw;
@@ -17,13 +19,16 @@ label {
 	font-size: 2.5rem;
 }
 
+.container div{
+    margin: 1.5em;
+}
 .container button {
 	background-color: #eda598;
 	color: white;
 	border: none;
 	border-radius: 1em;
 	padding: 1em;
-	font-size: 1em;
+	font-size: 2em;
 	font-family: 'Josefin Sans';
 	cursor: pointer;
 	width: 70%;
@@ -53,12 +58,15 @@ label {
 
 @media (max-width: 767.98px) {
 	.container {
-		margin-top: 3em;
+		margin-top: 2em;
 	}
 }
 
 @media (max-width: 575.98px) {
 	.container {
-		margin-top: 4em;
+		margin-top: 1em;
 	}
-}
+    .container button {
+        font-size: 2em;
+}}
+

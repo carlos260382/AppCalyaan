@@ -106,16 +106,6 @@ function App() {
 				></Route>
 				<PrivateRoute path='/profile' component={ProfileScreen}></PrivateRoute>
 				<PrivateRoute path='/map' component={MapScreen}></PrivateRoute>
-				{/* <AdminRoute
-            path="/productlist"
-            component={ProductListScreen}
-            exact
-          ></AdminRoute> */}
-				{/* <AdminRoute
-            path="/productlist/pageNumber/:pageNumber"
-            component={ProductListScreen}
-            exact
-          ></AdminRoute> */}
 				<AdminRoute
 					path='/servicelist'
 					component={ServiceListScreen}
@@ -141,10 +131,6 @@ function App() {
 				<AdminRoute path='/dashboard' component={DashboardScreen}></AdminRoute>
 				<AdminRoute path='/support' component={SupportScreen}></AdminRoute>
 
-				{/* <SellerRoute
-            path="/productlist/seller"
-            component={ProductListScreen}
-          ></SellerRoute> */}
 				<SellerRoute
 					path='/servicelist/seller'
 					component={ServiceListScreen}

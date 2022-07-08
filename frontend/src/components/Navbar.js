@@ -9,8 +9,10 @@ import LoadingBox from './LoadingBox';
 import MessageBox from './MessageBox';
 import styles from '../style/Navbar.module.css';
 import logo from '../assent/logo.png';
+import logoWhite from '../assent/LOGO34.png';
 import carrito from '../assent/cart2.svg';
-import lupa from '../assent/lupa.png';
+import carritoBlanco from '../assent/cart1.svg';
+import Asider from './Asider';
 
 function Navbar() {
 	const cart = useSelector(state => state.cart);
@@ -19,30 +21,10 @@ function Navbar() {
 	const { cartItems } = cart;
 	const userSignin = useSelector(state => state.userSignin);
 	const { userInfo } = userSignin;
-
+	console.log('usuario', userInfo);
 	const dispatch = useDispatch();
 	const signoutHandler = () => {
 		dispatch(signout());
-	};
-
-	const handleClickInicio = () => {
-		window.location.replace('https://calyaan.com/');
-	};
-
-	const handleClickService = () => {
-		window.location.replace('https://calyaan.com/empresarial/');
-	};
-
-	const handleClickBlog = () => {
-		window.location.replace('https://calyaan.com/blog/');
-	};
-
-	const handleClickNosotros = () => {
-		window.location.replace('https://calyaan.com/quienes-somos/');
-	};
-
-	const handleClickContacto = () => {
-		window.location.replace('https://calyaan.com/contactanos/');
 	};
 
 	const serviceCategoryList = useSelector(state => state.serviceCategoryList);
@@ -59,35 +41,60 @@ function Navbar() {
 	return (
 		<div className={styles.all}>
 			<div className={styles.container}>
+				<Asider />
 				<div className={styles.logo}>
 					<NavLink to='/'>
-						<img src={logo} alt='Logo' />
+						<picture>
+							<source srcSet={logoWhite} media='(max-width: 768px)' />
+							<source srcSet={logoWhite} media='(max-width: 575.98px)' />
+							<img src={logo} alt='imagen principal' />
+						</picture>
 					</NavLink>
 				</div>
 
 				<div className={styles.menu}>
-					<NavLink to='/' onClick={handleClickInicio}>
+					<a
+						href='https://calyaan.com/'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
 						<h3> Inicio </h3>
-					</NavLink>
-					<NavLink to='/' onClick={handleClickService}>
+					</a>
+					<a
+						href='https://calyaan.com/empresarial/'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
 						<h3>Servicios Corporativos</h3>
-					</NavLink>
-					<NavLink to='/' onClick={handleClickBlog}>
+					</a>
+					<a
+						href='https://calyaan.com/blog/'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
 						<h3> Blog</h3>
-					</NavLink>
-					<NavLink to='/' onClick={handleClickNosotros}>
+					</a>
+					<a
+						href='https://calyaan.com/quienes-somos/'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
 						<h3> Nosotros</h3>
-					</NavLink>
-					<NavLink to='/' onClick={handleClickContacto}>
+					</a>
+					<a
+						href='https://calyaan.com/contactanos/'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
 						<h3> Contacto</h3>
-					</NavLink>
+					</a>
 				</div>
 
 				<div className={styles.signin}>
 					{userInfo ? (
 						<div className='dropdown'>
 							<NavLink to='#' className={styles.nav}>
-								{userInfo.name} <i></i>{' '}
+								{userInfo.numberPhone} <i></i>{' '}
 							</NavLink>
 							<ul className='dropdown-content'>
 								<li>
@@ -110,10 +117,10 @@ function Navbar() {
 						</NavLink>
 					)}
 					{userInfo && userInfo.isSeller && (
-						<div className={styles.nav}>
+						<div>
 							<div className='dropdown'>
-								<NavLink to='#admin'>
-									Vendedor <i></i>
+								<NavLink to='#admin' className={styles.nav}>
+									Profesional <i></i>
 								</NavLink>
 								<ul className='dropdown-content'>
 									<li>
@@ -157,30 +164,31 @@ function Navbar() {
 						</div>
 					)}
 				</div>
-				<div className={styles.carrito}>
-					<NavLink to='/cart'>
-						<img src={carrito} alt='description' />
-						{cartItems.length > 0 && (
-							<span className={styles.badge}>{cartItems.length}</span>
-						)}
-					</NavLink>
-				</div>
+				<div className={styles.container2}>
+					<div className={styles.contenSearch}>
+						<div>
+							<Route
+								render={({ history }) => (
+									<SearchBox history={history}></SearchBox>
+								)}
+							></Route>
+						</div>
+					</div>
+					<div className={styles.carrito}>
+						<NavLink to='/cart'>
+							<picture>
+								<source srcSet={carritoBlanco} media='(max-width: 768px)' />
+								<source srcSet={carritoBlanco} media='(max-width: 575.98px)' />
+								<img src={carrito} alt='description' />
+							</picture>
 
-				<div className={styles.contenSearch}>
-					{searchIsOpen ? (
-						<Route
-							render={({ history }) => (
-								<SearchBox history={history}></SearchBox>
+							{cartItems.length > 0 && (
+								<span className={styles.badge}>{cartItems.length}</span>
 							)}
-						></Route>
-					) : (
-						<button type='button' onClick={() => setsearchIsOpen(true)}>
-							<img src={lupa} />
-						</button>
-					)}
+						</NavLink>
+					</div>
 				</div>
 			</div>
-
 			<div className={styles.container1}>
 				{loadingCategories ? (
 					<LoadingBox></LoadingBox>
@@ -193,49 +201,16 @@ function Navbar() {
 						</li>
 					))
 				)}
+				<div className={styles.contenSearch}>
+					<div>
+						<Route
+							render={({ history }) => (
+								<SearchBox history={history}></SearchBox>
+							)}
+						></Route>
+					</div>
+				</div>
 			</div>
-
-			<div>
-				<button
-					type='button'
-					className='open-sidebar'
-					onClick={() => setSidebarIsOpen(true)}
-				>
-					<i className='fa fa-bars'></i>
-				</button>
-				<NavLink className='brand' to='/'></NavLink>
-			</div>
-
-			<aside className={sidebarIsOpen ? 'open' : ''}>
-				<ul className='categories'>
-					<li>
-						<strong>Categorias</strong>
-						<button
-							onClick={() => setSidebarIsOpen(false)}
-							className='close-sidebar'
-							type='button'
-						>
-							<i className='fa fa-close'></i>
-						</button>
-					</li>
-					{loadingCategories ? (
-						<LoadingBox></LoadingBox>
-					) : errorCategories ? (
-						<MessageBox variant='danger'>{errorCategories}</MessageBox>
-					) : (
-						categories.map(c => (
-							<li key={c}>
-								<NavLink
-									to={`/search/category/${c}`}
-									onClick={() => setSidebarIsOpen(false)}
-								>
-									{c}
-								</NavLink>
-							</li>
-						))
-					)}
-				</ul>
-			</aside>
 		</div>
 	);
 }

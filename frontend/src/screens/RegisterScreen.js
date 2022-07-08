@@ -13,6 +13,7 @@ export default function RegisterScreen(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
+	const [numberPhone, setNumberPhone] = useState('');
 
 	const redirect = props.location.search
 		? props.location.search.split('=')[1]
@@ -27,7 +28,7 @@ export default function RegisterScreen(props) {
 		if (password !== confirmPassword) {
 			alert('Password and confirm password are not match');
 		} else {
-			dispatch(register(name, email, password));
+			dispatch(register(name, email, password, numberPhone));
 		}
 	};
 	useEffect(() => {
@@ -43,6 +44,16 @@ export default function RegisterScreen(props) {
 				</div>
 				{loading && <LoadingBox></LoadingBox>}
 				{error && <MessageBox variant='danger'>{error}</MessageBox>}
+				<div>
+					<label htmlFor='numberPhone'>Numero de telefono</label>
+					<input
+						type='text'
+						id='numberPhone'
+						placeholder='telefono'
+						required
+						onChange={e => setNumberPhone(e.target.value)}
+					></input>
+				</div>
 				<div>
 					<label htmlFor='name'>Nombre</label>
 					<input
@@ -63,6 +74,7 @@ export default function RegisterScreen(props) {
 						onChange={e => setEmail(e.target.value)}
 					></input>
 				</div>
+
 				<div>
 					<label htmlFor='password'>Contraseña</label>
 					<input
@@ -93,7 +105,7 @@ export default function RegisterScreen(props) {
 					<label />
 					<div>
 						¿Ya tienes una cuenta?{' '}
-						<Link to={`/signin?redirect=${redirect}`}>Registrarse</Link>
+						<Link to={`/signin?redirect=${redirect}`}>Inicia sesión</Link>
 					</div>
 				</div>
 			</form>

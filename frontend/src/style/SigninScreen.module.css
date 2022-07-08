@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 
 .container {
 	width: 100vw;
@@ -9,31 +9,33 @@
   font-size: 1em;
 } */
 
-.inicio {
-	color: #2d495e;
-	font-family: 'Open Sans', sans-serif;
-}
 
 .container h1,
 label {
-	color: #2d495e;
-	font-family: 'Open Sans', sans-serif;
+	color: #494949;
+	font-family: 'Josefin Sans';
+	font-size: 1.5em;
 }
 
+.inicio h1{
+	color: #494949;
+	font-family: 'Josefin Sans';
+}
 .register {
-	color: #2d495e;
-	font-family: 'Open Sans', sans-serif;
+	color: #494949;
+	font-family: 'Josefin Sans';
 	font-size: 1.5em;
+	margin-bottom: 1em;
 }
 
 .container button {
-	background-color: #627c8e;
+	background-color: #eda598;
 	color: white;
 	border: none;
 	border-radius: 1em;
-	padding: 1em;
+	padding: 0.6em;
 	font-size: 1.5em;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Josefin Sans';
 	cursor: pointer;
 	width: 70%;
 	margin-left: 15%;
@@ -41,21 +43,28 @@ label {
 }
 
 .container button:hover {
-	background-color: #18d4ca;
+	background-color: #494949;
 }
 
 .container button:focus {
-	background-color: #18d4ca;
+	background-color: #494949;
 }
 
 .container button:active {
-	background-color: #18d4ca;
+	background-color: #494949;
 }
 
 .container button:disabled {
-	background-color: #18d4ca;
+	background-color: #494949;
 }
 
 .container button:disabled:hover {
-	background-color: #18d4ca;
+	background-color: #494949;
 }
+
+
+@media (max-width: 575.98px) {
+	.inicio h1{
+		font-size: 2em;
+	}
+ }

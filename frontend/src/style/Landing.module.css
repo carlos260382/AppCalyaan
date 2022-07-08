@@ -5,67 +5,76 @@
 	justify-content: center;
 	align-items: center;
 	align-content: center;
-	column-gap: 3em;
+	column-gap: 2em;
 	width: 100vw;
 	height: auto;
 	padding: 0 0 0 0;
-	margin: 2em 0 0 0;
+	margin: 0 0 0 0;
 }
 
-.container h2 {
-	color: #575d64;
-	font-family: poppins semi bold;
-	text-align: center;
-	font-size: 1.5em;
-	margin: 0% 0% 0% 0%;
+.container h1{
+	font-size: 3em;
 }
 
-.container img {
-	width: 93%;
-	height: 100%;
-	margin: 1em 1em 1em 1em;
+.container1{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100vw;
+	height: auto;
+	margin: 0 0 0 5em;
+	padding: 0 0 0 0;
 }
 
-.Card {
-	margin: 1em 1em 1em 1em;
+.li{
+	width: 45%;
+	height: auto;
+	list-style: none;
+	margin: 0;
+}
+
+.card {
+	margin: 0.5em 0.5em 0.5em 0.5em;
 	transition: 0.5s;
 	cursor: pointer;
-	border: solid rgba(0, 0, 0, 0.354) 3px;
+	border: solid #eda598 3px;
 	border-radius: 10px;
-	width: 40%;
-	height: 25%;
+	width: 90%;
+	height: auto;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-content: center;
-	justify-content: center;
-	align-items: center;
+	justify-content:flex-start;
+	align-items: flex-start;
+	box-shadow: 8px 8px 12px rgba(17, 12, 12, 0.3);
 }
 
-.Card-title {
+.card-title {
 	font-size: 15px;
 	transition: 1s;
 	cursor: pointer;
 }
-.Card-title i {
+.card-title i {
 	font-size: 15px;
 	transition: 1s;
 	cursor: pointer;
 	color: #ffa710;
 }
-.Card-title i:hover {
+.card-title i:hover {
 	transform: scale(1.25) rotate(100deg);
 	color: #18d4ca;
 }
-.Card:hover {
+.card:hover {
 	transform: scale(1.05);
 	box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
 }
-.Card-text {
+.card-text {
 	height: 80px;
 }
 
-.Card::before,
-.Card1::after {
+.card::before,
+.card1::after {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -77,102 +86,202 @@
 	content: '';
 	pointer-events: none;
 }
-.Card::before {
+.card::before {
 	transform-origin: left top;
 }
-.Card::after {
+.card::after {
 	transform-origin: right bottom;
 }
-.Card:hover::before,
-.Card1:hover::after,
-.Card1:focus::before,
-.Card1:focus::after {
+.card:hover::before,
+.card1:hover::after,
+.card1:focus::before,
+.card1:focus::after {
 	transform: scale3d(1, 1, 1);
 }
 
-.container li {
-	color: #575d64;
-	font-family: poppins semi bold;
-	text-align: center;
-	font-size: 1.5em;
-	margin: 0% 0% 0% 0%;
+.img{
+	width: 35%;
+	height: 35%;
+	margin:1em;
 }
 
-.steps {
+.textCard{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	width: 100%;
+	
+}
+
+.textCard h2{
+font-size: 2em;
+height: 30%;
+margin: 0.5em;
+}
+
+.textCard span{
+	width: 30%;
+	font-size: 1.5em;
+	color: #ffffff;
+	background-color: #6b6b6b;
+	border-radius: 30px;
+	padding: 0.9em;
+	margin: 0.7em;
+	text-align: center;
+}
+.textIcon{
+	height: 50%;
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	align-content: center;
-	column-gap: 3em;
 }
 
-.steps h3 {
-	color: #575d64;
-	font-family: poppins semi bold;
-	text-align: center;
-	font-size: 1.5em;
-	margin: 0% 0% 0% 0%;
+.entrarPng{
+	width: 12%;
+	height: 12%;
 }
 
-.steps div {
-	border: solid rgba(0, 0, 0, 0.354) 3px;
-	width: 15vw;
+/* pasos */
+
+.steps{
+	width: 100vw;
 	height: auto;
-	margin: 0.5vw 1.5vw 1vw 1.5vw;
-	padding: 1vw 1vw 1vw 1vw;
-	background-color: #f8f8f8;
-	font-size: 1.2vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: 2em;
 }
 
-.steps div:hover {
-	transform: scale(1.05);
-	box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
-}
-.steps div-text {
-	height: 80px;
-}
-
-.steps div::before,
-.steps div::after {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	transform: scale3d(0, 0, 1);
-	transition: transform 0.3s ease-out 0s;
-	background: rgba(255, 255, 255, 0.1);
-	content: '';
-	pointer-events: none;
-}
-.steps div::before {
-	transform-origin: left top;
-}
-.steps div::after {
-	transform-origin: right bottom;
-}
-.steps div:hover::before,
-.steps div:hover::after,
-.steps div:focus::before,
-.steps div:focus::after {
-	transform: scale3d(1, 1, 1);
+.steps1 {
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+align-content: center;
+    width: 20%;
+    height: 25%;
 }
 
-@media (max-width: 767.98px) {
-	.container {
-		margin: 3em 0 0 0;
-	}
+.steps2{
+	border: solid 1px #494949;
+	border-radius: 10px;
+	background-color: #494949;
+	display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+align-content: center;
+    width: 20%;
+    height: 60px;
+	text-align: justify;
+}
+
+.steps2 span{
+	font-weight: 500;
+	color:#ffffff;
+	font-size: 1.4em;
+}
+
+.text{
+ 	display: block;
+ 	border: 1px solid #494949;
+    background-color: #494949;
+    color: #ffffff;
+	font-weight: 500;
+	font-size: 1.2em;
+	text-align: justify;
+ 	padding: 2rem;
+ 	margin-top: 0;
+ 	width: 56%;
+	height: 45px;
+}
+.arrow {
+	width: 0;
+    height: 0;
+    border-top: 45px solid transparent;
+    border-bottom: 45px solid transparent;
+    border-left: 45px solid #494949;
+    right: 175px;
+    top: -15px;
+}
+
+@media (max-width: 768px) {
+	.textCard h2{
+		margin: 0.2em;
+		}
+
+	.textCard span{
+		width: 40%;
+		margin: 0.2em;
+	font-size: 1em;	}
 
 	.steps > div {
-		width: 25%;
+		width: 20%;
 		margin-bottom: 1em;
-		font-size: 1em;
+		font-size: 0.7em;
+	}
+	.steps2{
+		margin-top: 0%;
 	}
 }
 @media (max-width: 575.98px) {
-	.container {
-		margin: 4em 0 0 0;
+	.container1{
+		flex-direction: column;
+	margin: 0 0 0 0 ;
 	}
+	.container h1{
+		font-size: 2em;
+		margin: 0;
+		padding: 0.5em;
+	}
+
+	.li{
+		width: 98%;
+		height: auto;
+		list-style: none;
+		margin: 0;
+	}
+
+
+
+	.steps > div {
+		width: 20%;
+		margin-bottom: 0.5em;
+		font-size: 0.5em;
+	}
+
+	
+.steps1 {
+		width: 15%;
+		height: 15%;
+		margin: 0.7em;
+	}
+
+
+	.text{
+		font-size: 0.8em;
+	   text-align: justify;
+	   align-items: center;
+	   align-content: center;
+	   justify-content: center;
+		padding: 0.4rem;
+		margin-top: 0;
+		width: 50%;
+	   height: 40px;
+   }
+   .steps2{
+height: 40px;
+text-align: justify;
+}
+.steps2 span{
+	font-weight: 500;
+	color:#ffffff;
+	font-size: 1.1em;
+}
+
 }

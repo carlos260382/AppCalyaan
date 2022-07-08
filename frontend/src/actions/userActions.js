@@ -26,30 +26,35 @@ import {
 	USER_TOPSELLERS_LIST_FAIL,
 } from '../constants/userConstants';
 
-export const register = (name, email, password) => async dispatch => {
-	dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });
-	try {
-		const { data } = await Axios.post(
-			`${process.env.REACT_APP_API_BASE_URL}/api/users/register`,
-			{
-				name,
-				email,
-				password,
-			}
-		);
-		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-		dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-		localStorage.setItem('userInfo', JSON.stringify(data));
-	} catch (error) {
+export const register =
+	(name, email, password, numberPhone) => async dispatch => {
 		dispatch({
-			type: USER_REGISTER_FAIL,
-			payload:
-				error.response && error.response.data.message
-					? error.response.data.message
-					: error.message,
+			type: USER_REGISTER_REQUEST,
+			payload: { email, password, numberPhone },
 		});
-	}
-};
+		try {
+			const { data } = await Axios.post(
+				`${process.env.REACT_APP_API_BASE_URL}/api/users/register`,
+				{
+					name,
+					email,
+					password,
+					numberPhone,
+				}
+			);
+			dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+			dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
+			localStorage.setItem('userInfo', JSON.stringify(data));
+		} catch (error) {
+			dispatch({
+				type: USER_REGISTER_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			});
+		}
+	};
 
 export const signin = (email, password) => async dispatch => {
 	dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });

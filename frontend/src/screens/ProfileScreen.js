@@ -121,9 +121,9 @@ export default function ProfileScreen() {
 						</div>
 						{user.isSeller && (
 							<>
-								<h1>Vendedor</h1>
+								<h1>Profesional</h1>
 								<div>
-									<label htmlFor='sellerName'>Nombre del Vendedor</label>
+									<label htmlFor='sellerName'>Nombre del Profesional</label>
 									<input
 										id='sellerName'
 										type='text'
@@ -133,23 +133,23 @@ export default function ProfileScreen() {
 									></input>
 								</div>
 								<div>
-									<label htmlFor='sellerLogo'>Logotipo del Vendedor</label>
+									<label htmlFor='sellerLogo'>Logotipo</label>
 									<input
 										id='sellerLogo'
 										type='text'
-										placeholder='Enter Seller Logo'
+										placeholder='Logo'
 										value={sellerLogo}
 										onChange={e => setSellerLogo(e.target.value)}
 									></input>
 								</div>
 								<div>
 									<label htmlFor='sellerDescription'>
-										Descripción del vendedor
+										Descripción del Profesional
 									</label>
 									<input
 										id='sellerDescription'
 										type='text'
-										placeholder='Enter Seller Description'
+										placeholder='Ingresar descripcion del Profesional'
 										value={sellerDescription}
 										onChange={e => setSellerDescription(e.target.value)}
 									></input>

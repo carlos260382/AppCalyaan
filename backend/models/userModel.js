@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       default: random(100000, 999999),
       required: false,
     },
+    numberPhone: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

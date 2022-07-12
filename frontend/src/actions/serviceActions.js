@@ -45,6 +45,7 @@ export const listService =
 			dispatch({ type: SERVICE_LIST_SUCCESS, payload: data });
 		} catch (error) {
 			dispatch({ type: SERVICE_LIST_FAIL, payload: error.message });
+			console.log('error', error.message);
 		}
 	};
 

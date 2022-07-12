@@ -165,15 +165,6 @@ function Navbar() {
 					)}
 				</div>
 				<div className={styles.container2}>
-					<div className={styles.contenSearch}>
-						<div>
-							<Route
-								render={({ history }) => (
-									<SearchBox history={history}></SearchBox>
-								)}
-							></Route>
-						</div>
-					</div>
 					<div className={styles.carrito}>
 						<NavLink to='/cart'>
 							<picture>

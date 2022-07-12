@@ -2,7 +2,8 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, Route } from 'react-router-dom';
+import SearchBox from '../components/SearchBox';
 import { listService } from '../actions/serviceActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -25,7 +26,7 @@ export default function SearchScreen(props) {
 	const dispatch = useDispatch();
 	const serviceList = useSelector(state => state.serviceList);
 	const { loading, error, services, page, pages } = serviceList;
-	console.log('serviceList', serviceList);
+
 	const serviceCategoryList = useSelector(state => state.serviceCategoryList);
 	const {
 		loading: loadingCategories,
@@ -58,16 +59,8 @@ export default function SearchScreen(props) {
 	};
 	return (
 		<div className={styles.container}>
-			<div className={styles.contenSearch}>
-				<div className={styles.container1}>
-					{/* {loading ? (
-						<LoadingBox></LoadingBox>
-					) : error ? (
-						<MessageBox variant='danger'>{error}</MessageBox>
-					) : (
-						<div>{services.length} Resultados </div>
-					)} */}
-
+			<div className={styles.container1}>
+				<div>
 					<h3> Ordenar los servicios por </h3>
 					<select
 						value={order}
@@ -83,10 +76,20 @@ export default function SearchScreen(props) {
 						</option>
 					</select>
 				</div>
+				<div className={styles.contenSearch}>
+					<div>
+						<Route
+							render={({ history }) => (
+								<SearchBox history={history}></SearchBox>
+							)}
+						></Route>
+					</div>
+				</div>
 			</div>
+
 			<div className={styles.container2}>
 				<div className={styles.col1}>
-					<h3>Buscar servicios por categoria</h3>
+					<h3>Buscar por categoria</h3>
 					<div>
 						{loadingCategories ? (
 							<LoadingBox></LoadingBox>
@@ -133,7 +136,7 @@ export default function SearchScreen(props) {
             </ul>
           </div> */}
 					<div>
-						<h3>Buscar por opinión del cliente</h3>
+						<h3>Buscar por opinión</h3>
 						<ul>
 							{ratings.map(r => (
 								<li key={r.name}>
@@ -148,7 +151,7 @@ export default function SearchScreen(props) {
 						</ul>
 					</div>
 				</div>
-				<div className={styles.col3}>
+				<div>
 					{loading ? (
 						<LoadingBox></LoadingBox>
 					) : error ? (

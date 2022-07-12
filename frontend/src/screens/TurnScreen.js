@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 // import { createTurn } from '../actions/turnAction.js'
 import styles from '../style/OrderScreenTurn.module.css';
+import Swal from 'sweetalert2';
+
 import {
 	TURN_CREATE_SUCCESS,
 	TURN_CREATE_FAIL,
@@ -59,7 +61,7 @@ export default function TurnScreen(props, order) {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		if (!turn.hour || !turn.day) {
-			alert('debe seleccionar un dia y una hora');
+			Swal.fire('debe seleccionar un dia y una hora');
 		}
 
 		// dispatch({ type: TURN_CREATE_REQUEST, payload: turn });
@@ -79,9 +81,12 @@ export default function TurnScreen(props, order) {
 			dispatch({ type: TURN_CREATE_SUCCESS, payload: data.turn });
 
 			if (data) {
-				alert(
+				Swal.fire(
 					'Turno creado con exito, recibira una notificación cuando el profesional tome el servicio'
 				);
+				// alert(
+				// 	'Turno creado con exito, recibira una notificación cuando el profesional tome el servicio'
+				// );
 				history.push(`/order/${props.order._id}`);
 			}
 			// dispatch({ type: CART_EMPTY });
@@ -103,6 +108,7 @@ export default function TurnScreen(props, order) {
 	return (
 		<form className={styles.form} onSubmit={handleSubmit}>
 			<h1>Elije la fecha y hora para agendar su turno</h1>
+
 			<div>
 				<label>Selecciona la Fecha</label>
 				<input type='date' name='day' onChange={handleChange} />

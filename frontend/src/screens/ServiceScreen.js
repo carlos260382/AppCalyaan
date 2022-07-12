@@ -119,9 +119,9 @@ export default function ServiceScreen(props) {
 										numReviews={service.numReviews}
 									></Rating>
 								</li>
-								<li>Price : ${service.price}</li>
+								<li>Precio : ${service.price}</li>
 								<li>
-									Description:
+									Descripción:
 									<p className={styles.p}>{service.description}</p>
 								</li>
 							</ul>

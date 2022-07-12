@@ -11,7 +11,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import styles from '../../style/MercadoPagoForm.module.css';
 import { payOrder, detailsOrder } from '../../actions/orderActions.js';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Swal from 'sweetalert2';
 const INITIAL_STATE = {
 	cvc: '',
 	cardExpirationMonth: '',
@@ -162,14 +162,14 @@ export default function MercadoPagoForm(props) {
 			resultPayment.status === 'approved' &&
 			resultPayment.status_detail === 'accredited'
 		) {
-			alert('Pago realizado con exito');
+			Swal.fire('Pago realizado con exito');
 			history.push(`/order/${order._id}`);
 		}
 		if (
 			resultPayment.status === 'rejected' &&
 			resultPayment.status_detail === 'cc_rejected_other_reason'
 		) {
-			alert(
+			Swal.fire(
 				'Pago rechazado por error general, vuelva a intentarlo verificando sus datos'
 			);
 			history.push(`/mercadoPago/${order._id}`);
@@ -179,7 +179,7 @@ export default function MercadoPagoForm(props) {
 			resultPayment.status === 'in_process' &&
 			resultPayment.status_detail === 'pending_contingency'
 		) {
-			alert('Pago pendiente por ser procesado');
+			Swal.fire('Pago pendiente por ser procesado');
 			history.push(`/order/${order._id}`);
 		}
 
@@ -187,7 +187,7 @@ export default function MercadoPagoForm(props) {
 			resultPayment.status === 'rejected' &&
 			resultPayment.status_detail === 'cc_rejected_call_for_authorize'
 		) {
-			alert('Pago Rechazado con validación para autorizar');
+			Swal.fire('Pago Rechazado con validación para autorizar');
 			history.push(`/order/${order._id}`);
 		}
 
@@ -195,7 +195,9 @@ export default function MercadoPagoForm(props) {
 			resultPayment.status === 'rejected' &&
 			resultPayment.status_detail === 'cc_rejected_insufficient_amount'
 		) {
-			alert('Pago Rechazado por importe insuficiente, pruebe con otra tarjeta');
+			Swal.fire(
+				'Pago Rechazado por importe insuficiente, pruebe con otra tarjeta'
+			);
 			history.push(`/order/${order._id}`);
 		}
 
@@ -203,7 +205,7 @@ export default function MercadoPagoForm(props) {
 			resultPayment.status === 'rejected' &&
 			resultPayment.status_detail === 'cc_rejected_bad_filled_security_code'
 		) {
-			alert('Pago Rechazado por código de seguridad inválido	');
+			Swal.fire('Pago Rechazado por código de seguridad inválido	');
 			history.push(`/order/${order._id}`);
 		}
 
@@ -211,7 +213,7 @@ export default function MercadoPagoForm(props) {
 			resultPayment.status === 'rejected' &&
 			resultPayment.status_detail === 'cc_rejected_bad_filled_date'
 		) {
-			alert('Pago Rechazado por problema en la fecha de vencimiento');
+			Swal.fire('Pago Rechazado por problema en la fecha de vencimiento');
 			history.push(`/order/${order._id}`);
 		}
 
@@ -219,7 +221,7 @@ export default function MercadoPagoForm(props) {
 			resultPayment.status === 'rejected' &&
 			resultPayment.status_detail === 'cc_rejected_bad_filled_other'
 		) {
-			alert('Pago Rechazado debido a un error de formulario');
+			Swal.fire('Pago Rechazado debido a un error de formulario');
 			history.push(`/order/${order._id}`);
 		}
 	};

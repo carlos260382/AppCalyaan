@@ -8,7 +8,7 @@ import { createOrder } from '../actions/orderActions.js';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants.js';
 import CheckoutSteps from '../components/CheckoutSteps';
 import styles from '../style/ShippingAddressScreen.module.css';
-
+import Swal from 'sweetalert2';
 export default function ShippingAddressScreen(props) {
 	const userSignin = useSelector(state => state.userSignin);
 
@@ -70,9 +70,7 @@ export default function ShippingAddressScreen(props) {
 		}
 		let moveOn = true;
 		if (!newLat || !newLng) {
-			moveOn = window.confirm(
-				'No configuró su ubicación en el mapa. Continuar?'
-			);
+			moveOn = Swal.fire('No configuró su ubicación en el mapa. Continuar?');
 		}
 		if (moveOn) {
 			dispatch(

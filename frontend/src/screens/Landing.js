@@ -3,11 +3,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoadingBox from '../components/LoadingBox.js';
 import MessageBox from '../components/MessageBox.js';
-
+import SearchBox from '../components/SearchBox.js';
 import styles from '../style/Landing.module.css';
 import catBarberia from '../assent/catBarberia.png';
 import catDepilacion from '../assent/catDepilacion.png';
@@ -45,7 +45,15 @@ export default function Landing() {
 	console.log('categoriesImage', categoriesImage);
 	return (
 		<div className={styles.container}>
+			<div className={styles.contenSearch}>
+				<div>
+					<Route
+						render={({ history }) => <SearchBox history={history}></SearchBox>}
+					></Route>
+				</div>
+			</div>
 			<h1>Servicios</h1>
+
 			<div className={styles.container1}>
 				{loadingCategories ? (
 					<LoadingBox></LoadingBox>
@@ -62,7 +70,6 @@ export default function Landing() {
 								<div className={styles.textCard}>
 									<h2>{c.name}</h2>
 									<div className={styles.textIcon}>
-										<span>Ver mas</span>
 										<img src={entrarPng} alt='' className={styles.entrarPng} />
 									</div>
 								</div>

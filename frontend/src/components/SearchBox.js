@@ -22,7 +22,12 @@ export default function SearchBox(props) {
 					className={styles.input}
 				></input>
 				<button className={styles.btnSearch} type='submit'>
-					<FaSearch color='#ffffff' />
+					<div className={styles.white}>
+						<FaSearch color='#ffffff' />
+					</div>
+					<div className={styles.black}>
+						<FaSearch color='#494949' />
+					</div>
 				</button>
 			</div>
 		</form>

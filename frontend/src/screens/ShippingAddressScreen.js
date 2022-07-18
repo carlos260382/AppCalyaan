@@ -1,78 +1,120 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingAddress } from '../actions/cartActions';
 import { createOrder } from '../actions/orderActions.js';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants.js';
-import CheckoutSteps from '../components/CheckoutSteps';
 import styles from '../style/ShippingAddressScreen.module.css';
 import Swal from 'sweetalert2';
+import {
+	LoadScript,
+	GoogleMap,
+	StandaloneSearchBox,
+	Marker,
+} from '@react-google-maps/api';
+import LoadingBox from '../components/LoadingBox';
+import Axios from 'axios';
+import { USER_ADDRESS_MAP_CONFIRM } from '../constants/userConstants';
+
+const libs = ['places'];
+const defaultLocation = { lat: 45.516, lng: -73.56 };
+
 export default function ShippingAddressScreen(props) {
+	// Codigo Mapa Google
+
 	const userSignin = useSelector(state => state.userSignin);
-
 	const { userInfo } = userSignin;
-	console.log('Info de usuario', userInfo);
-
 	const cart = useSelector(state => state.cart);
-	const { shippingAddress } = cart;
-	console.log('Info de address', shippingAddress);
 
-	const [lat, setLat] = useState(shippingAddress.lat);
-	const [lng, setLng] = useState(shippingAddress.lng);
-
-	const userAddressMap = useSelector(state => state.userAddressMap);
-	const { address: addressMap } = userAddressMap;
-
-	if (!userInfo) {
-		props.history.push('/signin');
-	}
-	const [fullName, setFullName] = useState(shippingAddress.fullName);
-	const [address, setAddress] = useState(shippingAddress.address);
-	const [city, setCity] = useState(shippingAddress.city);
-	const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
-	const [country, setCountry] = useState(shippingAddress.country);
-
-	const dispatch = useDispatch();
-
-	const orderCreate = useSelector(state => state.orderCreate);
-
-	const { success, order } = orderCreate;
 	const toPrice = num => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
 	cart.itemsPrice = toPrice(
 		cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
 	);
 
 	cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-	cart.taxPrice = toPrice(0 * cart.itemsPrice);
-	cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+	cart.taxPrice = toPrice(0.65 * cart.itemsPrice);
+	cart.totalPrice = cart.itemsPrice + cart.shippingPrice - cart.taxPrice;
 
+	const { shippingAddress } = cart;
+	const [googleApiKey, setGoogleApiKey] = useState('');
+	const [center, setCenter] = useState(defaultLocation);
+	const [location, setLocation] = useState(center);
+
+	const mapRef = useRef(null);
+	const placeRef = useRef(null);
+	const markerRef = useRef(null);
+	const orderCreate = useSelector(state => state.orderCreate);
+	const { success, order } = orderCreate;
+	const dispatch = useDispatch();
+	if (!userInfo) {
+		props.history.push('/signin');
+	}
 	useEffect(() => {
+		const fetch = async () => {
+			const { data } = await Axios(
+				`${process.env.REACT_APP_API_BASE_URL}/api/config/google`
+			);
+			setGoogleApiKey(data);
+			getUserCurrentLocation();
+		};
+		fetch();
+
 		if (success) {
+			Swal.fire('Ubicación seleccionada con exito');
 			props.history.push(`/orderTurn/${order._id}`);
 			// props.history.push(`/turn`);
 			dispatch({ type: ORDER_CREATE_RESET });
 		}
-	}, [dispatch, order, props.history, success]);
+	}, [success, order]);
 
-	const submitHandler = e => {
-		e.preventDefault();
-		setFullName(userInfo.name);
-		setCountry('Colombia');
-		cart.shippingAddress.fullName = userInfo.name;
-		cart.shippingAddress.country = 'Colombia';
-		const newLat = addressMap ? addressMap.lat : lat;
-		const newLng = addressMap ? addressMap.lng : lng;
-		if (addressMap) {
-			setLat(addressMap.lat);
-			setLng(addressMap.lng);
-		}
-		let moveOn = true;
-		if (!newLat || !newLng) {
-			moveOn = Swal.fire('No configuró su ubicación en el mapa. Continuar?');
-		}
-		if (moveOn) {
+	const onLoad = map => {
+		mapRef.current = map;
+	};
+	const onMarkerLoad = marker => {
+		markerRef.current = marker;
+	};
+	const onLoadPlaces = place => {
+		placeRef.current = place;
+	};
+	const onIdle = () => {
+		setLocation({
+			lat: mapRef.current.center.lat(),
+			lng: mapRef.current.center.lng(),
+		});
+	};
+	const onPlacesChanged = () => {
+		const place = placeRef.current.getPlaces()[0].geometry.location;
+		setCenter({ lat: place.lat(), lng: place.lng() });
+		setLocation({ lat: place.lat(), lng: place.lng() });
+	};
+
+	const onConfirm = async () => {
+		const places = placeRef.current.getPlaces();
+		console.log('el place', places);
+		if (places && places.length === 1) {
+			// dispatch select action
+			dispatch({
+				type: USER_ADDRESS_MAP_CONFIRM,
+				payload: {
+					lat: location.lat,
+					lng: location.lng,
+					address: places[0].formatted_address,
+					name: places[0].name,
+					vicinity: places[0].vicinity,
+					googleAddressId: places[0].id,
+				},
+			});
+
+			setFullName(userInfo.name);
+			setCountry('Colombia');
+			cart.shippingAddress.fullName = userInfo.name;
+			cart.shippingAddress.country = 'Colombia';
+			cart.shippingAddress.address = places[0].formatted_address;
+			cart.shippingAddress.city = places[0].vicinity;
+			const newLat = location.lat;
+			const newLng = location.lng;
 			dispatch(
 				saveShippingAddress({
 					fullName,
@@ -86,14 +128,58 @@ export default function ShippingAddressScreen(props) {
 			);
 			// props.history.push('/placeorder');
 
-			// props.history.push(`/orderTurn/${order._id}`);
+			if (cart) {
+				dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
+				console.log('lo que va a la order', cart);
+				dispatch({ type: ORDER_CREATE_RESET });
+			}
+		} else {
+			alert('Por favor ingrese su dirección');
 		}
-		if (cart) dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
-		console.log('lo que va a la order', cart);
-		console.log('lo que va a la order2', cart.cartItems);
 	};
 
-	const chooseOnMap = () => {
+	const getUserCurrentLocation = async () => {
+		if (!navigator.geolocation) {
+			alert('La geolocalización no es compatible con este navegador');
+		} else {
+			navigator.geolocation.getCurrentPosition(position => {
+				setCenter({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				});
+				setLocation({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				});
+			});
+		}
+	};
+
+	// Inicio formulario ShippinAnddress
+
+	const [fullName, setFullName] = useState(shippingAddress.fullName);
+	const [address, setAddress] = useState(shippingAddress.address);
+	const [city, setCity] = useState(shippingAddress.city);
+	const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
+	const [country, setCountry] = useState(shippingAddress.country);
+
+	// const dispatch = useDispatch(); repetido
+
+	// useEffect(() => {			Repetido
+	// 	if (success) {
+	// 		props.history.push(`/orderTurn/${order._id}`);
+	// 		// props.history.push(`/turn`);
+	// 		dispatch({ type: ORDER_CREATE_RESET });
+	// 	}
+	// }, [dispatch, order, props.history, success]);
+
+	const submitHandler = e => {
+		e.preventDefault();
+		setFullName(userInfo.name);
+		setCountry('Colombia');
+		cart.shippingAddress.fullName = userInfo.name;
+		cart.shippingAddress.country = 'Colombia';
+
 		dispatch(
 			saveShippingAddress({
 				fullName,
@@ -101,87 +187,103 @@ export default function ShippingAddressScreen(props) {
 				city,
 				postalCode,
 				country,
-				lat,
-				lng,
 			})
 		);
-		props.history.push('/map');
+		// props.history.push('/placeorder');
+
+		// props.history.push(`/orderTurn/${order._id}`);
+
+		if (cart) dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
+		console.log('lo que va a la order', cart);
+		console.log('lo que va a la order2', cart.cartItems);
+		dispatch({ type: ORDER_CREATE_RESET });
 	};
-	return (
+
+	return googleApiKey ? (
 		<div className={styles.container}>
-			<CheckoutSteps step1 step2></CheckoutSteps>
-			<form className='form' onSubmit={submitHandler}>
-				<div>
-					<h1>Dirección de envío</h1>
-				</div>
-				{/* <div>
-					<label htmlFor='fullName'>Nombre Completo</label>
-					<input
-						type='text'
-						id='fullName'
-						placeholder='Enter full name'
-						value={fullName}
-						onChange={e => setFullName(e.target.value)}
-						required
-					></input>
-				</div> */}
-				<div>
-					<label htmlFor='address'>Dirección</label>
-					<input
-						type='text'
-						id='address'
-						placeholder='Enter address'
-						value={address}
-						onChange={e => setAddress(e.target.value)}
-						required
-					></input>
-				</div>
-				<div>
-					<label htmlFor='city'>Ciudad</label>
-					<input
-						type='text'
-						id='city'
-						placeholder='Enter city'
-						value={city}
-						onChange={e => setCity(e.target.value)}
-						required
-					></input>
-				</div>
-				<div>
-					<label htmlFor='postalCode'>Código Postal</label>
-					<input
-						type='text'
-						id='postalCode'
-						placeholder='Enter postal code'
-						value={postalCode}
-						onChange={e => setPostalCode(e.target.value)}
-						required
-					></input>
-				</div>
-				{/* <div>
-					<label htmlFor='country'>País</label>
-					<input
-						type='text'
-						id='country'
-						placeholder='Enter country'
-						value={country}
-						onChange={e => setCountry(e.target.value)}
-						required
-					></input>
-				</div> */}
-				<div>
-					<label htmlFor='chooseOnMap'>Localización</label>
-					<button type='button' onClick={chooseOnMap}>
-						Elija en el mapa
-					</button>
-				</div>
-				<div>
-					<label />
-					<button className={styles.btn} type='submit'>
-						Continuar
-					</button>
-				</div>
-			</form>
+			<div className={styles.map}>
+				<h1>Use el buscador para encontrar su ubicacion exacta</h1>
+				<span>
+					Ingrese direccion completa (ejemplo: calle 100 # 20-35,
+					Ciudad/Barrio/Localidad)
+				</span>
+				<LoadScript libraries={libs} googleMapsApiKey={googleApiKey}>
+					<GoogleMap
+						id='smaple-map'
+						mapContainerStyle={{ height: '100%', width: '100%' }}
+						center={center}
+						zoom={15}
+						onLoad={onLoad}
+						onIdle={onIdle}
+					>
+						<StandaloneSearchBox
+							onLoad={onLoadPlaces}
+							onPlacesChanged={onPlacesChanged}
+						>
+							<div className='map-input-box'>
+								<input
+									type='text'
+									placeholder='Ingrese su direccion completa'
+								></input>
+								<button type='button' onClick={onConfirm}>
+									Confirmar
+								</button>
+							</div>
+						</StandaloneSearchBox>
+						<Marker position={location} onLoad={onMarkerLoad}></Marker>
+					</GoogleMap>
+				</LoadScript>
+			</div>
+			<div className={styles.sectionForm}>
+				<h1>
+					Tambien puede registrar su direccion en el formulario a continuacion
+				</h1>
+
+				<form className='form' onSubmit={submitHandler}>
+					<div>
+						<label htmlFor='address'>Dirección</label>
+						<input
+							type='text'
+							id='address'
+							placeholder='Ingrese su direccion'
+							value={address}
+							onChange={e => setAddress(e.target.value)}
+							required
+						></input>
+					</div>
+					<div>
+						<label htmlFor='postalCode'>Barrio/Localidad/Casa/Apto.</label>
+						<input
+							type='text'
+							id='postalCode'
+							placeholder='Barrio/Casa/Apto.'
+							value={postalCode}
+							onChange={e => setPostalCode(e.target.value)}
+							required
+						></input>
+					</div>
+					<div>
+						<label htmlFor='city'>Ciudad</label>
+						<input
+							type='text'
+							id='city'
+							placeholder='Ciudad'
+							value={city}
+							onChange={e => setCity(e.target.value)}
+							required
+						></input>
+					</div>
+
+					<div>
+						<label />
+						<button className={styles.btn} type='submit'>
+							Continuar
+						</button>
+					</div>
+				</form>
+			</div>
 		</div>
+	) : (
+		<LoadingBox></LoadingBox>
 	);
 }

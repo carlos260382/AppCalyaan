@@ -70,9 +70,7 @@ export default function MercadoPagoForm(props) {
 
 			if (MercadoPago) {
 				console.log('pago', value);
-				const mp = new MercadoPago(
-					'APP_USR-0e043c2b-a009-4847-8479-1348b83c143c'
-				);
+				const mp = new MercadoPago('TEST-6b20445a-c8e0-464b-8db9-eb32c1630a6a');
 
 				const cardForm = mp.cardForm({
 					amount: value,

@@ -13,22 +13,21 @@ export default function RegisterScreen(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
-	const [numberPhone, setNumberPhone] = useState('');
-
+	const [phone, setPhone] = useState('');
+	const userRegister = useSelector(state => state.userRegister);
+	const { userInfo, loading, error } = userRegister;
+	console.log('usuario register', userInfo);
 	const redirect = props.location.search
 		? props.location.search.split('=')[1]
 		: '/';
-
-	const userRegister = useSelector(state => state.userRegister);
-	const { userInfo, loading, error } = userRegister;
 
 	const dispatch = useDispatch();
 	const submitHandler = e => {
 		e.preventDefault();
 		if (password !== confirmPassword) {
-			alert('Password and confirm password are not match');
+			alert('La contraseña y la contraseña de confirmación no coinciden');
 		} else {
-			dispatch(register(name, email, password, numberPhone));
+			dispatch(register(name, email, password, phone));
 		}
 	};
 	useEffect(() => {
@@ -45,13 +44,13 @@ export default function RegisterScreen(props) {
 				{loading && <LoadingBox></LoadingBox>}
 				{error && <MessageBox variant='danger'>{error}</MessageBox>}
 				<div>
-					<label htmlFor='numberPhone'>Numero de telefono</label>
+					<label htmlFor='phone'>Numero de telefono</label>
 					<input
 						type='text'
-						id='numberPhone'
+						id='phone'
 						placeholder='telefono'
 						required
-						onChange={e => setNumberPhone(e.target.value)}
+						onChange={e => setPhone(e.target.value)}
 					></input>
 				</div>
 				<div>

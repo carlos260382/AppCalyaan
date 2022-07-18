@@ -60,7 +60,7 @@ serviceRouter.get(
       ...ratingFilter,
     })
 
-      //console.log('este es el servicio', services)
+      // console.log("este es el servicio", services)
       .populate("seller", "seller.name seller.logo")
       .sort(sortOrder)
       .skip(pageSize * (page - 1))
@@ -127,6 +127,7 @@ serviceRouter.post(
       seller: req.user._id,
       image: "/images/p1.jpg",
       price: 0,
+      points: 0,
       category: "sample category",
       brand: "sample brand",
       countInStock: 0,
@@ -148,6 +149,7 @@ serviceRouter.put(
     if (service) {
       service.name = req.body.name;
       service.price = req.body.price;
+      service.points = req.body.price * 0.03;
       service.image = req.body.image;
       service.category = req.body.category;
       service.brand = req.body.brand;
@@ -158,6 +160,7 @@ serviceRouter.put(
     } else {
       res.status(404).send({ message: "service Not Found" });
     }
+    console.log("servicio modificado", service);
   })
 );
 

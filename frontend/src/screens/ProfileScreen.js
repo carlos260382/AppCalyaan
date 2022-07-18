@@ -60,6 +60,7 @@ export default function ProfileScreen() {
 			);
 		}
 	};
+
 	return (
 		<div className={styles.container}>
 			<form className='form' onSubmit={submitHandler}>
@@ -127,13 +128,13 @@ export default function ProfileScreen() {
 									<input
 										id='sellerName'
 										type='text'
-										placeholder='Enter Seller Name'
+										placeholder='Nombre'
 										value={sellerName}
 										onChange={e => setSellerName(e.target.value)}
 									></input>
 								</div>
 								<div>
-									<label htmlFor='sellerLogo'>Logotipo</label>
+									<label htmlFor='Url Foto'>Foto</label>
 									<input
 										id='sellerLogo'
 										type='text'

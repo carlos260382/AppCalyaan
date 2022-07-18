@@ -143,31 +143,38 @@ orderRouter.put("/:id/pay", async (req, res) => {
       };
       const updatedOrder = await order.save();
       res.send({ message: "Order Paid", order: updatedOrder });
+      const userEmail = order.user.email;
+      const user = await User.findOne({ email: userEmail });
+      console.log("usuario encontrado", user);
+      if (user) {
+        user.pointsUser = order.itemsPrice * 0.03 + pointsUser;
+      }
+      const updatedUser = await user.save();
 
-      const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-          user: "ep3977752@gmail.com",
-          pass: process.env.KEY_NODEMAILER,
-        },
-      });
+      // const transporter = nodemailer.createTransport({
+      //   host: "smtp.gmail.com",
+      //   port: 465,
+      //   secure: true,
+      //   auth: {
+      //     user: "ep3977752@gmail.com",
+      //     pass: process.env.KEY_NODEMAILER,
+      //   },
+      // });
       console.log("esta es la order para email", order);
-      const mailOptions = {
-        from: "Remitente",
-        to: order.user.email,
-        subject: "pago exitoso",
-        text: `¡Gracias ${order.user.name}, has realizado el pago de tu servicio exitosamente`,
-      };
+      // const mailOptions = {
+      //   from: "Remitente",
+      //   to: order.user.email,
+      //   subject: "pago exitoso",
+      //   text: `¡Gracias ${order.user.name}, has realizado el pago de tu servicio exitosamente`,
+      // };
 
-      await transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Email enviado");
-        }
-      });
+      // await transporter.sendMail(mailOptions, (err, info) => {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     console.log("Email enviado");
+      //   }
+      // });
 
       // mailgun()
       //   .messages()

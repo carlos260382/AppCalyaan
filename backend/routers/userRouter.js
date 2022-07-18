@@ -42,7 +42,9 @@ userRouter.post(
           email: user.email,
           isAdmin: user.isAdmin,
           isSeller: user.isSeller,
-          numberPhone: user.numberPhone,
+          phone: user.phone,
+          pointsUser: 0,
+          logo: user.seller.logo,
           token: generateToken(user),
         });
         return;
@@ -56,21 +58,23 @@ userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
     const keyNumber = random(100000, 999999);
+    console.log("body de register", req.body);
     const user = new User({
       name: req.body.name,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
-      numberPhone: req.body.numberPhone,
+      phone: req.body.phone,
     });
     const createdUser = await user.save();
     res.send({
       _id: createdUser._id,
       name: createdUser.name,
       email: createdUser.email,
-      phone: createdUser.numberPhone,
+      phone: createdUser.phone,
       isAdmin: createdUser.isAdmin,
       isSeller: user.isSeller,
       numberPassword: keyNumber,
+      pointsUser,
       token: generateToken(createdUser),
     });
   })
@@ -109,9 +113,11 @@ userRouter.put(
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
-        phone: createdUser.numberPhone,
+        phone: updatedUser.phone,
+        logo: updatedUser.seller.logo,
         isAdmin: updatedUser.isAdmin,
         isSeller: user.isSeller,
+        pointsUser,
         token: generateToken(updatedUser),
       });
     }

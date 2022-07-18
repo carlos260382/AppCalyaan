@@ -43,6 +43,7 @@ export default function TurnScreen(props, order) {
 		orderId: props.order._id,
 		fullName: props.order.shippingAddress.fullName,
 		emailUser: userInfo.email,
+		phoneUser: userInfo.phone,
 		address: props.order.shippingAddress.address,
 		city: props.order.shippingAddress.city,
 		postalCode: props.order.shippingAddress.postalCode,

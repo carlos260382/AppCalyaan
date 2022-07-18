@@ -1,8 +1,42 @@
-.container {
-	width: 100vw;
-	margin-top: 2em;
+.container{
+    width: 100vw;
+    height: auto;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-content: flex-start;
+align-items: center;
+
 }
 
+
+.map{
+	display: flex;
+	flex-direction: column;
+	width: 70vw;
+	height: 85vh;
+}
+
+.map h1{
+	font-size: 1.5em;
+	font-family:'Josefin Sans';
+	color: #494949
+}
+
+.map span{
+	font-size: 1em;
+	font-family:'Josefin Sans';
+	color: #494949
+}
+.sectionForm{
+width: 50vw;
+height: auto;
+}
+.sectionForm h1{
+	font-size: 1.5em;
+	font-family:'Josefin Sans';
+	color: #494949
+}
 .btn {
 	background-color: #eda598;
 	color: white;
@@ -12,7 +46,7 @@
 	font-size: 2em;
 	font-family: 'Josefin Sans';
 	cursor: pointer;
-	width: 60%;
+	width: 50%;
 	margin-left: 15%;
 	transition: all 0.3s ease-in-out;
 }
@@ -37,9 +71,14 @@
 	background-color: #18d4ca;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
 	.container {
-		margin-top: 3em;
+		flex-direction: column;
+		margin-top: 1em;
+	}
+
+	.map{
+		width: 90vw;
 	}
 }
 
@@ -48,16 +87,19 @@
 		margin-top: 4em;
 	}
 	
-.btn {
-	background-color: #eda598;
-	color: white;
-	border: none;
-	border-radius: 1em;
-	padding: 0.5em;
-	font-size: 1.5em;
-	cursor: pointer;
-	width: 60%;
-	margin-left: 15%;
+	.map{
+		width: 95vw;
+	}
 
-}
+	.sectionForm{
+		width: 80vw;
+		height: auto;
+		}
+		.btn {
+			padding: 0.5em;
+			font-size: 1.5em;
+			width: 50%;
+			margin-left: 22%;
+		
+		}
 }

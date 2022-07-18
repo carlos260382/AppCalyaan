@@ -347,17 +347,29 @@ img.large {
 	left: 0;
 	right: 0;
 	margin: 0.5rem auto;
-	width: 25rem;
-	height: 4rem;
+	width: 35vw;
+	height: 3em;
 	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
 }
 .map-input-box input {
+	width: 25vw;
 	border-radius: 1rem 0 0 1rem;
 	border-right: 0;
+	height: 2em;
+	padding: 0;
+	margin: 0;
 }
 .map-input-box button {
 	border-radius: 0 1rem 1rem 0;
+	height: 2em;
+	width: 7vw;
 	border-left: 0;
+	background-color: #494949;
+	color:#ffffff;
+	font-family:'Josefin Sans' ;
+	padding: 0;
 }
 /* Pagination */
 .pagination a {
@@ -578,6 +590,22 @@ img.large {
 	}
 	.dropdown-content {
 		font-size: 1.8em;
+	}
+
+	.map-input-box{
+margin-top: 6em;
+		width: 90vw;
+		height: 2em;
+	}
+
+	.map-input-box input {
+		width: 10vw;
+		height: 2em;
+	
+	}
+	.map-input-box button {
+		width: 30vw;
+		height: 2em;
 	}
 }
 

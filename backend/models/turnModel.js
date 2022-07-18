@@ -10,9 +10,10 @@ const turnSchema = new mongoose.Schema(
     seller: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
     fullName: { type: String, required: true },
     emailUser: { type: String, required: true },
+    phoneUser: { type: String, required: true },
     address: { type: String, required: true },
-    city: { type: String, required: true },
-    postalCode: { type: String, required: true },
+    city: { type: String, required: false },
+    postalCode: { type: String, required: false },
     country: { type: String, required: true },
     service: [
       {

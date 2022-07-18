@@ -1,15 +1,22 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateTurn, deleteTurn } from '../actions/turnAction';
 import styles from '../style/ServiceListScreen.module.css';
 
 export default function Turn(props) {
 	const { turn } = props;
 	console.log('estos son los turnos', turn);
+	const userSignin = useSelector(state => state.userSignin);
+	const { userInfo } = userSignin;
+	console.log('usuario q acepta turno', userInfo);
 	const dispatch = useDispatch();
-
+	const Turn = {
+		id: turn._id,
+		name: userInfo.name,
+		img: userInfo.logo,
+	};
 	const nameService = turn.service.map(servi => {
 		return servi.name;
 	});
@@ -22,7 +29,7 @@ export default function Turn(props) {
 
 	const handleAcceptor = turn => {
 		if (window.confirm('¿Desea aceptar el turno?')) {
-			dispatch(updateTurn(turn));
+			dispatch(updateTurn(Turn));
 		}
 		window.location.replace('');
 	};
@@ -30,11 +37,11 @@ export default function Turn(props) {
 	const handleDelete = turn => {
 		console.log('este es id', turn);
 		if (window.confirm('¿Desea eliminar el turno?')) {
-			dispatch(deleteTurn(turn));
+			dispatch(deleteTurn(Turn.id));
 		}
 		window.location.replace('');
 	};
-
+	console.log('datos q se envian', Turn);
 	return (
 		<table className='table'>
 			<thead>
@@ -66,14 +73,14 @@ export default function Turn(props) {
 						<button
 							type='button'
 							className={styles.btn}
-							onClick={() => handleAcceptor(turn._id)}
+							onClick={() => handleAcceptor(Turn)}
 						>
 							Aceptar
 						</button>
 						<button
 							type='button'
 							className={styles.btn}
-							onClick={() => handleDelete(turn._id)}
+							onClick={() => handleDelete(Turn.id)}
 						>
 							Eliminar
 						</button>

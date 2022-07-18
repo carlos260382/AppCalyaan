@@ -61,16 +61,18 @@ export const listTurns = () => async dispatch => {
 	}
 };
 
-export const updateTurn = id => async (dispatch, getState) => {
-	dispatch({ type: TURN_UPDATE_REQUEST, payload: id });
+export const updateTurn = Turn => async (dispatch, getState) => {
+	dispatch({ type: TURN_UPDATE_REQUEST, payload: Turn.id });
 	const {
 		userSignin: { userInfo },
 	} = getState();
 	try {
 		const { data } = await Axios.put(
-			`${process.env.REACT_APP_API_BASE_URL}/api/turn/${id}`,
+			`${process.env.REACT_APP_API_BASE_URL}/api/turn/${Turn.id}`,
+
 			{
 				headers: { Authorization: `Bearer ${userInfo.token}` },
+				name: Turn.name,
 			}
 		);
 		dispatch({ type: TURN_UPDATE_SUCCESS, payload: data });

@@ -73,6 +73,8 @@
 	border-radius: 0.7em;
 	font-size: 1em;
 	height: 10em;
+	
+	
 }
 
 
@@ -111,6 +113,11 @@
 	cursor: pointer;
 }
 
+.imgSeller{
+	position:static;
+	width: 3vw;
+	height: 3vw;
+}
 
 .container1 {
 	background-color:#eda598;
@@ -142,6 +149,11 @@
 	font-family: 'Josefin Sans';
 color: #ffffff;
 }
+.category{
+	display: flex;
+	flex-direction: row;
+}
+
 .contenSearch{
 	width: 10vw;
 }

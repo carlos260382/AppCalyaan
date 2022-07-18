@@ -20,10 +20,11 @@ const userSchema = new mongoose.Schema(
       default: random(100000, 999999),
       required: false,
     },
-    numberPhone: {
+    phone: {
       type: String,
       required: true,
     },
+    pointsUser: { type: Number, required: false },
   },
   {
     timestamps: true,

@@ -128,6 +128,13 @@ export default function OrderScreen(props) {
 											<div>
 												{item.qty} x ${item.price} = ${item.qty * item.price}
 											</div>
+											<div>
+												<h2>Total a pagar por este medio</h2>${order.totalPrice}
+												<h4>
+													Cancelas por este medio el 35% del valor total del
+													servicio
+												</h4>
+											</div>
 										</div>
 									</li>
 								))}

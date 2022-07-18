@@ -1,0 +1,11 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(221, 221, 232);
+}
+
+.searchAddress{
+    width: 25vw;
+    height: 15vw;
+    background-color: red;
+}

@@ -147,9 +147,9 @@ orderRouter.put("/:id/pay", async (req, res) => {
       const user = await User.findOne({ email: userEmail });
       console.log("usuario encontrado", user);
       if (user) {
-        user.pointsUser = order.itemsPrice * 0.03 + pointsUser;
+        user.pointsUser = order.itemsPrice * 0.03 + user.pointsUser;
       }
-      const updatedUser = await user.save();
+      await user.save();
 
       // const transporter = nodemailer.createTransport({
       //   host: "smtp.gmail.com",

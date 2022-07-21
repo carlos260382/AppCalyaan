@@ -7,7 +7,7 @@ import styles from '../style/SearchScreen.module.css';
 
 export default function Service(props) {
 	const { service } = props;
-	// console.log('estos son los servicios', service)
+	console.log('estos son los servicios', service);
 	return (
 		<div key={service._id} className={styles.card}>
 			<Link to={`/service/${service._id}`}>
@@ -18,6 +18,7 @@ export default function Service(props) {
 					<img src={service.image} alt={service.name} />
 				</Link>
 				<div className={styles.price}>${service.price}</div>
+				<div className={styles.price}>Puntos {service.points}</div>
 			</div>
 			<Rating rating={service.rating} numReviews={service.numReviews}></Rating>
 		</div>

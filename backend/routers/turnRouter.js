@@ -76,31 +76,31 @@ turnRouter.post(
             isSeller: true,
           });
 
-          const sendMessage = async () => {
-            await venom
-              .create({
-                session: "session-name", //name of session
-                multidevice: true, // for version not multidevice use false.(default: true)
-              })
-              .then((client) => start(client))
-              .catch((erro) => {
-                console.log(erro);
-              });
-            function start(client) {
-              client
-                .sendText(
-                  "573127411293@c.us",
-                  `El señor ${turn.fullName}, acaba de solicitar los servicios ${turn.service}, para el dia ${turn.day} y hora ${turn.hour} para mas informacion y/o aceptar el servicio, ingrese a calyaan.com`
-                )
-                .then((result) => {
-                  console.log("Result: ", result); //return object success
-                })
-                .catch((erro) => {
-                  console.error("Error when sending: ", erro); //return object error
-                });
-            }
-          };
-          sendMessage();
+          // const sendMessage = async () => {
+          //   await venom
+          //     .create({
+          //       session: "session-name", //name of session
+          //       multidevice: true, // for version not multidevice use false.(default: true)
+          //     })
+          //     .then((client) => start(client))
+          //     .catch((erro) => {
+          //       console.log(erro);
+          //     });
+          //   function start(client) {
+          //     client
+          //       .sendText(
+          //         "573127411293@c.us",
+          //         `El señor ${turn.fullName}, acaba de solicitar los servicios ${turn.service}, para el dia ${turn.day} y hora ${turn.hour} para mas informacion y/o aceptar el servicio, ingrese a calyaan.com`
+          //       )
+          //       .then((result) => {
+          //         console.log("Result: ", result); //return object success
+          //       })
+          //       .catch((erro) => {
+          //         console.error("Error when sending: ", erro); //return object error
+          //       });
+          //   }
+          // };
+          // sendMessage();
 
           // *Envio notificacion por email
 
@@ -155,61 +155,65 @@ turnRouter.put(
       const updatedTurn = await turn.save();
       res.send({ message: "Turno Aceptado", Turn: updatedTurn });
 
-      const sendMessage = async () => {
-        await venom
-          .create({
-            session: "session-name", //name of session
-            multidevice: true, // for version not multidevice use false.(default: true)
-          })
-          .then((client) => start(client))
-          .catch((erro) => {
-            console.log(erro);
-          });
-        function start(client) {
-          client
-            .sendText(
-              `57${turn.phoneUser}@c.us`,
-              `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede ingresar al sitio web www.calyaan.com, para realizar el proceso de pago y finalizar el pedido `
-            )
-            .then((result) => {
-              console.log("Result: ", result); //return object success
-            })
-            .catch((erro) => {
-              console.error("Error when sending: ", erro); //return object error
-            });
-        }
-      };
-      sendMessage();
+      // ---------------> Envio WHATSAPP---------------------->
 
-      const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-          user: "ep3977752@gmail.com",
-          pass: process.env.KEY_NODEMAILER,
-        },
-      });
+      // const sendMessage = async () => {
+      //   await venom
+      //     .create({
+      //       session: "session-name", //name of session
+      //       multidevice: true, // for version not multidevice use false.(default: true)
+      //     })
+      //     .then((client) => start(client))
+      //     .catch((erro) => {
+      //       console.log(erro);
+      //     });
+      //   function start(client) {
+      //     client
+      //       .sendText(
+      //         `57${turn.phoneUser}@c.us`,
+      //         `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede ingresar al sitio web www.calyaan.com, para realizar el proceso de pago y finalizar el pedido `
+      //       )
+      //       .then((result) => {
+      //         console.log("Result: ", result); //return object success
+      //       })
+      //       .catch((erro) => {
+      //         console.error("Error when sending: ", erro); //return object error
+      //       });
+      //   }
+      // };
+      // sendMessage();
 
-      const mailOptions = {
-        from: "Remitente",
-        to: turn.emailUser,
-        subject: "Turno Aceptado",
-        text: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede ingresar al sitio web www.calyaan.com, para realizar el proceso de pago y finalizar el pedido `,
-        html: `
-        <p>¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede ingresar al sitio web www.calyaan.com, para realizar el proceso de pago y finalizar el pedido</p>
-        <img src=${req.body.img} width: "10" height: "10">
-      
-        `,
-      };
+      // ---------------> Envio EMAIL---------------------->
 
-      await transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Email enviado a cliente confirmando aceptacion Turno");
-        }
-      });
+      // const transporter = nodemailer.createTransport({
+      //   host: "smtp.gmail.com",
+      //   port: 465,
+      //   secure: true,
+      //   auth: {
+      //     user: "ep3977752@gmail.com",
+      //     pass: process.env.KEY_NODEMAILER,
+      //   },
+      // });
+
+      // const mailOptions = {
+      //   from: "Remitente",
+      //   to: turn.emailUser,
+      //   subject: "Turno Aceptado",
+      //   text: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede ingresar al sitio web www.calyaan.com, para realizar el proceso de pago y finalizar el pedido `,
+      //   html: `
+      //   <p>¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede ingresar al sitio web www.calyaan.com, para realizar el proceso de pago y finalizar el pedido</p>
+      //   <img src=${req.body.img} width: 10 height: 10>
+
+      //   `,
+      // };
+
+      // await transporter.sendMail(mailOptions, (err, info) => {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     console.log("Email enviado a cliente confirmando aceptacion Turno");
+      //   }
+      // });
     } else {
       res.status(404).send({ message: "Turn Not Found" });
     }

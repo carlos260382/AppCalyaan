@@ -29,6 +29,9 @@ export default function Landing() {
 		categories,
 	} = serviceCategoryList;
 
+	// const userSignin = useSelector(state => state.userSignin);
+	// const { userInfo } = userSignin;
+
 	console.log('categoria', categories);
 	const images = {
 		Barbería: catBarberia,
@@ -42,7 +45,7 @@ export default function Landing() {
 	};
 
 	const categoriesImage = categories?.map(c => ({ name: c, image: images[c] }));
-	console.log('categoriesImage', categoriesImage);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.contenSearch}>
@@ -53,7 +56,7 @@ export default function Landing() {
 				</div>
 			</div>
 			<h1>Servicios</h1>
-
+			{/* {userInfo ? <h2>Puntos Acumulados {userInfo.pointsUser} </h2> : ''} */}
 			<div className={styles.container1}>
 				{loadingCategories ? (
 					<LoadingBox></LoadingBox>

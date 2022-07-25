@@ -90,6 +90,7 @@ orderRouter.post(
   "/",
   isAuth,
   expressAsyncHandler(async (req, res) => {
+    console.log("lo que llega a order", req.body);
     if (req.body.orderItems.length === 0) {
       res.status(400).send({ message: "Cart is empty" });
     } else {
@@ -103,6 +104,7 @@ orderRouter.post(
         taxPrice: req.body.taxPrice,
         totalPrice: req.body.totalPrice,
         user: req.user._id,
+        userPoints: req.body.userPoints,
       });
       const createdOrder = await order.save();
       res
@@ -234,4 +236,32 @@ orderRouter.put(
   })
 );
 
+orderRouter.put(
+  "/:id/update",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    console.log("lo q llega body", req.body.points);
+    console.log("lo q llega params", req.params);
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      if (order.totalPrice >= req.body.points.points) {
+        order.totalPrice = order.totalPrice - req.body.points.points;
+        order.userPoints = order.userPoints - req.body.points.points;
+        const updatedOrder = await order.save();
+        const user = await User.findById(req.body.points.userId);
+        if (user) {
+          user.pointsUser = user.pointsUser - req.body.points.points;
+          const updatedUser = await user.save();
+          res.send({
+            message: "Order upDate",
+            order: updatedOrder,
+            user: updatedUser.pointsUser,
+          });
+        }
+      }
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
+    }
+  })
+);
 export default orderRouter;

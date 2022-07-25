@@ -43,12 +43,35 @@ userRouter.post(
           isAdmin: user.isAdmin,
           isSeller: user.isSeller,
           phone: user.phone,
-          pointsUser: 0,
+          pointsUser: user.pointsUser,
           logo: user.seller.logo,
           token: generateToken(user),
         });
         return;
       }
+    }
+    res.status(401).send({ message: "Invalid email or password" });
+  })
+);
+
+userRouter.post(
+  "/points",
+  expressAsyncHandler(async (req, res) => {
+    console.log("lo q llega points", req.body.id);
+    const user = await User.findOne({ _id: req.body.id });
+    if (user) {
+      res.send({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        isSeller: user.isSeller,
+        phone: user.phone,
+        pointsUser: user.pointsUser,
+        logo: user.seller.logo,
+        token: generateToken(user),
+      });
+      return;
     }
     res.status(401).send({ message: "Invalid email or password" });
   })
@@ -75,7 +98,7 @@ userRouter.post(
       isAdmin: createdUser.isAdmin,
       isSeller: user.isSeller,
       numberPassword: keyNumber,
-      pointsUser: 0,
+      pointsUser: createdUser.pointUser,
       token: generateToken(createdUser),
     });
   })
@@ -239,8 +262,6 @@ userRouter.post(
 // );
 
 userRouter.put("/recoverPassword/:id/:number", async (req, res) => {
-  console.log("lo que llega por body", req.body);
-  console.log("lo que llega por params", req.params);
   const user = await User.findById(req.params.id);
   if (!user) {
     return res.status(403).send({

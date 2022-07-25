@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 .container {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
+	justify-content: center;
 	column-gap: 1vw;
 	flex-wrap: wrap;
 	width: 100vw;
@@ -9,6 +10,9 @@
 	margin-bottom: 3vw;
 	margin-top: 2em;
 }
+
+
+
 
 .container h1,
 label {

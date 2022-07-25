@@ -60,9 +60,12 @@ export default function ProfileScreen() {
 			);
 		}
 	};
-
+	console.log('info usuario pofile', userInfo);
 	return (
 		<div className={styles.container}>
+			<div>
+				<h1>Puntos Acumulados {userInfo.pointsUser} </h1>
+			</div>
 			<form className='form' onSubmit={submitHandler}>
 				<div>
 					<h1>Perfil de Usuario</h1>

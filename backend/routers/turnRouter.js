@@ -6,7 +6,7 @@ import venom from "venom-bot";
 import dotenv from "dotenv";
 import User from "../models/userModel.js";
 // import Service from "../models/serviceModel.js";
-import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
+import { isAdmin, isAuth, isSellerOrAdmin, random } from "../utils.js";
 dotenv.config();
 
 const turnRouter = express.Router();
@@ -30,6 +30,7 @@ turnRouter.post(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     try {
+      const keyCode = random(100000, 999999);
       if (req.body.length === 0) {
         res.status(400).send({ message: "No hay turno creado" });
       } else {
@@ -64,6 +65,7 @@ turnRouter.post(
           postalCode: postalCode,
           country: country,
           service: service,
+          keyCode: keyCode,
         });
         const createdTurn = await turn.save();
 
@@ -100,7 +102,7 @@ turnRouter.post(
           //       });
           //   }
           // };
-          // sendMessage();
+          // await sendMessage();
 
           // *Envio notificacion por email
 
@@ -181,7 +183,7 @@ turnRouter.put(
       //       });
       //   }
       // };
-      // sendMessage();
+      // await sendMessage();
 
       // ---------------> Envio EMAIL---------------------->
 

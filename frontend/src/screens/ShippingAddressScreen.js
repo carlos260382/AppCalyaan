@@ -122,6 +122,7 @@ export default function ShippingAddressScreen(props) {
 					city,
 					postalCode,
 					country,
+					userPoints,
 					lat: newLat,
 					lng: newLng,
 				})
@@ -162,6 +163,7 @@ export default function ShippingAddressScreen(props) {
 	const [city, setCity] = useState(shippingAddress.city);
 	const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
 	const [country, setCountry] = useState(shippingAddress.country);
+	const [userPoints, setUserPoints] = useState(userInfo.pointsUser);
 
 	// const dispatch = useDispatch(); repetido
 
@@ -177,8 +179,10 @@ export default function ShippingAddressScreen(props) {
 		e.preventDefault();
 		setFullName(userInfo.name);
 		setCountry('Colombia');
+		setUserPoints(userInfo.pointsUser);
 		cart.shippingAddress.fullName = userInfo.name;
 		cart.shippingAddress.country = 'Colombia';
+		cart.userPoints = userInfo.pointsUser;
 
 		dispatch(
 			saveShippingAddress({

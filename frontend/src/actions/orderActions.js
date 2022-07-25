@@ -24,6 +24,9 @@ import {
 	ORDER_DELIVER_FAIL,
 	ORDER_SUMMARY_REQUEST,
 	ORDER_SUMMARY_SUCCESS,
+	ORDER_UPDATE_FAIL,
+	ORDER_UPDATE_SUCCESS,
+	ORDER_UPDATE_REQUEST,
 } from '../constants/orderConstants';
 
 export const createOrder = order => async (dispatch, getState) => {
@@ -213,5 +216,28 @@ export const summaryOrder = () => async (dispatch, getState) => {
 					? error.response.data.message
 					: error.message,
 		});
+	}
+};
+
+export const updateValue = (orderId, points) => async (dispatch, getState) => {
+	dispatch({ type: ORDER_UPDATE_REQUEST, payload: orderId });
+	const {
+		userSignin: { userInfo },
+	} = getState();
+	try {
+		const { data } = Axios.put(
+			`${process.env.REACT_APP_API_BASE_URL}/api/orders/${orderId}/update`,
+			{ points },
+			{
+				headers: { Authorization: `Bearer ${userInfo.token}` },
+			}
+		);
+		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
+	} catch (error) {
+		const message =
+			error.response && error.response.data.message
+				? error.response.data.message
+				: error.message;
+		dispatch({ type: ORDER_UPDATE_FAIL, payload: message });
 	}
 };

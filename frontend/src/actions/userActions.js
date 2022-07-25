@@ -82,6 +82,13 @@ export const signout = () => dispatch => {
 	dispatch({ type: USER_SIGNOUT });
 	document.location.href = '/signin';
 };
+export const signoutHome = () => dispatch => {
+	localStorage.removeItem('userInfo');
+	localStorage.removeItem('cartItems');
+	localStorage.removeItem('shippingAddress');
+	dispatch({ type: USER_SIGNOUT });
+	document.location.href = '/';
+};
 export const detailsUser = userId => async (dispatch, getState) => {
 	dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
 	const {

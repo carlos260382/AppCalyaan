@@ -15,6 +15,7 @@ const turnSchema = new mongoose.Schema(
     city: { type: String, required: false },
     postalCode: { type: String, required: false },
     country: { type: String, required: true },
+    keyCode: { type: Number, required: true },
     service: [
       {
         name: { type: String, required: true },

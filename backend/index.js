@@ -15,6 +15,7 @@ import turnRouter from "./routers/turnRouter.js";
 import mercadopago from "mercadopago";
 import { response } from "express";
 import pushRouter from "./routers/pushRouter.js";
+
 dotenv.config();
 
 const app = express();
@@ -22,6 +23,23 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+
+// mongoose
+//   .connect("mongodb://localhost/calyaan", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: false,
+//     useCreateIndex: true,
+//   })
+//   .then(() => {
+//     console.log("esta conectado base datos");
+//   })
+//   .catch((error) => {
+//     console.log("este es el error", error);
+//   });
+
+
 
 mongoose
   .connect(process.env.MONGODB_URL, {
@@ -79,7 +97,9 @@ app.post("/process-payment", (req, res) => {
     });
   });
 });
-
+// const browser = await puppeteer.launch({
+//   ignoreDefaultArgs: ["--disable-extensions"],
+// });
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 app.use(express.static(path.join(__dirname, "/frontend/build")));

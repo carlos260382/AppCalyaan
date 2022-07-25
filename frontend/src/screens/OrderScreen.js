@@ -10,7 +10,6 @@ import { listTurns } from '../actions/turnAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import styles from '../style/OrderScreen.module.css';
-import { USER_UPDATEPOINTS_SUCCESS } from '../constants/userConstants.js';
 
 import {
 	ORDER_DELIVER_RESET,
@@ -103,6 +102,10 @@ export default function OrderScreen(props) {
 					<h3>Día y hora del Turno Seleccionado</h3>
 					<p>Fecha: {turnUser ? turnUser.day : ''} </p>
 					<p>Hora: {turnUser ? turnUser.hour : ''}</p>
+					<p>
+						Codigo de confirmación: {turnUser ? turnUser.keyCode : ''} <br />{' '}
+						(este numero sera mostrado por el profesional para confirmación)
+					</p>
 					<p>
 						Estado: {turnUser && turnUser.status ? 'Aprobado' : 'Pendiente'}
 					</p>

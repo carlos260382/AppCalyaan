@@ -57,7 +57,6 @@ userRouter.post(
 userRouter.post(
   "/points",
   expressAsyncHandler(async (req, res) => {
-    console.log("lo q llega points", req.body.id);
     const user = await User.findOne({ _id: req.body.id });
     if (user) {
       res.send({
@@ -141,7 +140,7 @@ userRouter.put(
         logo: updatedUser.seller.logo,
         isAdmin: updatedUser.isAdmin,
         isSeller: user.isSeller,
-        pointsUser,
+        pointsUser: updatedUser.pointsUser,
         token: generateToken(updatedUser),
       });
     }
@@ -200,7 +199,6 @@ userRouter.put(
 userRouter.post(
   "/forgotPassword",
   expressAsyncHandler(async (req, res) => {
-    console.log("llega body fortgotPassword", req.body.email);
     if (req.body.email == "") {
       res.status(400).send({
         message: "email is required",
@@ -209,15 +207,11 @@ userRouter.post(
     try {
       const [user] = await User.find({ email: req.body.email });
 
-      console.log("usuario encontrado", user);
-
       if (!user) {
         return res.status(403).send({
           message: "email not found",
         });
       }
-
-      console.log("numero password del user", user.numberPassword);
 
       const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -237,7 +231,7 @@ userRouter.post(
         from: "Remitente",
         to: user.email,
         subject: "Enlace para recuperar su cuenta en Calyaan.com",
-        text: `http://localhost:3000/resetPassword/${user._id}/${user.numberPassword}, `,
+        text: `https://www.calyaan.com.co/resetPassword/${user._id}/${user.numberPassword}, `,
       };
 
       transporter.sendMail(mailOptions, (err, info) => {
@@ -268,7 +262,6 @@ userRouter.put("/recoverPassword/:id/:number", async (req, res) => {
       message: "user not found",
     });
   }
-  console.log("usuario encontrado", user);
 
   if (user.numberPassword != req.params.number) {
     return res.status(401).send({

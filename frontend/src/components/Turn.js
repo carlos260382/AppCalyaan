@@ -7,10 +7,10 @@ import styles from '../style/ServiceListScreen.module.css';
 
 export default function Turn(props) {
 	const { turn } = props;
-	console.log('estos son los turnos', turn);
+
 	const userSignin = useSelector(state => state.userSignin);
 	const { userInfo } = userSignin;
-	console.log('usuario q acepta turno', userInfo);
+
 	const dispatch = useDispatch();
 	const Turn = {
 		id: turn._id,
@@ -27,21 +27,20 @@ export default function Turn(props) {
 		return servi.qty;
 	});
 
-	const handleAcceptor = turn => {
+	const handleAcceptor = () => {
 		if (window.confirm('¿Desea aceptar el turno?')) {
 			dispatch(updateTurn(Turn));
 		}
 		window.location.replace('');
 	};
 
-	const handleDelete = turn => {
-		console.log('este es id', turn);
+	const handleDelete = () => {
 		if (window.confirm('¿Desea eliminar el turno?')) {
 			dispatch(deleteTurn(Turn.id));
 		}
 		window.location.replace('');
 	};
-	console.log('datos q se envian', Turn);
+
 	return (
 		<table className='table'>
 			<thead>

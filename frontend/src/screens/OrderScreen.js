@@ -109,8 +109,11 @@ export default function OrderScreen(props) {
 					<p>
 						Estado: {turnUser && turnUser.status ? 'Aprobado' : 'Pendiente'}
 					</p>
+					<button className={styles.btn} onClick={irMercadoPago}>
+						Pagar
+					</button>
 
-					{turnUser && turnUser.status ? (
+					{/* {turnUser && turnUser.status ? (
 						<button className={styles.btn} onClick={irMercadoPago}>
 							Pagar
 						</button>
@@ -119,7 +122,7 @@ export default function OrderScreen(props) {
 							En cuanto sea aceptado el servicio aca aparecera la opcion para
 							realizar el pago
 						</div>
-					)}
+					)} */}
 				</div>
 
 				<div>

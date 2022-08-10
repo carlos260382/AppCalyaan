@@ -73,6 +73,7 @@ export const updateTurn = Turn => async (dispatch, getState) => {
 			{
 				headers: { Authorization: `Bearer ${userInfo.token}` },
 				name: Turn.name,
+				img: Turn.img,
 			}
 		);
 		dispatch({ type: TURN_UPDATE_SUCCESS, payload: data });

@@ -2,7 +2,12 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteOrder, listOrders, deliverOrder } from '../actions/orderActions';
+import {
+	deleteOrder,
+	listOrders,
+	deliverOrder,
+	payOrder,
+} from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { ORDER_DELETE_RESET } from '../constants/orderConstants';
@@ -36,6 +41,13 @@ export default function OrderListScreen(props) {
 	const changeToDo = order => {
 		if (window.confirm('¿Va confirmar que realizo el servicio?')) {
 			dispatch(deliverOrder(order._id));
+		}
+		window.location.replace('');
+	};
+
+	const changePay = order => {
+		if (window.confirm('¿Confirma que el servicio fue pagado?')) {
+			dispatch(payOrder(order._id));
 		}
 		window.location.replace('');
 	};
@@ -94,6 +106,13 @@ export default function OrderListScreen(props) {
 										onClick={() => changeToDo(order)}
 									>
 										Realizado
+									</button>
+									<button
+										type='button'
+										className={styles.btn}
+										onClick={() => changePay(order)}
+									>
+										Pagado
 									</button>
 								</td>
 							</tr>

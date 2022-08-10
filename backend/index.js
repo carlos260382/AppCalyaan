@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
-//import productRouter from "./routers/productRouter.js";
 import serviceRouter from "./routers/serviceRouter.js";
 import userRouter from "./routers/userRouter.js";
 import orderRouter from "./routers/orderRouter.js";
@@ -15,31 +14,27 @@ import turnRouter from "./routers/turnRouter.js";
 import mercadopago from "mercadopago";
 import { response } from "express";
 import pushRouter from "./routers/pushRouter.js";
-
+import fs from "fs";
 dotenv.config();
 
 const app = express();
+// const whiteList = [
+//   "https://appcalyaan.herokuapp.com/*",
+//   "http://localhost:3000/*",
+// ];
 app.use(morgan("dev"));
 app.use(cors());
+// app.use(
+//   cors({
+//     allowedHeaders: ["sessionId", "Content-Type"],
+//     exposedHeaders: ["sessionId"],
+//     origin: "*",
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     preflightContinue: false,
+//   })
+// );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-
-// mongoose
-//   .connect("mongodb://localhost/calyaan", {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: false,
-//     useCreateIndex: true,
-//   })
-//   .then(() => {
-//     console.log("esta conectado base datos");
-//   })
-//   .catch((error) => {
-//     console.log("este es el error", error);
-//   });
-
-
 
 mongoose
   .connect(process.env.MONGODB_URL, {
@@ -53,7 +48,6 @@ mongoose
   .catch((error) => {
     console.log("este es el error", error);
   });
-
 app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);
 app.use("/api/services", serviceRouter);
@@ -64,8 +58,7 @@ app.use("/pushRouter", pushRouter);
 app.get("/api/config/google", (req, res) => {
   res.send(process.env.GOOGLE_API_KEY || "");
 });
-
-app.post("/process-payment", (req, res) => {
+app.post("/api/process-payment", cors(), (req, res) => {
   mercadopago.configurations.setAccessToken(
     process.env.ACCESS_TOKEN_MERCADO_PAGO
   );
@@ -88,18 +81,20 @@ app.post("/process-payment", (req, res) => {
     },
   };
 
-  return mercadopago.payment.save(payment_data).then((response) => {
-    console.log("respuesta de mercado pago", response.body.status);
-    return res.status(response.status).json({
-      status: response.body.status,
-      status_detail: response.body.status_detail,
-      id: response.body.id,
-    });
-  });
+  return mercadopago.payment
+    .save(payment_data)
+    .then((response) => {
+      console.log("respuesta de mercado pago", response.body.status);
+      return res.status(response.status).json({
+        status: response.body.status,
+        status_detail: response.body.status_detail,
+        id: response.body.id,
+      });
+    })
+
+    .catch((error) => console.log("este este el error", error));
 });
-// const browser = await puppeteer.launch({
-//   ignoreDefaultArgs: ["--disable-extensions"],
-// });
+
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 app.use(express.static(path.join(__dirname, "/frontend/build")));
@@ -188,14 +183,6 @@ io.on("connection", (socket) => {
     }
   });
 });
-
-// const { PUBLIC_VAPID_KEY, PRIVATE_VAPID_KEY, MAILTO } = process.env;
-
-// webPush.setVapidDetails(
-//   MAILTO,
-//   PUBLIC_VAPID_KEY,
-//   PRIVATE_VAPID_KEY
-// );
 
 httpServer.listen(port, () => {
   console.log(`Serve at :${port}`);

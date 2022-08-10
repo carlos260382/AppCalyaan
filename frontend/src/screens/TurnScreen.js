@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-// import { createTurn } from '../actions/turnAction.js'
+
 import styles from '../style/OrderScreenTurn.module.css';
 import Swal from 'sweetalert2';
 
@@ -14,7 +14,7 @@ import {
 } from '../constants/turnConstant.js';
 import Axios from 'axios';
 
-export default function TurnScreen(props, order) {
+export default function TurnScreen(props) {
 	const history = useHistory();
 	console.log('props de screen', props.order);
 
@@ -26,30 +26,30 @@ export default function TurnScreen(props, order) {
 		};
 	});
 
-	// console.log('servicios', service)
-	// console.log('servicios desde props', props.order.orderItems)
-
 	const userSignin = useSelector(state => state.userSignin);
 	const { userInfo } = userSignin;
 	const dispatch = useDispatch();
 	console.log('informacion de usuario', userInfo);
+	const [turn, setTurn] = useState({});
 
-	const [turn, setTurn] = useState({
-		seller: props.order.seller,
-		day: '',
-		hour: '',
-		status: false,
-		user: props.order.user,
-		orderId: props.order._id,
-		fullName: props.order.shippingAddress.fullName,
-		emailUser: userInfo.email,
-		phoneUser: userInfo.phone,
-		address: props.order.shippingAddress.address,
-		city: props.order.shippingAddress.city,
-		postalCode: props.order.shippingAddress.postalCode,
-		country: props.order.shippingAddress.country,
-		service,
-	});
+	useEffect(() => {
+		setTurn({
+			seller: props.order.seller,
+			day: '',
+			hour: '',
+			status: false,
+			user: props.order.user,
+			orderId: props.order._id,
+			fullName: props.order.shippingAddress.fullName,
+			emailUser: userInfo.email,
+			phoneUser: userInfo.phone,
+			address: props.order.shippingAddress.address,
+			city: props.order.shippingAddress.city,
+			postalCode: props.order.shippingAddress.postalCode,
+			country: props.order.shippingAddress.country,
+			service,
+		});
+	}, []);
 
 	const handleChange = e => {
 		setTurn({
@@ -65,7 +65,6 @@ export default function TurnScreen(props, order) {
 			Swal.fire('debe seleccionar un dia y una hora');
 		}
 
-		// dispatch({ type: TURN_CREATE_REQUEST, payload: turn });
 		try {
 			//   const {
 			//     userSignin: { userInfo },
@@ -85,13 +84,8 @@ export default function TurnScreen(props, order) {
 				Swal.fire(
 					'Turno creado con exito, recibira una notificación cuando el profesional tome el servicio'
 				);
-				// alert(
-				// 	'Turno creado con exito, recibira una notificación cuando el profesional tome el servicio'
-				// );
 				history.push(`/order/${props.order._id}`);
 			}
-			// dispatch({ type: CART_EMPTY });
-			// localStorage.removeItem('cartItems');
 		} catch (error) {
 			dispatch({
 				type: TURN_CREATE_FAIL,
@@ -101,8 +95,6 @@ export default function TurnScreen(props, order) {
 						: error.message,
 			});
 		}
-
-		// (dispatch (createTurn(turn)))
 	};
 
 	console.log('turno creado', turn);
@@ -111,7 +103,7 @@ export default function TurnScreen(props, order) {
 			<h1>Elije la fecha y hora para agendar su turno</h1>
 
 			<div>
-				<label>Selecciona la Fecha</label>
+				<label>Elije el dia</label>
 				<input type='date' name='day' onChange={handleChange} />
 			</div>
 

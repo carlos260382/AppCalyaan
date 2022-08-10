@@ -32,7 +32,6 @@ export default function Landing() {
 	// const userSignin = useSelector(state => state.userSignin);
 	// const { userInfo } = userSignin;
 
-	console.log('categoria', categories);
 	const images = {
 		Barbería: catBarberia,
 		Depilación: catDepilacion,

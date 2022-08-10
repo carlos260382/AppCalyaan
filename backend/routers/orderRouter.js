@@ -90,7 +90,6 @@ orderRouter.post(
   "/",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    console.log("lo que llega a order", req.body);
     if (req.body.orderItems.length === 0) {
       res.status(400).send({ message: "Cart is empty" });
     } else {
@@ -128,7 +127,6 @@ orderRouter.get(
 );
 
 orderRouter.put("/:id/pay", async (req, res) => {
-  //console.log('este es el req body', req.params)
   try {
     const order = await Order.findById(req.params.id).populate(
       "user",
@@ -147,9 +145,9 @@ orderRouter.put("/:id/pay", async (req, res) => {
       res.send({ message: "Order Paid", order: updatedOrder });
       const userEmail = order.user.email;
       const user = await User.findOne({ email: userEmail });
-      console.log("usuario encontrado", user);
+
       if (user) {
-        user.pointsUser = order.itemsPrice * 0.03 + user.pointsUser;
+        user.pointsUser = order.itemsPrice * 0.05 + user.pointsUser;
       }
       await user.save();
 
@@ -162,7 +160,7 @@ orderRouter.put("/:id/pay", async (req, res) => {
       //     pass: process.env.KEY_NODEMAILER,
       //   },
       // });
-      console.log("esta es la order para email", order);
+
       // const mailOptions = {
       //   from: "Remitente",
       //   to: order.user.email,
@@ -240,8 +238,6 @@ orderRouter.put(
   "/:id/update",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    console.log("lo q llega body", req.body.points);
-    console.log("lo q llega params", req.params);
     const order = await Order.findById(req.params.id);
     if (order) {
       if (order.totalPrice >= req.body.points.points) {

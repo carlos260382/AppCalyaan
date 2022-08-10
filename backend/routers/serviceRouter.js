@@ -7,13 +7,6 @@ import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
 
 const serviceRouter = express.Router();
 
-// serviceRouter.get(
-//   '/',
-//   expressAsyncHandler(async (req, res) => {
-//   console.log('este es el get servicios')
-//   })
-// );
-
 serviceRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
@@ -149,7 +142,7 @@ serviceRouter.put(
     if (service) {
       service.name = req.body.name;
       service.price = req.body.price;
-      service.points = req.body.price * 0.03;
+      service.points = req.body.price * 0.05;
       service.image = req.body.image;
       service.category = req.body.category;
       service.brand = req.body.brand;
@@ -160,7 +153,6 @@ serviceRouter.put(
     } else {
       res.status(404).send({ message: "service Not Found" });
     }
-    console.log("servicio modificado", service);
   })
 );
 

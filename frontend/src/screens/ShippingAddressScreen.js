@@ -22,11 +22,18 @@ const libs = ['places'];
 const defaultLocation = { lat: 45.516, lng: -73.56 };
 
 export default function ShippingAddressScreen(props) {
-	// Codigo Mapa Google
-
+	const cart = useSelector(state => state.cart);
+	const { shippingAddress } = cart;
 	const userSignin = useSelector(state => state.userSignin);
 	const { userInfo } = userSignin;
-	const cart = useSelector(state => state.cart);
+	const [fullName, setFullName] = useState(shippingAddress.fullName);
+	const [address, setAddress] = useState(shippingAddress.address);
+	const [city, setCity] = useState(shippingAddress.city);
+	const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
+	const [country, setCountry] = useState(shippingAddress.country);
+	const [userPoints, setUserPoints] = useState(userInfo.pointsUser);
+
+	// Codigo Mapa Google
 
 	const toPrice = num => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
 	cart.itemsPrice = toPrice(
@@ -37,7 +44,6 @@ export default function ShippingAddressScreen(props) {
 	cart.taxPrice = toPrice(0.65 * cart.itemsPrice);
 	cart.totalPrice = cart.itemsPrice + cart.shippingPrice - cart.taxPrice;
 
-	const { shippingAddress } = cart;
 	const [googleApiKey, setGoogleApiKey] = useState('');
 	const [center, setCenter] = useState(defaultLocation);
 	const [location, setLocation] = useState(center);
@@ -60,7 +66,9 @@ export default function ShippingAddressScreen(props) {
 			getUserCurrentLocation();
 		};
 		fetch();
-
+		setFullName(userInfo.name);
+		setCountry('Colombia');
+		setUserPoints(userInfo.pointsUser);
 		if (success) {
 			Swal.fire('Ubicación seleccionada con exito');
 			props.history.push(`/orderTurn/${order._id}`);
@@ -107,10 +115,9 @@ export default function ShippingAddressScreen(props) {
 				},
 			});
 
-			setFullName(userInfo.name);
-			setCountry('Colombia');
-			cart.shippingAddress.fullName = userInfo.name;
-			cart.shippingAddress.country = 'Colombia';
+			cart.shippingAddress.fullName = fullName;
+			cart.shippingAddress.country = country;
+			cart.userPoints = userPoints;
 			cart.shippingAddress.address = places[0].formatted_address;
 			cart.shippingAddress.city = places[0].vicinity;
 			const newLat = location.lat;
@@ -158,13 +165,6 @@ export default function ShippingAddressScreen(props) {
 
 	// Inicio formulario ShippinAnddress
 
-	const [fullName, setFullName] = useState(shippingAddress.fullName);
-	const [address, setAddress] = useState(shippingAddress.address);
-	const [city, setCity] = useState(shippingAddress.city);
-	const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
-	const [country, setCountry] = useState(shippingAddress.country);
-	const [userPoints, setUserPoints] = useState(userInfo.pointsUser);
-
 	// const dispatch = useDispatch(); repetido
 
 	// useEffect(() => {			Repetido
@@ -177,12 +177,9 @@ export default function ShippingAddressScreen(props) {
 
 	const submitHandler = e => {
 		e.preventDefault();
-		setFullName(userInfo.name);
-		setCountry('Colombia');
-		setUserPoints(userInfo.pointsUser);
-		cart.shippingAddress.fullName = userInfo.name;
-		cart.shippingAddress.country = 'Colombia';
-		cart.userPoints = userInfo.pointsUser;
+		cart.shippingAddress.fullName = fullName;
+		cart.shippingAddress.country = country;
+		cart.userPoints = userPoints;
 
 		dispatch(
 			saveShippingAddress({
@@ -198,8 +195,7 @@ export default function ShippingAddressScreen(props) {
 		// props.history.push(`/orderTurn/${order._id}`);
 
 		if (cart) dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
-		console.log('lo que va a la order', cart);
-		console.log('lo que va a la order2', cart.cartItems);
+
 		dispatch({ type: ORDER_CREATE_RESET });
 	};
 

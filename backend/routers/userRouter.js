@@ -2,7 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 //import data from '../data.js';
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import User from "../models/userModel.js";
@@ -45,6 +45,8 @@ userRouter.post(
           phone: user.phone,
           pointsUser: user.pointsUser,
           logo: user.seller.logo,
+          userfatherId: user.userfatherId,
+          userChildreId: user.userChildreId,
           token: generateToken(user),
         });
         return;
@@ -67,6 +69,8 @@ userRouter.post(
         isSeller: user.isSeller,
         phone: user.phone,
         pointsUser: user.pointsUser,
+        userfatherId: user.userfatherId,
+        userChildreId: user.userChildreId,
         logo: user.seller.logo,
         token: generateToken(user),
       });
@@ -87,6 +91,8 @@ userRouter.post(
       password: bcrypt.hashSync(req.body.password, 8),
       phone: req.body.phone,
       pointsUser: 0,
+      userfatherId: req.body.userfatherId,
+      userChildreId: req.body.userChildreId,
     });
     const createdUser = await user.save();
     res.send({
@@ -98,8 +104,16 @@ userRouter.post(
       isSeller: user.isSeller,
       numberPassword: keyNumber,
       pointsUser: createdUser.pointUser,
+      userfatherId: createdUser.userfatherId,
+      userChildreId: createdUser.userChildreId,
       token: generateToken(createdUser),
     });
+    const userFather = await User.findById(req.body.userfatherId);
+    if (userFather) {
+      // const userChildreId = userFather.userChildreId;
+      userFather.userChildreId = [...userFather.userChildreId, createdUser._id];
+      const updatedUser = await userFather.save();
+    }
   })
 );
 
@@ -141,6 +155,8 @@ userRouter.put(
         isAdmin: updatedUser.isAdmin,
         isSeller: user.isSeller,
         pointsUser: updatedUser.pointsUser,
+        userfatherId: updatedUser.userfatherId,
+        userChildreId: updatedUser.userChildreId,
         token: generateToken(updatedUser),
       });
     }

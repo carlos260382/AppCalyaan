@@ -32,7 +32,7 @@ export default function ShippingAddressScreen(props) {
 	const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
 	const [country, setCountry] = useState(shippingAddress.country);
 	const [userPoints, setUserPoints] = useState(userInfo.pointsUser);
-
+	const [userfatherId, setUserfatherId] = useState(userInfo.userfatherId);
 	// Codigo Mapa Google
 
 	const toPrice = num => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
@@ -69,6 +69,7 @@ export default function ShippingAddressScreen(props) {
 		setFullName(userInfo.name);
 		setCountry('Colombia');
 		setUserPoints(userInfo.pointsUser);
+		setUserfatherId(userInfo.userfatherId);
 		if (success) {
 			Swal.fire('Ubicación seleccionada con exito');
 			props.history.push(`/orderTurn/${order._id}`);
@@ -118,6 +119,7 @@ export default function ShippingAddressScreen(props) {
 			cart.shippingAddress.fullName = fullName;
 			cart.shippingAddress.country = country;
 			cart.userPoints = userPoints;
+			cart.userfatherId = userfatherId;
 			cart.shippingAddress.address = places[0].formatted_address;
 			cart.shippingAddress.city = places[0].vicinity;
 			const newLat = location.lat;
@@ -129,7 +131,7 @@ export default function ShippingAddressScreen(props) {
 					city,
 					postalCode,
 					country,
-					userPoints,
+					userfatherId,
 					lat: newLat,
 					lng: newLng,
 				})
@@ -180,6 +182,7 @@ export default function ShippingAddressScreen(props) {
 		cart.shippingAddress.fullName = fullName;
 		cart.shippingAddress.country = country;
 		cart.userPoints = userPoints;
+		cart.userfatherId = userfatherId;
 
 		dispatch(
 			saveShippingAddress({
@@ -187,6 +190,7 @@ export default function ShippingAddressScreen(props) {
 				address,
 				city,
 				postalCode,
+				userfatherId,
 				country,
 			})
 		);
@@ -198,7 +202,7 @@ export default function ShippingAddressScreen(props) {
 
 		dispatch({ type: ORDER_CREATE_RESET });
 	};
-
+	console.log('usuario ID', typeof userfatherId);
 	return googleApiKey ? (
 		<div className={styles.container}>
 			<div className={styles.map}>

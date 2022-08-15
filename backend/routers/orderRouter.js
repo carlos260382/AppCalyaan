@@ -90,6 +90,7 @@ orderRouter.post(
   "/",
   isAuth,
   expressAsyncHandler(async (req, res) => {
+    console.log("lo que llega del body", req.body);
     if (req.body.orderItems.length === 0) {
       res.status(400).send({ message: "Cart is empty" });
     } else {
@@ -104,7 +105,9 @@ orderRouter.post(
         totalPrice: req.body.totalPrice,
         user: req.user._id,
         userPoints: req.body.userPoints,
+        userfatherId: req.body.userfatherId,
       });
+      console.log("order creada", order);
       const createdOrder = await order.save();
       res
         .status(201)
@@ -127,11 +130,13 @@ orderRouter.get(
 );
 
 orderRouter.put("/:id/pay", async (req, res) => {
+  console.log("lo que llega body", req.params.id);
   try {
     const order = await Order.findById(req.params.id).populate(
       "user",
       "email name"
     );
+
     if (order) {
       order.isPaid = true;
       order.paidAt = Date.now();
@@ -144,13 +149,20 @@ orderRouter.put("/:id/pay", async (req, res) => {
       const updatedOrder = await order.save();
       res.send({ message: "Order Paid", order: updatedOrder });
       const userEmail = order.user.email;
-      const user = await User.findOne({ email: userEmail });
 
+      const user = await User.findOne({ email: userEmail });
       if (user) {
         user.pointsUser = order.itemsPrice * 0.05 + user.pointsUser;
       }
       await user.save();
+      console.log("la order", order.userfatherId);
 
+      const userFather = await User.findById(order.userfatherId);
+      console.log("usuario father", userFather);
+      if (userFather) {
+        userFather.pointsUser = order.itemsPrice * 0.07 + userFather.pointsUser;
+      }
+      await userFather.save();
       // const transporter = nodemailer.createTransport({
       //   host: "smtp.gmail.com",
       //   port: 465,

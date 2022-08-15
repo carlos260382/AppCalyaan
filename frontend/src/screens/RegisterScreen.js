@@ -9,14 +9,18 @@ import MessageBox from '../components/MessageBox';
 import styles from '../style/SigninScreen.module.css';
 
 export default function RegisterScreen(props) {
+	console.log('ID de userFather', props);
+	const { id } = props.match.params;
+	console.log('el id', id);
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [phone, setPhone] = useState('');
+	const [userfatherId, setUserfatherId] = useState('');
 	const userRegister = useSelector(state => state.userRegister);
 	const { userInfo, loading, error } = userRegister;
-	console.log('usuario register', userInfo);
+
 	const redirect = props.location.search
 		? props.location.search.split('=')[1]
 		: '/';
@@ -27,19 +31,22 @@ export default function RegisterScreen(props) {
 		if (password !== confirmPassword) {
 			alert('La contraseña y la contraseña de confirmación no coinciden');
 		} else {
-			dispatch(register(name, email, password, phone));
+			dispatch(register(name, email, password, phone, userfatherId));
 		}
 	};
 	useEffect(() => {
+		if (id) setUserfatherId(id);
 		if (userInfo) {
 			props.history.push(redirect);
 		}
 	}, [props.history, redirect, userInfo]);
+	console.log('id del padre', userfatherId);
 	return (
 		<div className={styles.container}>
 			<form className='form' onSubmit={submitHandler}>
 				<div>
 					<h1>Crear una cuenta</h1>
+					<h2>ID de quien lo refiere {id}</h2>
 				</div>
 				{loading && <LoadingBox></LoadingBox>}
 				{error && <MessageBox variant='danger'>{error}</MessageBox>}

@@ -3,6 +3,7 @@ import mg from "mailgun-js";
 import User from "./models/userModel.js";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
+
 dotenv.config();
 
 export const generateToken = (user) => {
@@ -23,6 +24,29 @@ export const generateToken = (user) => {
 
 export const isAuth = (req, res, next) => {
   const authorization = req.headers.authorization;
+
+  if (authorization) {
+    const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
+    jwt.verify(
+      token,
+      process.env.JWT_SECRET || "somethingsecret",
+      (err, decode) => {
+        if (err) {
+          res.status(401).send({ message: "Invalid Token" });
+        } else {
+          req.user = decode;
+          next();
+        }
+      }
+    );
+  } else {
+    res.status(401).send({ message: "No Token" });
+  }
+};
+
+export const isAuthTurn = (req, res, next) => {
+  const authorization = req.body.headers.Authorization;
+  console.log("autoizacion", authorization);
   if (authorization) {
     const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
     jwt.verify(

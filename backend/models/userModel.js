@@ -15,6 +15,8 @@ const userSchema = new mongoose.Schema(
       rating: { type: Number, default: 0, required: true },
       numReviews: { type: Number, default: 0, required: true },
     },
+    userfatherId: { type: String, required: false },
+    userChildreId: [{ type: String, required: false }],
     numberPassword: {
       type: Number,
       default: random(100000, 999999),

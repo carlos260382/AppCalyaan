@@ -151,12 +151,6 @@ export default function Footer() {
 						<h3>Calyaancol</h3>
 					</a>
 				</div>
-
-				{/* <div className={styles.footer5}>
-					<button onClick={goWhatsApp} className={styles.btnW}>
-						<img src={whatsApp} className={styles.imgW} />
-					</button>
-				</div> */}
 			</div>
 
 			{userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}

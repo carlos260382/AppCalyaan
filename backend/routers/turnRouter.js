@@ -4,7 +4,13 @@ import Turn from "../models/turnModel.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import User from "../models/userModel.js";
-import { isAdmin, isAuth, isSellerOrAdmin, random } from "../utils.js";
+import {
+  isAdmin,
+  isAuth,
+  isSellerOrAdmin,
+  random,
+  isAuthTurn,
+} from "../utils.js";
 dotenv.config();
 const port = process.env.PORT || 5000;
 const turnRouter = express.Router();
@@ -78,33 +84,33 @@ turnRouter.post(
 
           // for (let i = 0; i < userSeller.length; i++) {
           // console.log("email user", userSeller[i].email);
-          const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
-            auth: {
-              user: "ep3977752@gmail.com",
-              pass: process.env.KEY_NODEMAILER,
-            },
-          });
+          // const transporter = nodemailer.createTransport({
+          //   host: "smtp.gmail.com",
+          //   port: 465,
+          //   secure: true,
+          //   auth: {
+          //     user: "ep3977752@gmail.com",
+          //     pass: process.env.KEY_NODEMAILER,
+          //   },
+          // });
 
-          const mailOptions = {
-            from: "Calyaan",
-            // to: userSeller[i].email,
-            to: "calyaan.com@gmail.com",
-            subject: "Han solicitado turno para un servicio",
-            text: `El señor ${turn.fullName}, con el numero telefonico ${turn.phoneUser} acaba de solicitar los servicios ${turn.service}, para el dia ${turn.day} y hora ${turn.hour}, el numero de pedido ${turn.orderId} y el codigo de seguridad para ser presentado por el profesional que toma el servicio es ${turn.keyCode}`,
-          };
+          // const mailOptions = {
+          //   from: "Calyaan",
+          //   // to: userSeller[i].email,
+          //   to: "calyaan.com@gmail.com",
+          //   subject: "Han solicitado turno para un servicio",
+          //   text: `El señor ${turn.fullName}, con el numero telefonico ${turn.phoneUser} acaba de solicitar los servicios ${turn.service}, para el dia ${turn.day} y hora ${turn.hour}, el numero de pedido ${turn.orderId} y el codigo de seguridad para ser presentado por el profesional que toma el servicio es ${turn.keyCode}`,
+          // };
 
-          transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(
-                "Email enviado a Calyaan informando la creación del turno"
-              );
-            }
-          });
+          // transporter.sendMail(mailOptions, (err, info) => {
+          //   if (err) {
+          //     console.log(err);
+          //   } else {
+          //     console.log(
+          //       "Email enviado a Calyaan informando la creación del turno"
+          //     );
+          //   }
+          // });
           // }
         }
       }
@@ -117,7 +123,7 @@ turnRouter.post(
 
 turnRouter.put(
   "/:id",
-  isAuth,
+  isAuthTurn,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const turn = await Turn.findById(req.params.id);

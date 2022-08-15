@@ -5,21 +5,16 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
 import CartScreen from './screens/CartScreen';
-// import HomeScreen from './screens/HomeScreen';
-// import HomeScreenService from './screens/HomeScreenService';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderScreenTurn from './screens/OrderScreenTurn';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
-// import ProductListScreen from './screens/ProductListScreen';
 import ServiceListScreen from './screens/ServiceListScreen';
-// import ProductScreen from './screens/ProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
-// import ProductEditScreen from './screens/ProductEditScreen';
 import ServiceScreen from './screens/ServiceScreen';
 import ServiceEditScreen from './screens/ServiceEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
@@ -40,7 +35,6 @@ import TurnListScreen from './screens/TurnListScreen';
 import Footer from './components/Footer.js';
 import recoverPasswordScreen from './screens/recoverPasswordScreen.js';
 import ResetPasswordScreen from './screens/ResetPasswordScreen.js';
-// import worker from './webPush/worker';
 
 function App() {
 	const dispatch = useDispatch();
@@ -56,9 +50,8 @@ function App() {
 				<Route path='/' component={Landing} exact></Route>
 				<Route path='/seller/:id' component={SellerScreen}></Route>
 				<Route path='/cart/:id?' component={CartScreen}></Route>
-				{/* <Route path="/product/:id" component={ProductScreen} exact></Route> */}
 				<Route path='/service/:id' component={ServiceScreen} exact></Route>
-				{/* <Route path="/product/:id/edit" component={ProductEditScreen} exact></Route> */}
+
 				<Route
 					path='/service/:id/edit'
 					component={ServiceEditScreen}
@@ -73,7 +66,8 @@ function App() {
 					path='/resetPassword/:id/:number'
 					component={ResetPasswordScreen}
 				></Route>
-				<Route path='/register' component={RegisterScreen}></Route>
+				<Route path='/register/:id' component={RegisterScreen}></Route>
+				{/* <Route path='/register' component={RegisterScreen}></Route> */}
 				<Route path='/shipping' component={ShippingAddressScreen}></Route>
 				<Route path='/payment' component={PaymentMethodScreen}></Route>
 				<Route path='/placeorder' component={PlaceOrderScreen}></Route>
@@ -82,7 +76,6 @@ function App() {
 				<Route path='/turnlist' component={TurnListScreen}></Route>
 				<Route path='/orderhistory' component={OrderHistoryScreen}></Route>
 				<Route path='/mercadoPago/:id' component={MercadoPagoForm}></Route>
-				{/* <Route path='/worker' component={worker}></Route> */}
 
 				<Route
 					path='/search/name/:name?'
@@ -141,7 +134,6 @@ function App() {
 					component={OrderListScreen}
 				></SellerRoute>
 
-				{/* <Route path="/product" component={HomeScreen} exact></Route> */}
 				<Route path='/service' component={SearchScreen} exact></Route>
 				<Route path='/turn' component={TurnScreen} exact></Route>
 			</main>

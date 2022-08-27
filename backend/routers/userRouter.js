@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import User from "../models/userModel.js";
 import { generateToken, isAdmin, isAuth, random } from "../utils.js";
+import webpush from "web-push";
 dotenv.config();
 
 const userRouter = express.Router();
@@ -40,6 +41,7 @@ userRouter.post(
           _id: user._id,
           name: user.name,
           email: user.email,
+          subscribed: user.subscribed,
           isAdmin: user.isAdmin,
           isSeller: user.isSeller,
           phone: user.phone,
@@ -68,6 +70,7 @@ userRouter.post(
         isAdmin: user.isAdmin,
         isSeller: user.isSeller,
         phone: user.phone,
+        subscribed: user.subscribed,
         pointsUser: user.pointsUser,
         userfatherId: user.userfatherId,
         userChildreId: user.userChildreId,
@@ -88,6 +91,7 @@ userRouter.post(
     const user = new User({
       name: req.body.name,
       email: req.body.email,
+      subscribed: false,
       password: bcrypt.hashSync(req.body.password, 8),
       phone: req.body.phone,
       pointsUser: 0,
@@ -99,6 +103,7 @@ userRouter.post(
       _id: createdUser._id,
       name: createdUser.name,
       email: createdUser.email,
+      subscribed: createdUser.subscribed,
       phone: createdUser.phone,
       isAdmin: createdUser.isAdmin,
       isSeller: user.isSeller,
@@ -151,6 +156,7 @@ userRouter.put(
         name: updatedUser.name,
         email: updatedUser.email,
         phone: updatedUser.phone,
+        subscribed: updatedUser.subscribed,
         logo: updatedUser.seller.logo,
         isAdmin: updatedUser.isAdmin,
         isSeller: user.isSeller,
@@ -311,6 +317,53 @@ userRouter.put("/recoverPassword/:id/:number", async (req, res) => {
   //   numberPassword: keyNumber,
   //   token: generateToken(createdUser),
   // });
+});
+
+userRouter.post("/suscribed", isAuth, async (req, res) => {
+  console.log("lo que llega del suscription", req.body.subscription);
+
+  const pushSubscription = JSON.parse(req.body.subscription);
+
+  console.log("ya suscription", pushSubscription);
+
+  const payload = JSON.stringify({
+    title: "Hola Bienvenido a Calyaan",
+    message:
+      "Nos alegra que te hayas suscrito, ahora podras recibir nuestras notificaciones",
+  });
+
+  try {
+    await webpush.setVapidDetails(
+      "mailto:andres260382@gmail.com",
+      process.env.PUBLIC_API_KEY_WEBPUSH,
+      process.env.PRIVATE_API_KEY_WEBPUSH
+    );
+    await webpush.sendNotification(pushSubscription, payload);
+    // res.status(200).json();
+  } catch (error) {
+    console.log("error de suscribed", error);
+    res.status(400).send(error).json();
+  }
+
+  const user = await User.findById(req.user._id);
+  if (user) {
+    user.subscribed = true;
+    const updatedUser = await user.save();
+    res.send({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      phone: updatedUser.phone,
+      subscribed: updatedUser.subscribed,
+      logo: updatedUser.seller.logo,
+      isAdmin: updatedUser.isAdmin,
+      isSeller: user.isSeller,
+      pointsUser: updatedUser.pointsUser,
+      userfatherId: updatedUser.userfatherId,
+      userChildreId: updatedUser.userChildreId,
+      token: generateToken(updatedUser),
+    });
+  }
 });
 
 export default userRouter;

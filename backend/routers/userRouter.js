@@ -319,12 +319,14 @@ userRouter.put("/recoverPassword/:id/:number", async (req, res) => {
   // });
 });
 
-userRouter.post("/suscribed", isAuth, async (req, res) => {
-  console.log("lo que llega del suscription", req.body.subscription);
+userRouter.post("/suscribed", async (req, res) => {
+  console.log("lo que llega", req.body);
 
   const pushSubscription = JSON.parse(req.body.subscription);
+  const userId = req.body.user._id;
 
   console.log("ya suscription", pushSubscription);
+  console.log("ID del usuario", userId);
 
   const payload = JSON.stringify({
     title: "Hola Bienvenido a Calyaan",
@@ -344,10 +346,10 @@ userRouter.post("/suscribed", isAuth, async (req, res) => {
     console.log("error de suscribed", error);
     res.status(400).send(error).json();
   }
-
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(userId);
   if (user) {
     user.subscribed = true;
+    user.subscription = pushSubscription;
     const updatedUser = await user.save();
     res.send({
       _id: updatedUser._id,
@@ -361,6 +363,7 @@ userRouter.post("/suscribed", isAuth, async (req, res) => {
       pointsUser: updatedUser.pointsUser,
       userfatherId: updatedUser.userfatherId,
       userChildreId: updatedUser.userChildreId,
+      subscription: updatedUser.subscription,
       token: generateToken(updatedUser),
     });
   }

@@ -104,6 +104,7 @@ serviceRouter.get(
     );
     if (service) {
       res.send(service);
+      console.log("serivice enviado", service);
     } else {
       res.status(404).send({ message: "service Not Found" });
     }

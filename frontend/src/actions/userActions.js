@@ -242,7 +242,7 @@ export const recoverPassword = (password, id, number) => async (dispatch) => {
 };
 
 export const subscriptionUser =
-  (user, subscription) => async (dispatch, getState) => {
+  (user, subscriptions) => async (dispatch, getState) => {
     dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });
     const {
       userSignin: { userInfo },
@@ -253,7 +253,7 @@ export const subscriptionUser =
         {
           user: user,
 
-          subscription: JSON.stringify(subscription),
+          subscription: JSON.stringify(subscriptions),
         },
         {
           headers: { authorization: `Bearer ${userInfo.token}` },

@@ -7,7 +7,7 @@ import { saveShippingAddress } from "../actions/cartActions";
 import { createOrder } from "../actions/orderActions.js";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants.js";
 import styles from "../style/ShippingAddressScreen.module.css";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import {
   LoadScript,
   GoogleMap,
@@ -71,7 +71,7 @@ export default function ShippingAddressScreen(props) {
     setUserPoints(userInfo.pointsUser);
     setUserfatherId(userInfo.userfatherId);
     if (success) {
-      Swal.fire("Ubicación seleccionada con exito");
+      alert("Ubicación seleccionada con exito");
       props.history.push(`/orderTurn/${order._id}`);
       // props.history.push(`/turn`);
       dispatch({ type: ORDER_CREATE_RESET });

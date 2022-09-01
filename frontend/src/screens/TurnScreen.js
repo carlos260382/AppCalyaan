@@ -32,11 +32,42 @@ export default function TurnScreen(props) {
   console.log("informacion de usuario", userInfo);
   const [turn, setTurn] = useState({});
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   setTurn({
+  //     seller: props.order.seller,
+  //     day: "",
+  //     hour: "",
+  //     status: false,
+  //     user: props.order.user,
+  //     orderId: props.order._id,
+  //     fullName: props.order.shippingAddress.fullName,
+  //     emailUser: userInfo.email,
+  //     phoneUser: userInfo.phone,
+  //     address: props.order.shippingAddress.address,
+  //     city: props.order.shippingAddress.city,
+  //     postalCode: props.order.shippingAddress.postalCode,
+  //     country: props.order.shippingAddress.country,
+  //     service,
+  //   });
+  // }, [
+  //   props.order.seller,
+  //   props.order.user,
+  //   props.order._id,
+  //   props.order.shippingAddress.fullName,
+  //   userInfo.email,
+  //   userInfo.phone,
+  //   props.order.shippingAddress.address,
+  //   props.order.shippingAddress.city,
+  //   props.order.shippingAddress.postalCode,
+  //   props.order.shippingAddress.country,
+  //   service,
+  // ]);
+
+  const handleChange = (e) => {
     setTurn({
+      ...turn,
+      [e.target.name]: e.target.value,
       seller: props.order.seller,
-      day: "",
-      hour: "",
       status: false,
       user: props.order.user,
       orderId: props.order._id,
@@ -49,30 +80,28 @@ export default function TurnScreen(props) {
       country: props.order.shippingAddress.country,
       service,
     });
-  }, [
-    props.order.seller,
-    props.order.user,
-    props.order._id,
-    props.order.shippingAddress.fullName,
-    userInfo.email,
-    userInfo.phone,
-    props.order.shippingAddress.address,
-    props.order.shippingAddress.city,
-    props.order.shippingAddress.postalCode,
-    props.order.shippingAddress.country,
-    service,
-  ]);
-
-  const handleChange = (e) => {
-    setTurn({
-      ...turn,
-      [e.target.name]: e.target.value,
-    });
     console.log("este es el turno", turn);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // setTurn({
+    //   ...turn,
+    //   seller: props.order.seller,
+    //   status: false,
+    //   user: props.order.user,
+    //   orderId: props.order._id,
+    //   fullName: props.order.shippingAddress.fullName,
+    //   emailUser: userInfo.email,
+    //   phoneUser: userInfo.phone,
+    //   address: props.order.shippingAddress.address,
+    //   city: props.order.shippingAddress.city,
+    //   postalCode: props.order.shippingAddress.postalCode,
+    //   country: props.order.shippingAddress.country,
+    //   service,
+    // });
+
     if (!turn.hour || !turn.day) {
       Swal.fire("debe seleccionar un dia y una hora");
     }

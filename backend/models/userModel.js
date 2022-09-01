@@ -9,6 +9,14 @@ const userSchema = new mongoose.Schema(
     subscribed: { type: Boolean, default: false, required: true },
     isAdmin: { type: Boolean, default: false, required: true },
     isSeller: { type: Boolean, default: false, required: true },
+    subscription: {
+      endpoint: { type: String, default: 0, required: false },
+      expirationTime: { type: String, default: 0, required: false },
+      keys: {
+        auth: { type: String, required: false },
+        p256dh: { type: String, required: false },
+      },
+    },
     seller: {
       name: String,
       logo: String,

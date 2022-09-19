@@ -4,29 +4,34 @@
 	height: auto;
 	display: flex;
 	flex-direction: row;
-	align-items: center;
-	justify-content: space-around;
+	align-items: flex-start;
+	justify-content: space-evenly;
 	background-color: #f5f5f5;
 	margin-top: 1.5em;
 }
 
 .col1 {
+	width: 30vw;
 	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-around;
-	gap: 1vw;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	margin-top: 10px;
+	
 }
 
-.h1 {
-	font-size: 1.5em;
-	color: #494949;
-	font-family:'Josefin Sans';
+
+.cart{
+display: flex;
+flex-direction: row;
+width: 30vw;
 }
+
+
 
 .img {
-	width: 10em;
-	height: 10em;
+	width: 10vw;
+	height: 10vw;
 	border: solid 2px #eda598;
 	border-radius: 1em;
 }
@@ -70,130 +75,56 @@
 }
 
 .nameProduc {
-	font-size: 1.5em;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 5px;
+	margin: 5px;
+	font-size: 1em;
 	color: #494949;
 	font-family:'Josefin Sans';
 }
 
 .price {
-	font-size: 1.5em;
+	font-size: 1em;
 	color: #494949;
 	font-family:'Josefin Sans';
 }
 
-.btnDelet {
+.nameProduc button {
 	display: flex;
 	justify-content: center;
-	width: 7vw;
-	font-size: 1em;
-	padding: 1vw 1vw 1vw 1vw;
-}
-
-.btn {
-	background-color: #eda598;
-	color: white;
-	border: none;
-	border-radius: 1em;
-	padding: 1em;
-	font-size: 1em;
-	font-family:'Josefin Sans';
-	cursor: pointer;
-	width: 70%;
-	margin-left: 15%;
-	transition: all 0.3s ease-in-out;
-}
-
-.btn:hover {
-	background-color: #494949;
-}
-
-.btn:focus {
-	background-color: #494949;
-}
-
-.btn:active {
-	background-color: #494949;
-}
-
-.btn:disabled {
-	background-color: #494949;
-}
-
-.btn:disabled:hover {
-	background-color: #494949;
-}
-
-.selec select {
-	background-color: #eda598 ;
 	width: 5vw;
+	height: 3vw;
+	background-color: #ffffff;
+	border: none;
+	border-radius: 10px;
 	font-size: 1em;
+	padding: 1em;
 }
 
-.col2 {
-	width: 30vw;
-}
 
-.h2 {
-	font-size: 1.5rem;
-	color: #494949;
-	font-family:'Josefin Sans';
-}
 
-@media (max-width: 1199.98px) {
-}
-
-@media (max-width: 991.98px) {
-}
 
 @media (max-width: 768px) {
-	.selec select {
-		font-size: 1.5em;
-		width: 3em;
+	.container{
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
-	.container {
-		margin-top: 3em;
-	}
-	.col1 div{
-		margin: 0.2em;
-	}
-	.btnDelet {
-		width: 8em;
-		font-size: 1em;
-		padding: 0.7vw;
+	.col1 {
+		flex-direction: row;
+		
 	}
 
 }
 
 @media (max-width: 575.98px) {
-	.col1 div{
-		margin: 0.2em;
-	}
-	.selec select {
-		font-size: 1.5em;
-		width: 3em;
-	}
-	.h2 {
-		font-size: 2em;
-	}
-	.btn {
-		padding: 0.5em;
-		font-size: 1.5em;
+	
+
+	.col1 {
+		flex-direction: column;
+		
 	}
 
-	.btnDelet {
-		display: flex;
-		justify-content: center;
-		width: 9em;
-		font-size: 0.9em;
-		padding: 0.7vw;
-	}
-
-	.container {
-flex-direction: column;
-		margin-top: 1em;
-	}
-
-	.col2{
-		width: 90vw;
-	}
 }

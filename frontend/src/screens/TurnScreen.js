@@ -141,16 +141,18 @@ export default function TurnScreen(props) {
   console.log("turno creado", turn);
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <h1>Elije la fecha y hora para agendar su turno</h1>
+      <h1>Aquí podras gestionar tu turno</h1>
+      <label>
+        Escoge el dia y la hora en la que deseas recibir el servicio
+      </label>
 
       <div>
-        <label>Elije el dia</label>
+        <p>Dia</p>
         <input type="date" name="day" onChange={handleChange} />
       </div>
 
       <div>
-        <label>Selecciona la Hora</label>
-
+        <p>Horarios disponibles</p>
         <select name="hour" onChange={handleChange}>
           <option value="09:00 AM">09:00 AM</option>
           <option value="10:00 AM">10:00 AM</option>

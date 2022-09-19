@@ -50,7 +50,7 @@ export default function RegisterScreen(props) {
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
-        <div>
+        <div className={styles.mail}>
           <label htmlFor="phone">Numero de telefono</label>
           <input
             type="text"
@@ -60,7 +60,7 @@ export default function RegisterScreen(props) {
             onChange={(e) => setPhone(e.target.value)}
           ></input>
         </div>
-        <div>
+        <div className={styles.mail}>
           <label htmlFor="name">Nombre</label>
           <input
             type="text"
@@ -70,7 +70,7 @@ export default function RegisterScreen(props) {
             onChange={(e) => setName(e.target.value)}
           ></input>
         </div>
-        <div>
+        <div className={styles.mail}>
           <label htmlFor="email">Correo Electrónico</label>
           <input
             type="email"
@@ -81,7 +81,7 @@ export default function RegisterScreen(props) {
           ></input>
         </div>
 
-        <div>
+        <div className={styles.mail}>
           <label htmlFor="password">Contraseña</label>
           <input
             type="password"
@@ -91,7 +91,7 @@ export default function RegisterScreen(props) {
             onChange={(e) => setPassword(e.target.value)}
           ></input>
         </div>
-        <div>
+        <div className={styles.mail}>
           <label htmlFor="confirmPassword">Confirmar Contraseña</label>
           <input
             type="password"

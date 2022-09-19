@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Rating from "./Rating";
 import styles from "../style/SearchScreen.module.css";
-import verMas from "../assent/verMas.svg";
+import verMas from "../assent/verMas.png";
 import addCar from "../assent/addCart.svg";
 import carAdd from "../assent/carAdd.svg";
 import { addToCart } from "../actions/cartActions.js";
@@ -23,10 +23,6 @@ export default function Service(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // const addToCartHandler = (_id) => {
-  //   history.push(`/cart/${_id}?qty=${qty}`);
-  // };
-
   const addToCartHandler = (_id) => {
     let qty = 1;
     dispatch(addToCart(_id, qty));
@@ -36,7 +32,7 @@ export default function Service(props) {
   const addToCartOrder = (_id) => {
     let qty = 1;
     dispatch(addToCart(_id, qty));
-    history.push("/signin?redirect=shipping");
+    history.push("/signin?redirect=cart");
   };
 
   useEffect(() => {
@@ -44,7 +40,7 @@ export default function Service(props) {
   }, []);
 
   const { service } = props;
-  console.log("estos son los servicios", props);
+
   return (
     <div key={service._id} className={styles.card}>
       <Link to={`/service/${service._id}`}>
@@ -63,7 +59,7 @@ export default function Service(props) {
           <img src={addCar} alt={"img"} />
         )}
         <Link to={`/service/${service._id}`}>
-          <img src={verMas} alt={service.name} />
+          <img src={verMas} alt={"img"} />
         </Link>
       </div>
 

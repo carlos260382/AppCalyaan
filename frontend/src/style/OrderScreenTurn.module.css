@@ -14,7 +14,7 @@
 
 
 .btn {
-	background-color: #eda598;
+	background-color: #641940;
 	color: white;
 	border: none;
 	border-radius: 1em;
@@ -28,6 +28,7 @@
 
 .btn:hover {
 	background-color: #494949;
+	color:#ffffff
 }
 
 .btn:focus {
@@ -49,32 +50,35 @@
 .form {
 	padding: 1em;
 	margin: 1em;
-	border: 0.1em #eda598 solid;
 	background-color: #f8f8f8;
-	border-radius: 0.5rem;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
 	gap: 1.5em;
 	width: 30em;
+	border: solid 1px #49494927;
+	border-radius: 20px;
+	box-shadow: 8px 8px 12px rgba(17, 12, 12, 0.101);
 }
 
 .form input,
 select {
 	margin-left: 0.5em;
-	background-color: #eda598;
-	color: #ffff;
+	border: solid 1px #eda598; 
+	background-color: transparent;
+	color: #494949;
+	border-radius: 5px;
 }
 
 .form label {
 	font-family: 'Josefin Sans';
-	color: #494949;
-	font-size: 1.5em;
+	color: #201d1d;
+	font-size: 1em;
 }
 
 .form h1 {
 	font-family: 'Josefin Sans';
-	color: #494949;
+	color: #201d1d;
 	font-size: 1.5em;
 }
 
@@ -94,5 +98,8 @@ select {
 
 	.form{
 		align-items: center;
+	}
+	.form label{
+		font-size: 1.3em;
 	}
 }

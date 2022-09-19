@@ -4,6 +4,7 @@ import Turn from "../models/turnModel.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import User from "../models/userModel.js";
+import webpush from "web-push";
 import {
   isAdmin,
   isAuth,
@@ -112,6 +113,32 @@ turnRouter.post(
           //   }
           // });
           // }
+
+          // *-------Envio Norificacion Push-----------
+
+          console.log("el seller", userSeller[0].subscription);
+          const payload = JSON.stringify({
+            title: "Servicio solicitado",
+            message: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}`,
+          });
+
+          try {
+            for (let i = 0; i < userSeller.length; i++) {
+              await webpush.setVapidDetails(
+                "mailto:andres260382@gmail.com",
+                process.env.PUBLIC_API_KEY_WEBPUSH,
+                process.env.PRIVATE_API_KEY_WEBPUSH
+              );
+              await webpush.sendNotification(
+                userSeller[i].subscription,
+                payload
+              );
+              // res.status(200).json();
+            }
+          } catch (error) {
+            console.log("No se pudo enviar la notificacion", error);
+            res.status(400).send(error).json();
+          }
         }
       }
     } catch (error) {
@@ -131,6 +158,28 @@ turnRouter.put(
       turn.status = true;
       const updatedTurn = await turn.save();
       res.send({ message: "Turno Aceptado", Turn: updatedTurn });
+
+      // *-------Envio Norificacion Push-----------
+
+      const user = await User.findById(turn.user);
+      console.log("el usuario", user);
+      const payload = JSON.stringify({
+        title: "Servicio Aprobado",
+        message: `por el profesional ${req.body.name}, en su correo recibira los detalles para realizar el pago`,
+      });
+
+      try {
+        await webpush.setVapidDetails(
+          "mailto:andres260382@gmail.com",
+          process.env.PUBLIC_API_KEY_WEBPUSH,
+          process.env.PRIVATE_API_KEY_WEBPUSH
+        );
+        await webpush.sendNotification(user.subscription, payload);
+        // res.status(200).json();
+      } catch (error) {
+        console.log("No se pudo enviar la notificacion", error);
+        res.status(400).send(error).json();
+      }
 
       // ---------------> Envio EMAIL---------------------->
 

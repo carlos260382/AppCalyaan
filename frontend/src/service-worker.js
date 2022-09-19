@@ -91,6 +91,6 @@ self.addEventListener("push", (e) => {
 
   self.registration.showNotification(data.title, {
     body: data.message,
-    icon: "https://calyaan.com/wp-content/uploads/2022/01/Logo-Calyaan2-115x64.png",
+    icon: "https://ibb.co/Y2tJyPh",
   });
 });

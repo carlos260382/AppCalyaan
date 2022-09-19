@@ -1,11 +1,10 @@
 .container{
-    width: 100vw;
+    width: 60vw;
     height: auto;
-display: flex;
-flex-direction: row;
-justify-content: flex-start;
-align-content: flex-start;
-align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 
 }
 
@@ -13,8 +12,9 @@ align-items: center;
 .map{
 	display: flex;
 	flex-direction: column;
-	width: 70vw;
-	height: 85vh;
+	width: 50vw;
+	height: 30vw;
+	border-radius: 20px;
 }
 
 .map h1{
@@ -28,11 +28,31 @@ align-items: center;
 	font-family:'Josefin Sans';
 	color: #494949
 }
+
+.mapInput{
+	position: absolute;
+margin-left: 30%;
+	
+}
+
+.mapInput input{
+	border: none;
+	width: 20vw;
+}
+
+.mapInput button{
+	background-color: #eda598;
+	color: white;
+	border: none;
+}
+
 .sectionForm{
+	display: flex;
+	flex-direction: row;
 width: 50vw;
 height: auto;
 }
-.sectionForm h1{
+.sectionForm div{
 	font-size: 1.5em;
 	font-family:'Josefin Sans';
 	color: #494949
@@ -41,12 +61,12 @@ height: auto;
 	background-color: #eda598;
 	color: white;
 	border: none;
-	border-radius: 1em;
-	padding: 0.5em;
-	font-size: 2em;
+	border-radius: 0.5em;
+	padding: 0.2em;
+	font-size: 1.5em;
 	font-family: 'Josefin Sans';
 	cursor: pointer;
-	width: 50%;
+	width: 30%;
 	margin-left: 15%;
 	transition: all 0.3s ease-in-out;
 }
@@ -80,6 +100,13 @@ height: auto;
 	.map{
 		width: 90vw;
 	}
+
+	.btn {
+
+		font-size: 1em;
+
+	}
+
 }
 
 @media (max-width: 575.98px) {
@@ -89,6 +116,7 @@ height: auto;
 	
 	.map{
 		width: 95vw;
+		height: 95vw;
 	}
 
 	.sectionForm{
@@ -102,4 +130,16 @@ height: auto;
 			margin-left: 22%;
 		
 		}
+
+		.mapInput{
+			margin-top: 55vw;
+			margin-left: 0;
+		}
+
+		.mapInput input{
+			margin-right: 0;
+			border: none;
+			width: 60vw;
+		}
+
 }

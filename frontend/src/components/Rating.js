@@ -4,9 +4,7 @@ import React from "react";
 
 export default function Rating(props) {
   const { rating, numReviews, caption } = props;
-  console.log("rating", rating);
-  console.log("numeroRevi", numReviews);
-  console.log("caption", caption);
+
   return (
     <div className="rating">
       <span>

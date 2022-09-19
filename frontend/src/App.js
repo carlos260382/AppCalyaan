@@ -35,6 +35,7 @@ import TurnListScreen from "./screens/TurnListScreen";
 import Footer from "./components/Footer.js";
 import recoverPasswordScreen from "./screens/recoverPasswordScreen.js";
 import ResetPasswordScreen from "./screens/ResetPasswordScreen.js";
+import CartScreenOnly from "./screens/CartScreenOnly.js";
 import Updater from "./components/Updater.js";
 import { onServiceWorkerUpdate } from "@3m1/service-worker-updater";
 import { subscriptionUser } from "./actions/userActions.js";
@@ -236,6 +237,8 @@ function App(config) {
         <Route path="/" component={Landing} exact></Route>
         <Route path="/seller/:id" component={SellerScreen}></Route>
         <Route path="/cart/:id?" component={CartScreen}></Route>
+        <Route path="/cartOnly/:id?" component={CartScreenOnly}></Route>
+
         <Route path="/service/:id" component={ServiceScreen} exact></Route>
 
         <Route

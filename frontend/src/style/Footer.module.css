@@ -204,11 +204,14 @@ gap: 20px;
 
 	.container h3{
 	margin: 9px;
+	font-size: 1em;
+	font-weight: 500;
 	}
 
 	.container ul
 	li {
 		font-size: 1em;
+		font-weight: 500;
 
 	}
 

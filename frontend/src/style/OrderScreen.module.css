@@ -9,46 +9,45 @@
 	height: auto;
 	margin-bottom: 3vw;
 }
-.card h2 {
-	font-family: 'Josefin Sans';
-	color: #494949;
-	font-size: 1.5em;
-	font-weight: 500;
-}
 
 .card p{
 	font-family: 'Josefin Sans';
 	color: #494949;
-	font-size: 1.5em;
+	font-size: 1em;
 	font-weight: 400;
 }
 
-
+.card h2{
+	margin: 0;
+}
 
 .turn {
 	padding: 1em;
 	margin: 1em;
-	border: 0.1em #eda598 solid;
 	background-color: #f8f8f8;
-	border-radius: 0.5rem;
 	width: 40vw;
 	height: auto;
+	border: solid 1px #49494927;
+	border-radius: 20px;
+	box-shadow: 8px 8px 12px rgba(17, 12, 12, 0.101);
 }
 
 .card{
 	padding: 1em;
 	margin: 1em;
-	border: 0.1em #eda598 solid;
 	background-color: #f8f8f8;
-	border-radius: 0.5rem;
 	width: 40vw;
 	height: auto;
+	border: solid 1px #49494927;
+	border-radius: 20px;
+	box-shadow: 8px 8px 12px rgba(17, 12, 12, 0.101);
 }
 
 .service{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	margin-bottom: 1em;
 }
 
 .service a {
@@ -56,6 +55,7 @@
 	color: #494949;
 	font-size: 1em;
 	font-weight: 400;
+	margin-left: 1em;
 }
 
 .service div {
@@ -63,6 +63,7 @@
 	color: #494949;
 	font-size: 1.2em;
 	font-weight: 400;
+	margin-bottom: 1em;
 }
 
 

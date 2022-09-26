@@ -1,5 +1,45 @@
 .mesage {
 	font-size: 1.2em;
 	font-weight: bold;
-	color: #000000;
+	color: black;
+}
+
+
+.card{
+    background-color: #ffffff;
+	margin: 0.5em 0.5em 0.5em 0.5em;
+	color:#494949;
+	font-size: 1em;
+	font-family: 'Josefin Sans';
+	transition: 0.5s;
+	cursor: pointer;
+	border-radius: 12px;
+	width: 90%;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	align-content: flex-end;
+	justify-content:flex-start;
+	align-items: center;
+	box-shadow: 8px 8px 12px rgba(17, 12, 12, 0.3);
+}
+
+.card strong{
+	font-size: 1em;
+	font-weight: 500;
+	font-family: 'Josefin Sans';
+	color: black;
+}
+
+.card input{
+	width: 100%;
+}
+
+.btn{
+	border: solid 1px #494949;
+}
+
+.chat{
+	width: 7vw;
+	height: 7vw;
 }

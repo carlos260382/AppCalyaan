@@ -10,6 +10,7 @@ import LoadingBox from "./LoadingBox";
 import MessageBox from "./MessageBox";
 import styles from "../style/Navbar.module.css";
 import logo from "../assent/logo.png";
+import ProfileBtn from "./ProfileBtn.js";
 
 import carrito from "../assent/cart2.svg";
 // import carritoBlanco from "../assent/cart1.svg";
@@ -95,10 +96,10 @@ function Navbar() {
   // }
 
   return (
-    <div className={styles.all}>
-      <div className={styles.container}>
+    <div className={styles.container}>
+      <div className={styles.containerMenu}>
         <Asider />
-        <div className={styles.containerMenu}>
+        <div className={styles.containerLogo}>
           <div className={styles.logo}>
             <NavLink to="/">
               <img src={logo} alt="imagen principal" />
@@ -160,94 +161,19 @@ function Navbar() {
         </div>
 
         {userInfo ? (
-          <div className={styles.signin}>
-            {userInfo ? (
-              <div className="dropdown">
-                <NavLink to="#" className={styles.nav}>
-                  {userInfo.phone} <i></i>{" "}
-                </NavLink>
-                <ul className="dropdown-content">
-                  <li>
-                    <NavLink to="/profile">Perfil de Usuario</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/orderhistory">Historial de pedidos</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="#signout" onClick={signoutHandler}>
-                      Desconectar
-                    </NavLink>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              ""
-            )}
-            {userInfo && userInfo.isSeller && (
-              <div>
-                <div className="dropdown">
-                  <NavLink to="#admin" className={styles.nav}>
-                    Profesional <i></i>
-                  </NavLink>
-                  <ul className="dropdown-content">
-                    <li>
-                      <NavLink to="/servicelist/seller">Servicios</NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/turnlist">Turnos</NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/orderlist/seller">Pedidos</NavLink>
-                    </li>
-                  </ul>
-                </div>
-                {/* <div>
-								<img src={userInfo.logo} alt='' className={styles.imgSeller} />
-							</div>{' '} */}
-              </div>
-            )}
-            {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <NavLink to="#admin" className={styles.nav}>
-                  Admin <i></i>
-                </NavLink>
-                <ul className="dropdown-content">
-                  <li>
-                    <NavLink to="/dashboard">Dashboard</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/servicelist">Servicios</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/turnlist">Turnos</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/orderlist">Pedidos</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/userlist">Usuarios</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/support">Soporte</NavLink>
-                  </li>
-                </ul>
-              </div>
-            )}
-            {userInfo ? (
-              <div className={styles.container2}>
-                <div className={styles.carrito}>
-                  <NavLink to="/cartOnly">
-                    <img src={carrito} alt="description" />
+          <div className={styles.container2}>
+            <div className={styles.signin}>
+              <ProfileBtn />
+            </div>
+            <div className={styles.carrito}>
+              <NavLink to="/cartOnly">
+                <img src={carrito} alt="description" />
 
-                    {cartItems.length > 0 && (
-                      <span className={styles.badge}>{cartItems.length}</span>
-                    )}
-                  </NavLink>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
+                {cartItems.length > 0 && (
+                  <span className={styles.badge}>{cartItems.length}</span>
+                )}
+              </NavLink>
+            </div>
           </div>
         ) : (
           ""
@@ -269,15 +195,6 @@ function Navbar() {
             ""
           )}
         </div>
-        {/* <div className={styles.contenSearch}>
-          <div>
-            <Route
-              render={({ history }) => (
-                <SearchBox history={history}></SearchBox>
-              )}
-            ></Route>
-          </div>
-        </div> */}
       </div>
     </div>
   );

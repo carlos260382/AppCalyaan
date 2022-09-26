@@ -14,7 +14,7 @@ import turnRouter from "./routers/turnRouter.js";
 import mercadopago from "mercadopago";
 import { response } from "express";
 import pushRouter from "./routers/pushRouter.js";
-import { onesignal } from "./oneSignal.js";
+// import { onesignal } from "./oneSignal.js";
 import webpush from "web-push";
 import fs from "fs";
 dotenv.config();
@@ -188,6 +188,4 @@ io.on("connection", (socket) => {
 
 httpServer.listen(port, () => {
   console.log(`Serve at :${port}`);
-
-  // onesignal();
 });

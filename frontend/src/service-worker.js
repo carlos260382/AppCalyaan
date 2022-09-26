@@ -92,5 +92,9 @@ self.addEventListener("push", (e) => {
   self.registration.showNotification(data.title, {
     body: data.message,
     icon: "https://ibb.co/Y2tJyPh",
+    onClick: function () {
+      window.location = "https://calyaanwp.netlify.app/";
+      this.close();
+    },
   });
 });

@@ -1,0 +1,72 @@
+.Dropdown {
+    width: 3vw;
+    height: 3vw;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.Dropdown img{
+    width: 3vw;
+    height: 3vw;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.MenuDropdown{
+    background-color: #FFF6EA;
+}
+
+
+.MenuHeader{
+    margin: 1em;
+font-family: 'Josefin Sans';
+font-size: 1.5em;
+color: #494949    
+}
+
+.MenuItem{
+   background-color: transparent;
+   width: 18vw;
+   border: none;
+}
+
+
+
+.MenuItem a{
+    font-family: 'Josefin Sans';
+font-size: 1em;
+color: #494949 ;
+font-weight: 400;
+
+
+}
+
+
+@media (max-width: 575.98px) {  
+
+    .Dropdown {
+        width: 9vw;
+        height: 9vw;
+margin-left: 1.7em;
+    }
+    .Dropdown img{
+        width: 5vw;
+        height: 5vw;
+
+    }
+
+
+    .MenuHeader{
+        margin: 1em;
+    font-size: 1.5em;
+   
+    }
+    
+    .MenuItem{
+       background-color: transparent;
+       width: 30vw;
+       border: none;
+    }
+
+
+}

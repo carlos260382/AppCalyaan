@@ -149,7 +149,7 @@ aside {
 	height: 100%;
 	background-color: #FFF6EA;
 	z-index: 1000;
-	transform: translateX(-50vw);
+	transform: translateX(-60vw);
 	transition: all 0.5s;
 
 }
@@ -164,7 +164,7 @@ button.open-sidebar {
 	position: center;
 	font-size: 2.1em;
 	padding-top: 0.2em;
-	margin: 1em 0 0 0;
+	margin: 0.5em 0 0 0;
 	background: none;
 	color: #1b1818bc;
 	cursor: pointer;
@@ -173,8 +173,8 @@ button.open-sidebar:hover {
 	border-color: #3211a0;
 }
 aside ul {
-	padding-left: 1em;
-	padding-right: 1em;
+	padding-left: 0em;
+	padding-right: 2em;
 	list-style: none;
 	font-family: 'Josefin Sans';
 	font-size: 1.5em;
@@ -184,7 +184,7 @@ aside ul {
 aside li {
 	display: flex;
 	justify-content: space-between;
-	padding: 0.6vw;
+	padding-bottom: 0.6vw;
 	border-bottom: #49494986 1px solid;
 	
 }
@@ -437,6 +437,7 @@ img.large {
 	position: fixed;
 	right: 1rem;
 	bottom: 1rem;
+	margin-bottom: 1em;
 }
 .chatbox ul {
 	overflow: scroll;
@@ -512,11 +513,17 @@ img.large {
 	}}
 
 
+
+	
 @media (max-width: 991.98px) {
 	body {
 		height: 100vh;
 		font-size: 1.2rem;
 		width: 100vw;
+	}
+
+	aside {
+		transform: translateX(-80vw);
 	}
 
 	.form {
@@ -617,6 +624,11 @@ margin-top: 6em;
 		width: 30vw;
 		height: 2em;
 	}
+
+	aside {
+		transform: translateX(-60vw);
+	}
+
 }
 
 

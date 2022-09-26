@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import User from "../models/userModel.js";
+import Subscription from "../models/subscriptions.js";
 import { generateToken, isAdmin, isAuth, random } from "../utils.js";
 import webpush from "web-push";
 dotenv.config();
@@ -332,6 +333,7 @@ userRouter.post("/suscribed", async (req, res) => {
     title: "Hola Bienvenido a Calyaan",
     message:
       "Nos alegra que te hayas suscrito, ahora podras recibir nuestras notificaciones",
+    vibrate: [100, 50, 100],
   });
 
   try {
@@ -341,11 +343,16 @@ userRouter.post("/suscribed", async (req, res) => {
       process.env.PRIVATE_API_KEY_WEBPUSH
     );
     await webpush.sendNotification(pushSubscription, payload);
-    // res.status(200).json();
   } catch (error) {
     console.log("error de suscribed", error);
     res.status(400).send(error).json();
   }
+
+  // const subscription = new Subscription({
+  //   subscription: pushSubscription,
+  // });
+  // const createdSubscription = await subscription.save();
+  // res.status(200).json(createdSubscription);
   const user = await User.findById(userId);
   if (user) {
     user.subscribed = true;

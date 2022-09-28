@@ -53,7 +53,6 @@ serviceRouter.get(
       ...ratingFilter,
     })
 
-      // console.log("este es el servicio", services)
       .populate("seller", "seller.name seller.logo")
       .sort(sortOrder)
       .skip(pageSize * (page - 1))
@@ -104,7 +103,6 @@ serviceRouter.get(
     );
     if (service) {
       res.send(service);
-      console.log("serivice enviado", service);
     } else {
       res.status(404).send({ message: "service Not Found" });
     }

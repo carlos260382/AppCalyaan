@@ -5,11 +5,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { detailsOrder, updateValue } from "../actions/orderActions";
-import { signoutHome } from "../actions/userActions.js";
 import { listTurns } from "../actions/turnAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import styles from "../style/OrderScreen.module.css";
+import { updateUserProfile, signoutHome } from "../actions/userActions.js";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants.js";
 
 import {
   ORDER_DELIVER_RESET,
@@ -74,9 +75,9 @@ export default function OrderScreen(props) {
   // const turnUser = turns && turns.find(e => e.orderId === id);
   // console.log('este es turn Filter', turnUser);
 
-  const irMercadoPago = () => {
-    props.history.push(`/mercadoPago/${order._id}`);
-  };
+  // const irMercadoPago = () => {
+  //   props.history.push(`/mercadoPago/${order._id}`);
+  // };
 
   const redeemPoints = () => {
     const points = {
@@ -85,7 +86,11 @@ export default function OrderScreen(props) {
     };
     if (window.confirm("¿Desea redimir sus puntos?")) {
       dispatch(updateValue(id, points));
-      window.location.replace("");
+      // dispatch(updateUserProfile());
+      window.location.reload(true);
+
+      //window.location.replace("");
+
       dispatch(signoutHome());
     }
   };
@@ -160,13 +165,6 @@ export default function OrderScreen(props) {
                         <br />${order.totalPrice}
                         <h4>Medios de pago</h4>
                         <p>
-                          1380 0006 0358 Davivienda ahorros Mateo Gomez Cc
-                          1094926510
-                          <br />
-                          <br />
-                          Bancolombia ahorros 865 00001 002 Mateo Gomez Cc
-                          1094926510 <br />
-                          <br />
                           Nequi 300 657 4297 Valentina Muschallik Cc 1018480222{" "}
                           <br />
                           <br />

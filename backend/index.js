@@ -11,12 +11,12 @@ import orderRouter from "./routers/orderRouter.js";
 import uploadRouter from "./routers/uploadRouter.js";
 import cors from "cors";
 import turnRouter from "./routers/turnRouter.js";
-import mercadopago from "mercadopago";
-import { response } from "express";
-import pushRouter from "./routers/pushRouter.js";
+// import mercadopago from "mercadopago";
+// import { response } from "express";
+// import pushRouter from "./routers/pushRouter.js";
 // import { onesignal } from "./oneSignal.js";
-import webpush from "web-push";
-import fs from "fs";
+// import webpush from "web-push";
+// import fs from "fs";
 dotenv.config();
 
 const app = express();
@@ -48,54 +48,53 @@ mongoose
     console.log("esta conectado base datos");
   })
   .catch((error) => {
-    console.log("este es el error", error);
+    console.log("error bases datos", error);
   });
 app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);
 app.use("/api/services", serviceRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/turn", turnRouter);
-app.use("/pushRouter", pushRouter);
 
 app.get("/api/config/google", (req, res) => {
   res.send(process.env.GOOGLE_API_KEY || "");
 });
-app.post("/api/process-payment", cors(), (req, res) => {
-  mercadopago.configurations.setAccessToken(
-    process.env.ACCESS_TOKEN_MERCADO_PAGO
-  );
-  console.log("este es lo q llega del body", req.body);
-  const orderId = req.body.orderId;
+// app.post("/api/process-payment", cors(), (req, res) => {
+//   mercadopago.configurations.setAccessToken(
+//     process.env.ACCESS_TOKEN_MERCADO_PAGO
+//   );
 
-  const payment_data = {
-    transaction_amount: Number(req.body.transaction_amount),
-    token: req.body.token,
-    description: req.body.description,
-    installments: Number(req.body.installments),
-    payment_method_id: req.body.payment_method_id,
-    issuer_id: req.body.issuer_id,
-    payer: {
-      email: req.body.payer.email,
-      identification: {
-        type: req.body.payer.identification.type,
-        number: req.body.payer.identification.number,
-      },
-    },
-  };
+//   const orderId = req.body.orderId;
 
-  return mercadopago.payment
-    .save(payment_data)
-    .then((response) => {
-      console.log("respuesta de mercado pago", response.body.status);
-      return res.status(response.status).json({
-        status: response.body.status,
-        status_detail: response.body.status_detail,
-        id: response.body.id,
-      });
-    })
+//   const payment_data = {
+//     transaction_amount: Number(req.body.transaction_amount),
+//     token: req.body.token,
+//     description: req.body.description,
+//     installments: Number(req.body.installments),
+//     payment_method_id: req.body.payment_method_id,
+//     issuer_id: req.body.issuer_id,
+//     payer: {
+//       email: req.body.payer.email,
+//       identification: {
+//         type: req.body.payer.identification.type,
+//         number: req.body.payer.identification.number,
+//       },
+//     },
+//   };
 
-    .catch((error) => console.log("este este el error", error));
-});
+//   return mercadopago.payment
+//     .save(payment_data)
+//     .then((response) => {
+//       console.log("respuesta de mercado pago", response.body.status);
+//       return res.status(response.status).json({
+//         status: response.body.status,
+//         status_detail: response.body.status_detail,
+//         id: response.body.id,
+//       });
+//     })
+
+//     .catch((error) => console.log("este este el error", error));
+// });
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
@@ -179,7 +178,7 @@ io.on("connection", (socket) => {
       } else {
         io.to(socket.id).emit("message", {
           name: "Admin",
-          body: "Sorry. I am not online right now",
+          body: "¡Disculpa!, En el momento no estamos en linea",
         });
       }
     }

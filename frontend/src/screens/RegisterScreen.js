@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { register } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import Swal from "sweetalert2";
 import styles from "../style/SigninScreen.module.css";
 
 export default function RegisterScreen(props) {
@@ -29,7 +30,7 @@ export default function RegisterScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("La contraseña y la contraseña de confirmación no coinciden");
+      Swal.fire("Las contraseñas no coinciden");
     } else {
       dispatch(register(name, email, password, phone, userfatherId));
     }

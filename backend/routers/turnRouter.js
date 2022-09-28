@@ -82,7 +82,7 @@ turnRouter.post(
           const userSeller = await User.find({
             isSeller: true,
           });
-          console.log("userSeller", userSeller);
+          // console.log("userSeller", userSeller);
           // const subscription = await Subscription.find();
 
           // *Envio notificacion por email
@@ -120,8 +120,6 @@ turnRouter.post(
 
           // *-------Envio Norificacion Push-----------
 
-          // console.log("datos subscritions", subscription);
-
           // const payload = JSON.stringify({
           //   title: "Servicio solicitado",
           //   message: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}`,
@@ -148,24 +146,24 @@ turnRouter.post(
 
           // ----------SEND WHATSAPP ------------
 
-          try {
-            for (let i = 0; i < userSeller.length; i++) {
-              const sendWhatsApp = await axios.post(
-                // "http://localhost:3001/received",
-                "https://sendmessageswhats.herokuapp.com/received",
-                {
-                  body: {
-                    // from: "573128596420@c.us",
-                    // body: "servicio solicitado",
-                    from: "57" + userSeller[i].phone + "@c.us",
-                    body: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la siguiente dirección https://calyaanwp.netlify.app/turnlist`,
-                  },
-                }
-              );
-            }
-          } catch (error) {
-            console.log("este es el error", error);
-          }
+          // try {
+          //   for (let i = 0; i < userSeller.length; i++) {
+          //     const sendWhatsApp = await axios.post(
+          //       // "http://localhost:3001/received",
+          //       "https://sendmessagewhatsapp.herokuapp.com/received",
+          //       {
+          //         body: {
+          //           // from: "573128596420@c.us",
+          //           // body: "servicio solicitado",
+          //           from: "57" + userSeller[i].phone + "@c.us",
+          //           body: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la siguiente dirección https://calyaanwp.netlify.app/turnlist`,
+          //         },
+          //       }
+          //     );
+          //   }
+          // } catch (error) {
+          //   console.log("este es el error", error);
+          // }
 
           //---------- NOTIFICATION PUSH--------------
 
@@ -216,45 +214,45 @@ turnRouter.put(
 
       // *-------Envio Norificacion Push-----------
 
-      const user = await User.findById(turn.user);
-      console.log("el usuario", user);
-      const payload = JSON.stringify({
-        title: "Servicio Aprobado",
-        message: `por el profesional ${req.body.name}, en su correo recibira los detalles para realizar el pago`,
-        vibrate: [100, 50, 100],
-      });
+      // const user = await User.findById(turn.user);
 
-      try {
-        await webpush.setVapidDetails(
-          "mailto:andres260382@gmail.com",
-          process.env.PUBLIC_API_KEY_WEBPUSH,
-          process.env.PRIVATE_API_KEY_WEBPUSH
-        );
-        await webpush.sendNotification(user.subscription, payload);
-        // res.status(200).json();
-      } catch (error) {
-        console.log("No se pudo enviar la notificacion", error);
-        res.status(400).send(error).json();
-      }
+      // const payload = JSON.stringify({
+      //   title: "Servicio Aprobado",
+      //   message: `por el profesional ${req.body.name}, en su correo recibira los detalles para realizar el pago`,
+      //   vibrate: [100, 50, 100],
+      // });
+
+      // try {
+      //   await webpush.setVapidDetails(
+      //     "mailto:andres260382@gmail.com",
+      //     process.env.PUBLIC_API_KEY_WEBPUSH,
+      //     process.env.PRIVATE_API_KEY_WEBPUSH
+      //   );
+      //   await webpush.sendNotification(user.subscription, payload);
+      //   // res.status(200).json();
+      // } catch (error) {
+      //   console.log("No se pudo enviar la notificacion", error);
+      //   res.status(400).send(error).json();
+      // }
 
       // ----------- Envio por WHATSAPP ----------------------
 
-      try {
-        const sendWhatsApp = await axios.post(
-          // "http://localhost:3001/received",
-          "https://sendmessageswhats.herokuapp.com/received",
-          {
-            body: {
-              // from: "573128596420@c.us",
-              // body: "servicio solicitado",
-              from: "57" + turn.phoneUser + "@c.us",
-              body: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede realizar el pago para finalizar el pedido`,
-            },
-          }
-        );
-      } catch (error) {
-        console.log("este es el error", error);
-      }
+      // try {
+      //   const sendWhatsApp = await axios.post(
+      //     // "http://localhost:3001/received",
+      //     "https://sendmessagewhatsapp.herokuapp.com/received",
+      //     {
+      //       body: {
+      //         // from: "573128596420@c.us",
+      //         // body: "servicio solicitado",
+      //         from: "57" + turn.phoneUser + "@c.us",
+      //         body: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede realizar el pago para finalizar el pedido`,
+      //       },
+      //     }
+      //   );
+      // } catch (error) {
+      //   console.log("este es el error", error);
+      // }
 
       // ---------------> Envio EMAIL---------------------->
 
@@ -313,7 +311,6 @@ turnRouter.delete(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    console.log("loq llega", req.params.id);
     const turn = await Turn.findById(req.params.id);
     if (turn) {
       const deleteTurn = await turn.remove();

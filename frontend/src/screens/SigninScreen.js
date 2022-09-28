@@ -76,7 +76,7 @@ export default function SigninScreen(props) {
             <br />
             ¿No tienes una cuenta?
             <br />{" "}
-            <Link to={"/register/63039ca0cb0e561dd0af1fce"}>
+            <Link to="register/63039ca0cb0e561dd0af1fce">
               Regístrate Facilmente.
             </Link>
           </div>

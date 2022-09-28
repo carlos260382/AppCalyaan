@@ -82,7 +82,7 @@ export const signout = () => (dispatch) => {
   localStorage.removeItem("cartItems");
   localStorage.removeItem("shippingAddress");
   dispatch({ type: USER_SIGNOUT });
-  document.location.href = "/signin";
+  document.location.href = "/";
 };
 export const signoutHome = () => (dispatch) => {
   localStorage.removeItem("userInfo");

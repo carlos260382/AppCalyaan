@@ -90,7 +90,6 @@ orderRouter.post(
   "/",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    console.log("lo que llega del body", req.body);
     if (req.body.orderItems.length === 0) {
       res.status(400).send({ message: "Cart is empty" });
     } else {
@@ -107,7 +106,7 @@ orderRouter.post(
         userPoints: req.body.userPoints,
         userfatherId: req.body.userfatherId,
       });
-      console.log("order creada", order);
+
       const createdOrder = await order.save();
       res
         .status(201)
@@ -130,7 +129,6 @@ orderRouter.get(
 );
 
 orderRouter.put("/:id/pay", async (req, res) => {
-  console.log("lo que llega body", req.params.id);
   try {
     const order = await Order.findById(req.params.id).populate(
       "user",
@@ -155,12 +153,11 @@ orderRouter.put("/:id/pay", async (req, res) => {
         user.pointsUser = order.itemsPrice * 0.05 + user.pointsUser;
       }
       await user.save();
-      console.log("la order", order.userfatherId);
 
       const userFather = await User.findById(order.userfatherId);
-      console.log("usuario father", userFather);
+
       if (userFather) {
-        userFather.pointsUser = order.itemsPrice * 0.07 + userFather.pointsUser;
+        userFather.pointsUser = order.itemsPrice * 0.05 + userFather.pointsUser;
       }
       await userFather.save();
       // const transporter = nodemailer.createTransport({
@@ -187,24 +184,6 @@ orderRouter.put("/:id/pay", async (req, res) => {
       //     console.log("Email enviado");
       //   }
       // });
-
-      // mailgun()
-      //   .messages()
-      //   .send(
-      //     {
-      //       from: 'calyaan <ep3977752@gmail.com>',
-      //       to: `${order.user.name} <${order.user.email}>`,
-      //       subject: `New order ${order._id}`,
-      //       html: payOrderEmailTemplate(order),
-      //     },
-      //     (error, body) => {
-      //       if (error) {
-      //         console.log(error);
-      //       } else {
-      //         console.log(body);
-      //       }
-      //     }
-      //   );
     } else {
       res.status(404).send({ message: "Order Not Found" });
     }
@@ -260,10 +239,10 @@ orderRouter.put(
         if (user) {
           user.pointsUser = user.pointsUser - req.body.points.points;
           const updatedUser = await user.save();
+
           res.send({
-            message: "Order upDate",
             order: updatedOrder,
-            user: updatedUser.pointsUser,
+            user: updatedUser,
           });
         }
       }

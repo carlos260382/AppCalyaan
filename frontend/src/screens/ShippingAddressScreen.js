@@ -9,7 +9,7 @@ import { createOrder } from "../actions/orderActions.js";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants.js";
 import styles from "../style/ShippingAddressScreen.module.css";
 // import CartScreen from "./CartScreen";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 import {
   LoadScript,
   GoogleMap,
@@ -75,7 +75,7 @@ export default function ShippingAddressScreen(props) {
     setUserPoints(userInfo.pointsUser);
     setUserfatherId(userInfo.userfatherId);
     if (success) {
-      alert("Ubicación seleccionada con exito");
+      Swal.fire("Ubicación seleccionada con exito");
       history.push(`/orderTurn/${order._id}`);
       // props.history.push(`/turn`);
       dispatch({ type: ORDER_CREATE_RESET });
@@ -156,13 +156,13 @@ export default function ShippingAddressScreen(props) {
         dispatch({ type: ORDER_CREATE_RESET });
       }
     } else {
-      alert("Por favor ingrese su dirección");
+      Swal.fire("Por favor ingrese su dirección");
     }
   };
 
   const getUserCurrentLocation = async () => {
     if (!navigator.geolocation) {
-      alert("La geolocalización no es compatible con este navegador");
+      Swal.fire("La geolocalización no es compatible con este navegador");
     } else {
       navigator.geolocation.getCurrentPosition((position) => {
         setCenter({

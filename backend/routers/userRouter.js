@@ -254,7 +254,7 @@ userRouter.post(
         from: "Remitente",
         to: user.email,
         subject: "Enlace para recuperar su cuenta en Calyaan.com",
-        text: `https://www.calyaan.com.co/resetPassword/${user._id}/${user.numberPassword}, `,
+        text: `https://calyaanwp.netlify.app/#/resetPassword/${user._id}/${user.numberPassword}, `,
       };
 
       transporter.sendMail(mailOptions, (err, info) => {
@@ -321,32 +321,27 @@ userRouter.put("/recoverPassword/:id/:number", async (req, res) => {
 });
 
 userRouter.post("/suscribed", async (req, res) => {
-  console.log("lo que llega", req.body);
-
   const pushSubscription = JSON.parse(req.body.subscription);
   const userId = req.body.user._id;
 
-  console.log("ya suscription", pushSubscription);
-  console.log("ID del usuario", userId);
+  // const payload = JSON.stringify({
+  //   title: "Hola Bienvenido a Calyaan",
+  //   message:
+  //     "Nos alegra que te hayas suscrito, ahora podras recibir nuestras notificaciones",
+  //   vibrate: [100, 50, 100],
+  // });
 
-  const payload = JSON.stringify({
-    title: "Hola Bienvenido a Calyaan",
-    message:
-      "Nos alegra que te hayas suscrito, ahora podras recibir nuestras notificaciones",
-    vibrate: [100, 50, 100],
-  });
-
-  try {
-    await webpush.setVapidDetails(
-      "mailto:andres260382@gmail.com",
-      process.env.PUBLIC_API_KEY_WEBPUSH,
-      process.env.PRIVATE_API_KEY_WEBPUSH
-    );
-    await webpush.sendNotification(pushSubscription, payload);
-  } catch (error) {
-    console.log("error de suscribed", error);
-    res.status(400).send(error).json();
-  }
+  // try {
+  //   await webpush.setVapidDetails(
+  //     "mailto:andres260382@gmail.com",
+  //     process.env.PUBLIC_API_KEY_WEBPUSH,
+  //     process.env.PRIVATE_API_KEY_WEBPUSH
+  //   );
+  //   await webpush.sendNotification(pushSubscription, payload);
+  // } catch (error) {
+  //   console.log("error de suscribed", error);
+  //   res.status(400).send(error).json();
+  // }
 
   // const subscription = new Subscription({
   //   subscription: pushSubscription,

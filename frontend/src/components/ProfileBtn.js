@@ -42,17 +42,19 @@ const ProfileBtn = (props) => {
           <DropdownItem header className={styles.MenuHeader}>
             {userInfo.phone}
           </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/profile">Perfil de Usuario</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/orderhistory">Historial de pedidos</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="#signout" onClick={signoutHandler}>
-              Salir
-            </NavLink>
-          </DropdownItem>
+          <NavLink to="/profile">
+            <DropdownItem className={styles.MenuItem}>
+              Perfil de Usuario
+            </DropdownItem>
+          </NavLink>
+          <NavLink to="/orderhistory">
+            <DropdownItem className={styles.MenuItem}>
+              Historial de pedidos
+            </DropdownItem>
+          </NavLink>
+          <NavLink to="/signout" onClick={signoutHandler}>
+            <DropdownItem className={styles.MenuItem}>Salir</DropdownItem>
+          </NavLink>
           <DropdownItem divider />{" "}
         </DropdownMenu>
       ) : dropdownOpen && userInfo.isSeller && !userInfo.isAdmin ? (
@@ -60,58 +62,60 @@ const ProfileBtn = (props) => {
           <DropdownItem header className={styles.MenuHeader}>
             Profesional
           </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/profile">Perfil de Usuario</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/orderhistory">Historial de pedidos</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/servicelist/seller">Servicios</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/turnlist">Turnos</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/orderlist/seller">Pedidos</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="#signout" onClick={signoutHandler}>
-              Salir
-            </NavLink>
-          </DropdownItem>
+          <NavLink to="/profile">
+            <DropdownItem className={styles.MenuItem}>
+              Perfil de Usuario
+            </DropdownItem>
+          </NavLink>
+          <NavLink to="/orderhistory">
+            <DropdownItem className={styles.MenuItem}>
+              Historial de pedidos
+            </DropdownItem>
+          </NavLink>
+          <NavLink to="/servicelist/seller">
+            <DropdownItem className={styles.MenuItem}>Servicios</DropdownItem>
+          </NavLink>
+          <NavLink to="/turnlist">
+            <DropdownItem className={styles.MenuItem}>Turnos</DropdownItem>
+          </NavLink>
+          <NavLink to="/orderlist/seller">
+            <DropdownItem className={styles.MenuItem}>Pedidos</DropdownItem>
+          </NavLink>
+          <NavLink to="/signout" onClick={signoutHandler}>
+            <DropdownItem className={styles.MenuItem}>Salir</DropdownItem>
+          </NavLink>
         </DropdownMenu>
       ) : dropdownOpen && userInfo.isAdmin ? (
         <DropdownMenu className={styles.MenuDropdown}>
           <DropdownItem header className={styles.MenuHeader}>
             Administrador
           </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/profile">Perfil de Usuario</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/dashboard">Dashboard</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/servicelist">Servicios</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/turnlist">Turnos</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/orderlist">Pedidos</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/userlist">Usuarios</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="/support">Soporte</NavLink>
-          </DropdownItem>
-          <DropdownItem className={styles.MenuItem}>
-            <NavLink to="#signout" onClick={signoutHandler}>
-              Salir
-            </NavLink>
-          </DropdownItem>
+          <NavLink to="/profile">
+            <DropdownItem className={styles.MenuItem}>
+              Perfil de Usuario
+            </DropdownItem>
+          </NavLink>
+          <NavLink to="/dashboard">
+            <DropdownItem className={styles.MenuItem}>Dashboard</DropdownItem>
+          </NavLink>
+          <NavLink to="/servicelist">
+            <DropdownItem className={styles.MenuItem}>Servicios</DropdownItem>
+          </NavLink>
+          <NavLink to="/turnlist">
+            <DropdownItem className={styles.MenuItem}>Turnos</DropdownItem>
+          </NavLink>
+          <NavLink to="/orderlist">
+            <DropdownItem className={styles.MenuItem}>Pedidos</DropdownItem>
+          </NavLink>
+          <NavLink to="/userlist">
+            <DropdownItem className={styles.MenuItem}>Usuarios</DropdownItem>
+          </NavLink>
+          <NavLink to="/support">
+            <DropdownItem className={styles.MenuItem}>Soporte</DropdownItem>
+          </NavLink>
+          <NavLink to="/signout" onClick={signoutHandler}>
+            <DropdownItem className={styles.MenuItem}>Salir</DropdownItem>
+          </NavLink>
         </DropdownMenu>
       ) : (
         ""

@@ -45,13 +45,13 @@ export default function ProfileScreen() {
     }
 
     if (userInfo)
-      seturlReferred(`${process.env.PUBLIC_URL}/register/${userInfo._id} `);
+      seturlReferred(`${process.env.PUBLIC_URL}/#/register/${userInfo._id} `);
   }, [dispatch, userInfo._id, user, userInfo]);
   const submitHandler = (e) => {
     e.preventDefault();
     // dispatch update profile
     if (password !== confirmPassword) {
-      alert("Password and Confirm Password Are Not Matched");
+      Swal.fire("Las contraseñas no coinciden");
     } else {
       dispatch(
         updateUserProfile({

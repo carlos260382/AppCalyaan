@@ -9,6 +9,7 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Rating from "../components/Rating";
 import { SERVICE_REVIEW_CREATE_RESET } from "../constants/serviceConstants";
+import Swal from "sweetalert2";
 import styles from "../style/ServiceScreen.module.css";
 
 export default function ServiceScreen(props) {
@@ -54,7 +55,7 @@ export default function ServiceScreen(props) {
         createReview(serviceId, { rating, comment, name: userInfo.name })
       );
     } else {
-      alert("Por favor ingrese comentario y calificación");
+      Swal.fire("Por favor ingrese comentario y calificación");
     }
   };
 

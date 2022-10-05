@@ -142,7 +142,7 @@ export const listOrders =
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
       );
-      console.log(data);
+
       dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
     } catch (error) {
       const message =
@@ -234,7 +234,7 @@ export const updateValue = (orderId, points) => async (dispatch, getState) => {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
     );
-    console.log("data order update", data);
+
     dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));

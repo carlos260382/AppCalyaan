@@ -19,11 +19,11 @@ import {
 
 export default function OrderScreen(props) {
   const id = props.match.params.id;
-  console.log("estas son las props", id);
+
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
-  console.log("order new", order);
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
@@ -37,8 +37,6 @@ export default function OrderScreen(props) {
 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { success: successDeliver } = orderDeliver;
-
-  console.log("turno", turnUser);
 
   const dispatch = useDispatch();
 
@@ -71,14 +69,6 @@ export default function OrderScreen(props) {
     turns,
     loadingTurn,
   ]);
-
-  // const turnUser = turns && turns.find(e => e.orderId === id);
-  // console.log('este es turn Filter', turnUser);
-
-  // const irMercadoPago = () => {
-  //   props.history.push(`/mercadoPago/${order._id}`);
-  // };
-
   const redeemPoints = () => {
     const points = {
       points: order.userPoints,

@@ -71,8 +71,7 @@ export default function ProfileScreen() {
     navigator.clipboard.writeText(urlReferred);
     Swal.fire("Link copiado al portapapeles");
   };
-  console.log("info usuario pofile", userInfo);
-  console.log("URL Referred", urlReferred);
+
   return (
     <div className={styles.container}>
       <div className={styles.referred}>

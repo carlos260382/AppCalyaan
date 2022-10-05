@@ -259,7 +259,7 @@ export const subscriptionUser =
           headers: { authorization: `Bearer ${userInfo.token}` },
         }
       );
-      console.log("data del backend.data", data.data);
+
       dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
       dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.data });
       localStorage.setItem("userInfo", JSON.stringify(data.data));

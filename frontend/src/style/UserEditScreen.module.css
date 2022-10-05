@@ -26,8 +26,8 @@ label {
 	background-color: #eda598;
 	color: white;
 	border: none;
-	border-radius: 1em;
-	padding: 1em;
+	border-radius: 12px;
+	padding: 0.5em;
 	font-size: 2em;
 	font-family: 'Josefin Sans';
 	cursor: pointer;

@@ -2,7 +2,8 @@
 import React, { useEffect } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 // import { Carousel } from 'react-responsive-carousel';
-import Turn from "../components/Turn";
+// import Turn from "../components/Turn";
+import TurnCard from "../components/TurnCard.js";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +17,7 @@ export default function TurnListScreen() {
   const dispatch = useDispatch();
   const turnList = useSelector((state) => state.turnList);
   const { loadingTurn, error, turns } = turnList;
+  console.log("turnos q llega", turns);
 
   // const userTopSellersList = useSelector((state) => state.userTopSellersList);
   // const {
@@ -41,8 +43,8 @@ export default function TurnListScreen() {
             <MessageBox>No se encontró ningún turno</MessageBox>
           )}
           <div className="row center">
-            {turns.map((turn) => (
-              <Turn key={turn._id} turn={turn}></Turn>
+            {turns?.map((turn) => (
+              <TurnCard key={turn._id} turn={turn}></TurnCard>
             ))}
           </div>
         </>

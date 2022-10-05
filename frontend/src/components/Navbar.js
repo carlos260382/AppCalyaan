@@ -94,7 +94,7 @@ function Navbar() {
   //   }
   //   return outputArray;
   // }
-  console.log("usuario ing", userInfo);
+
   return (
     <div className={styles.container}>
       <div className={styles.containerMenu}>

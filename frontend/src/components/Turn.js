@@ -16,6 +16,7 @@ export default function Turn(props) {
     id: turn._id,
     name: userInfo.name,
     img: userInfo.logo,
+    seller: userInfo._id,
   };
   const nameService = turn.service.map((servi) => {
     return servi.name;
@@ -40,7 +41,7 @@ export default function Turn(props) {
     }
     window.location.replace("");
   };
-  console.log("usuario turn", userInfo);
+
   return (
     <table className="table">
       <thead>

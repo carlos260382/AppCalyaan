@@ -13,7 +13,7 @@ export default function RegisterScreen(props) {
     e.preventDefault();
 
     setIsLoading(true);
-    console.log("datos del email", email);
+
     await Axios.post(
       `${process.env.REACT_APP_API_BASE_URL}/api/users/forgotPassword`,
       { email }

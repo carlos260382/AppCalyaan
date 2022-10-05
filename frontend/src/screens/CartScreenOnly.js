@@ -9,7 +9,7 @@ import styles from "../style/CartScreen.module.css";
 
 export default function CartScreenOnly(props) {
   const productId = props.match.params.id;
-  console.log("props de cart", props);
+
   const qty = props.location.search
     ? Number(props.location.search.split("=")[1])
     : 1;

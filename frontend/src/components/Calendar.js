@@ -5,11 +5,9 @@ import { createTurn } from "../actions/turnAction.js";
 import Swal from "sweetalert2";
 
 const Calendar = (props) => {
-  console.log("estas son las props", props);
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-  console.log("informacion de usuario", userInfo);
 
   const [turn, setTurn] = useState({
     seller: userInfo,
@@ -22,7 +20,6 @@ const Calendar = (props) => {
       ...turn,
       [e.target.name]: e.target.value,
     });
-    console.log("este es el turno", turn);
   };
 
   const handleSubmit = async (e) => {

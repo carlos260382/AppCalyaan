@@ -259,7 +259,6 @@ function App(config) {
             component={ResetPasswordScreen}
           ></Route>
 
-          {/* <Route path='/register' component={RegisterScreen}></Route> */}
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
           <Route path="/payment" component={PaymentMethodScreen}></Route>
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
@@ -336,10 +335,6 @@ function App(config) {
           <Route path="/turn" component={TurnScreen} exact></Route>
         </main>
         <Footer />
-        {/* <footer className="row center">
-          {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-          <div>Todos los derechos reservados</div>{' '}
-        </footer> */}
       </HashRouter>
     </>
   );

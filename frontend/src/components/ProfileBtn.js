@@ -60,7 +60,8 @@ const ProfileBtn = (props) => {
       ) : dropdownOpen && userInfo.isSeller && !userInfo.isAdmin ? (
         <DropdownMenu className={styles.MenuDropdown}>
           <DropdownItem header className={styles.MenuHeader}>
-            Profesional
+            Profesional <br />
+            {userInfo.phone}
           </DropdownItem>
           <NavLink to="/profile">
             <DropdownItem className={styles.MenuItem}>
@@ -88,7 +89,8 @@ const ProfileBtn = (props) => {
       ) : dropdownOpen && userInfo.isAdmin ? (
         <DropdownMenu className={styles.MenuDropdown}>
           <DropdownItem header className={styles.MenuHeader}>
-            Administrador
+            Administrador <br />
+            {userInfo.phone}
           </DropdownItem>
           <NavLink to="/profile">
             <DropdownItem className={styles.MenuItem}>

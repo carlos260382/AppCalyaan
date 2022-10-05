@@ -10,7 +10,7 @@ import ShippingAddressScreen from "./ShippingAddressScreen";
 
 export default function CartScreen(props) {
   const productId = props.match.params.id;
-  console.log("props de cart", props);
+
   const qty = props.location.search
     ? Number(props.location.search.split("=")[1])
     : 1;

@@ -29,7 +29,6 @@ const vapidKeys = {
 };
 
 export function register(config) {
-  console.log("el config", config);
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
@@ -77,8 +76,6 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 function registerValidSW(swUrl, config) {
-  console.log("esta es la config", config);
-
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
@@ -89,8 +86,6 @@ function registerValidSW(swUrl, config) {
         });
         // se lo enviamos al backend
 
-        console.log("subscrition enviada", subscriptions);
-
         const data = await Axios.post(
           `${process.env.REACT_APP_API_BASE_URL}/api/users/suscribed`,
           {
@@ -99,7 +94,6 @@ function registerValidSW(swUrl, config) {
           }
         );
 
-        console.log("data del backend.data", data.data);
         localStorage.setItem("userInfo", JSON.stringify(data.data));
       });
       registration.onupdatefound = () => {

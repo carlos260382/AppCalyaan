@@ -18,10 +18,13 @@
 
 
 .MenuHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 1em;
-font-family: 'Josefin Sans';
-font-size: 1.5em;
-color: #494949    
+    font-family: 'Josefin Sans';
+    font-size: 1.5em;
+    color: #494949    
 }
 
 .MenuItem{

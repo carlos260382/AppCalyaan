@@ -8,8 +8,6 @@ import {
 } from "../constants/cartConstants";
 
 export const addToCart = (productId, qty) => async (dispatch, getState) => {
-  console.log("id action", productId);
-  console.log("cantidad action", qty);
   const { data } = await Axios.get(
     `${process.env.REACT_APP_API_BASE_URL}/api/services/${productId}`
   );

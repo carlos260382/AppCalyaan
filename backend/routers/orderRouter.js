@@ -5,13 +5,10 @@ import User from "../models/userModel.js";
 import Service from "../models/serviceModel.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import {
-  isAdmin,
-  isAuth,
-  isSellerOrAdmin,
-  //mailgun,
-  //payOrderEmailTemplate,
-} from "../utils.js";
+import webpush from "web-push";
+import axios from "axios";
+import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
+import Turn from "../models/turnModel.js";
 
 dotenv.config();
 
@@ -138,12 +135,12 @@ orderRouter.put("/:id/pay", async (req, res) => {
     if (order) {
       order.isPaid = true;
       order.paidAt = Date.now();
-      order.paymentResult = {
-        id: req.body.id,
-        status: req.body.status,
-        update_time: req.body.update_time,
-        email_address: req.body.email_address,
-      };
+      // order.paymentResult = {
+      //   id: req.body.id,
+      //   status: req.body.status,
+      //   update_time: req.body.update_time,
+      //   email_address: req.body.email_address,
+      // };
       const updatedOrder = await order.save();
       res.send({ message: "Order Paid", order: updatedOrder });
       const userEmail = order.user.email;
@@ -160,6 +157,52 @@ orderRouter.put("/:id/pay", async (req, res) => {
         userFather.pointsUser = order.itemsPrice * 0.05 + userFather.pointsUser;
       }
       await userFather.save();
+
+      const seller = await User.findById(order.seller);
+
+      const turn = await Turn.findById(order.turnId);
+
+      // ----------- Envio por WHATSAPP ----------------------
+
+      try {
+        const sendWhatsApp = await axios.post(
+          "https://sendwhatsapp2.herokuapp.com/received",
+          // "http://localhost:3001/received",
+          // "https://sendmessagewhatsapp.herokuapp.com/received",
+          {
+            body: {
+              // from: "573128596420@c.us",
+              // body: "servicio solicitado",
+              from: "57" + seller.phone + "@c.us",
+              body: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}, recuerde marcarlo como realizado una vez finalice la actividad`,
+            },
+          }
+        );
+      } catch (error) {
+        console.log("este es el error", error);
+      }
+
+      // *-------Envio Norificacion Push-----------
+
+      const payload = JSON.stringify({
+        title: "Servicio Confirmado",
+        message: `Fue confirmado el servicio ${order.orderItems[0].name}`,
+        vibrate: [100, 50, 100],
+      });
+
+      try {
+        await webpush.setVapidDetails(
+          "mailto:andres260382@gmail.com",
+          process.env.PUBLIC_API_KEY_WEBPUSH,
+          process.env.PRIVATE_API_KEY_WEBPUSH
+        );
+        await webpush.sendNotification(seller.subscription, payload);
+        // res.status(200).json();
+      } catch (error) {
+        console.log("No se pudo enviar la notificacion", error);
+        res.status(400).send(error).json();
+      }
+
       // const transporter = nodemailer.createTransport({
       //   host: "smtp.gmail.com",
       //   port: 465,
@@ -219,6 +262,33 @@ orderRouter.put(
 
       const updatedOrder = await order.save();
       res.send({ message: "Order Delivered", order: updatedOrder });
+
+      // *-------Envio Norificacion Push-----------
+
+      if (createdTurn) {
+        const userAdmin = await User.find({
+          isAdmin: true,
+        });
+
+        const payload = JSON.stringify({
+          title: "Servicio Realizado",
+          message: `Fue realizado el servicio ${order.orderItems[0].name}`,
+          vibrate: [100, 50, 100],
+        });
+
+        try {
+          await webpush.setVapidDetails(
+            "mailto:andres260382@gmail.com",
+            process.env.PUBLIC_API_KEY_WEBPUSH,
+            process.env.PRIVATE_API_KEY_WEBPUSH
+          );
+          await webpush.sendNotification(userAdmin.subscription, payload);
+          // res.status(200).json();
+        } catch (error) {
+          console.log("No se pudo enviar la notificacion", error);
+          res.status(400).send(error).json();
+        }
+      }
     } else {
       res.status(404).send({ message: "Order Not Found" });
     }

@@ -8,7 +8,7 @@
 	width: 100vw;
 	height: auto;
 	margin-bottom: 3vw;
-	margin-top: 2em;
+	margin-top: 1em;
 }
 
 .referred{
@@ -35,6 +35,9 @@
 	padding: 13px 19px;
 	background-color: #ffffff;
 	border: none;
+	font-family: 'Josefin Sans';
+	color:#494949
+
 }
 
 .container h1,
@@ -86,7 +89,7 @@ label {
 
 @media (max-width: 575.98px) {
 	.container {
-		margin-top: 4em;
+		margin-top: 0em;
 	}
 	.referred{
 		display: flex;
@@ -95,5 +98,32 @@ label {
 		width: 100vw;
 		gap: 0em;
 	}
+
+	.referred p{
+		font-size: 1.3em;
+		font-weight: 400;
+	}
 	
+	.url{
+		
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background-color: #FFF6EA;
+		color: #494949;
+		font-family: 'Josefin Sans';
+		font-size: 1.4em;
+	}
+
+
+	.btn{
+		border-radius: 12px;
+		padding: 8px 8px;
+		font-size: 1.5em;
+	font-family: 'Josefin Sans';
+		background-color: #ffffff;
+		border: none;
+		color:#494949
+	}
+
 }

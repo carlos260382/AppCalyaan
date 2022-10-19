@@ -59,7 +59,6 @@ export default function ServiceScreen(props) {
     }
   };
 
-  console.log("servicio este es el detallado", serviceDetails);
   return (
     <div className={styles.container}>
       {loading ? (

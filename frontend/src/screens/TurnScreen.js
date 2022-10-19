@@ -16,7 +16,6 @@ import Axios from "axios";
 
 export default function TurnScreen(props) {
   const history = useHistory();
-  console.log("props de screen", props.order);
 
   const service = props.order.orderItems.map((service) => {
     return {
@@ -29,7 +28,7 @@ export default function TurnScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-  console.log("informacion de usuario", userInfo);
+
   const [turn, setTurn] = useState({});
 
   // useEffect(() => {
@@ -75,41 +74,22 @@ export default function TurnScreen(props) {
       emailUser: userInfo.email,
       phoneUser: userInfo.phone,
       address: props.order.shippingAddress.address,
+      neighborhood: props.order.shippingAddress.postalCode,
       city: props.order.shippingAddress.city,
       postalCode: props.order.shippingAddress.postalCode,
       country: props.order.shippingAddress.country,
       service,
     });
-    console.log("este es el turno", turn);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // setTurn({
-    //   ...turn,
-    //   seller: props.order.seller,
-    //   status: false,
-    //   user: props.order.user,
-    //   orderId: props.order._id,
-    //   fullName: props.order.shippingAddress.fullName,
-    //   emailUser: userInfo.email,
-    //   phoneUser: userInfo.phone,
-    //   address: props.order.shippingAddress.address,
-    //   city: props.order.shippingAddress.city,
-    //   postalCode: props.order.shippingAddress.postalCode,
-    //   country: props.order.shippingAddress.country,
-    //   service,
-    // });
 
     if (!turn.hour || !turn.day) {
       Swal.fire("debe seleccionar un dia y una hora");
     }
 
     try {
-      //   const {
-      //     userSignin: { userInfo },
-      //   } = getState();
       const { data } = await Axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/turn`,
         turn,
@@ -125,7 +105,10 @@ export default function TurnScreen(props) {
         Swal.fire(
           "Turno creado con exito, recibira una notificación cuando el profesional tome el servicio"
         );
-        history.push(`/order/${props.order._id}`);
+
+        setTimeout(() => {
+          history.push(`/order/${props.order._id}`);
+        }, 2000);
       }
     } catch (error) {
       dispatch({
@@ -138,7 +121,6 @@ export default function TurnScreen(props) {
     }
   };
 
-  console.log("turno creado", turn);
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h1>Aquí podras gestionar tu turno</h1>

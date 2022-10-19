@@ -55,6 +55,7 @@ turnRouter.post(
           fullName,
           emailUser,
           phoneUser,
+          neighborhood,
         } = req.body;
         const turn = new Turn({
           day: day,
@@ -67,6 +68,7 @@ turnRouter.post(
           emailUser: emailUser,
           phoneUser: phoneUser,
           address: address,
+          neighborhood: neighborhood,
           city: city,
           postalCode: postalCode,
           country: country,
@@ -87,23 +89,23 @@ turnRouter.post(
           // ----------SEND WHATSAPP ------------
 
           try {
-            for (let i = 0; i < userSeller.length; i++) {
-              const sendWhatsApp = await axios.post(
-                "https://sendwhatsapp2.herokuapp.com/received",
-                // "http://localhost:3001/received",
-                // "https://sendmessagewhatsapp.herokuapp.com/received",
-                {
-                  body: {
-                    // from: "573128596420@c.us",
-                    // body: "servicio solicitado",
-                    from: "57" + userSeller[i].phone + "@c.us",
-                    body: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos" https://calyaanwp.netlify.app`,
-                  },
-                }
-              );
-            }
+            //for (let i = 0; i < userSeller.length; i++) {
+            const sendWhatsApp = await axios.post(
+              // "https://sendwhatsapp2.herokuapp.com/received",
+              // "http://localhost:3001/received",
+              "https://sendmessagewhatsapp.herokuapp.com/received",
+              {
+                body: {
+                  from: "573128596420@c.us",
+                  // body: "servicio solicitado",
+                  // from: "57" + userSeller[i].phone + "@c.us",
+                  body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co`,
+                },
+              }
+            );
+            // }
           } catch (error) {
-            console.log("este es el error", error);
+            console.log("The message was not sent by whatsapp");
           }
 
           // *-------Envio Norificacion Push-----------
@@ -113,26 +115,47 @@ turnRouter.post(
             message: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}`,
             vibrate: [100, 50, 100],
           });
+          webpush.setVapidDetails(
+            "mailto:andres260382@gmail.com",
+            process.env.PUBLIC_API_KEY_WEBPUSH,
+            process.env.PRIVATE_API_KEY_WEBPUSH
+          );
 
-          try {
-            for (let i = 0; i < userSeller.length; i++) {
-              webpush.setVapidDetails(
-                "mailto:andres260382@gmail.com",
-                process.env.PUBLIC_API_KEY_WEBPUSH,
-                process.env.PRIVATE_API_KEY_WEBPUSH
-              );
-              await webpush.sendNotification(
-                userSeller[i].subscription,
-                payload
-              );
-              // res.status(200).json();
+          let count = 0;
+          while (count <= userSeller.length - 1) {
+            //for (let i = 0; i < userSeller.length; i++) {
+
+            // console.log("subscription", userSeller[count].subscription);
+
+            // console.log(
+            //   "objectKeys",
+            //   Object.keys(userSeller[count].subscription.endpoint).length
+            // );
+
+            if (
+              Object.keys(userSeller[count].subscription.endpoint).length === 1
+            ) {
+              count++;
+              continue;
+            } else {
+              try {
+                await webpush.sendNotification(
+                  userSeller[count].subscription,
+                  payload
+                );
+                // res.status(200).json();
+                console.log("web push enviado");
+                count++;
+              } catch (error) {
+                count++;
+                console.log("The message was not sent by webpush");
+                // res.status(400).send(error).json();
+              }
             }
-          } catch (error) {
-            console.log("No se pudo enviar la notificacion", error);
-            res.status(400).send(error).json();
           }
         }
       }
+      //}
     } catch (error) {
       console.log(error);
       res.status(404).alert("turno no fue creado", error);
@@ -143,7 +166,6 @@ turnRouter.post(
 turnRouter.put(
   "/:id",
   isAuthTurn,
-  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const turn = await Turn.findById(req.params.id);
     // console.log("el turno q llega body", req.body.Turn);
@@ -171,10 +193,10 @@ turnRouter.put(
 
       try {
         const sendWhatsApp = await axios.post(
-          "https://sendwhatsapp2.herokuapp.com/received",
+          //"https://sendwhatsapp2.herokuapp.com/received",
 
           // "http://localhost:3001/received",
-          // "https://sendmessagewhatsapp.herokuapp.com/received",
+          "https://sendmessagewhatsapp.herokuapp.com/received",
           {
             body: {
               // from: "573128596420@c.us",
@@ -185,7 +207,7 @@ turnRouter.put(
           }
         );
       } catch (error) {
-        console.log("este es el error", error);
+        console.log("The message was not sent by whatsapp");
       }
 
       // ---------------> Envio EMAIL---------------------->
@@ -195,7 +217,7 @@ turnRouter.put(
         port: 465,
         secure: true,
         auth: {
-          user: "ep3977752@gmail.com",
+          user: "calyaan.com@gmail.com",
           pass: process.env.KEY_NODEMAILER,
         },
       });
@@ -224,23 +246,22 @@ turnRouter.put(
       const user = await User.findById(turn.user);
 
       const payload = JSON.stringify({
-        title: "Servicio Aprobado",
+        title: "Servicio Aceptado",
         message: `por el profesional ${req.body.Turn.name}, en su correo recibira los detalles para realizar el pago`,
         vibrate: [100, 50, 100],
       });
 
-      try {
-        await webpush.setVapidDetails(
-          "mailto:andres260382@gmail.com",
-          process.env.PUBLIC_API_KEY_WEBPUSH,
-          process.env.PRIVATE_API_KEY_WEBPUSH
-        );
-        await webpush.sendNotification(user.subscription, payload);
-        console.log("Notificación push enviada");
-        // res.status(200).json();
-      } catch (error) {
-        console.log("No se pudo enviar la notificacion", error);
-        res.status(400).send(error).json();
+      if (Object.keys(user.subscription.endpoint).length === 1) {
+        return;
+      } else {
+        try {
+          await webpush.sendNotification(user.subscription, payload);
+          // res.status(200).json();
+          console.log("web push enviado");
+        } catch (error) {
+          console.log("The message was not sent by webpush");
+          // res.status(400).send(error).json();
+        }
       }
     } else {
       res.status(404).send({ message: "Turn Not Found" });
@@ -251,7 +272,6 @@ turnRouter.put(
 turnRouter.get(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const orderId = req.params.id;
     try {

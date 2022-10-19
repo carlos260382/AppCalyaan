@@ -166,9 +166,9 @@ orderRouter.put("/:id/pay", async (req, res) => {
 
       try {
         const sendWhatsApp = await axios.post(
-          "https://sendwhatsapp2.herokuapp.com/received",
+          //"https://sendwhatsapp2.herokuapp.com/received",
           // "http://localhost:3001/received",
-          // "https://sendmessagewhatsapp.herokuapp.com/received",
+          "https://sendmessagewhatsapp.herokuapp.com/received",
           {
             body: {
               // from: "573128596420@c.us",
@@ -186,21 +186,19 @@ orderRouter.put("/:id/pay", async (req, res) => {
 
       const payload = JSON.stringify({
         title: "Servicio Confirmado",
-        message: `Fue confirmado el servicio ${order.orderItems[0].name}`,
+        message: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}`,
         vibrate: [100, 50, 100],
       });
-
+      await webpush.setVapidDetails(
+        "mailto:andres260382@gmail.com",
+        process.env.PUBLIC_API_KEY_WEBPUSH,
+        process.env.PRIVATE_API_KEY_WEBPUSH
+      );
       try {
-        await webpush.setVapidDetails(
-          "mailto:andres260382@gmail.com",
-          process.env.PUBLIC_API_KEY_WEBPUSH,
-          process.env.PRIVATE_API_KEY_WEBPUSH
-        );
         await webpush.sendNotification(seller.subscription, payload);
         // res.status(200).json();
       } catch (error) {
-        console.log("No se pudo enviar la notificacion", error);
-        res.status(400).send(error).json();
+        console.log("No se pudo enviar la notificacion");
       }
 
       // const transporter = nodemailer.createTransport({
@@ -208,7 +206,7 @@ orderRouter.put("/:id/pay", async (req, res) => {
       //   port: 465,
       //   secure: true,
       //   auth: {
-      //     user: "ep3977752@gmail.com",
+      //     user: "calyaan.com@gmail.com",
       //     pass: process.env.KEY_NODEMAILER,
       //   },
       // });

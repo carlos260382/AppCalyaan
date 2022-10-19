@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { detailsOrder, updateValue } from "../actions/orderActions";
-import { listTurns } from "../actions/turnAction";
+import { listTurns, getTurn } from "../actions/turnAction";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import styles from "../style/OrderScreen.module.css";
@@ -27,10 +27,12 @@ export default function OrderScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
-  const turnList = useSelector((state) => state.turnList);
-  const { turns, loadingTurn } = turnList;
+  const [turnUser, setTurUser] = useState(null);
 
-  const turnUser = turns && turns.find((e) => e.orderId === id);
+  // const turnList = useSelector((state) => state.turnList);
+  // const { turns, loadingTurn } = turnList;
+
+  // const turnUser = turns && turns.find((e) => e.orderId === id);
 
   const orderPay = useSelector((state) => state.orderPay);
   const { success: successPay } = orderPay;
@@ -41,24 +43,30 @@ export default function OrderScreen(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (loadingTurn) {
-      dispatch(listTurns());
-    }
+    //dispatch(listTurns());
+    const getTurnDetail = (id) => {
+      dispatch(getTurn(id)).then((res) => {
+        const [turn] = res;
+        setTurUser(turn);
+      });
+    };
+    getTurnDetail(id);
 
     if (!order || successPay || successDeliver || (order && order._id !== id)) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
 
       dispatch(detailsOrder(id));
-    } else {
-      if (!order.isPaid) {
-        // eslint-disable-next-line no-empty
-        if (!window.paypal) {
-        } else {
-          setSdkReady(true);
-        }
-      }
     }
+    // else {
+    //   if (!order.isPaid) {
+    //     // eslint-disable-next-line no-empty
+    //     if (!window.paypal) {
+    //     } else {
+    //       setSdkReady(true);
+    //     }
+    //   }
+    // }
   }, [
     dispatch,
     id,
@@ -66,8 +74,8 @@ export default function OrderScreen(props) {
     successPay,
     successDeliver,
     order,
-    turns,
-    loadingTurn,
+    // turns,
+    //loadingTurn,
   ]);
   const redeemPoints = () => {
     const points = {
@@ -96,6 +104,8 @@ export default function OrderScreen(props) {
           <h3>Día y hora del Turno Seleccionado</h3>
           <p>Fecha: {turnUser ? turnUser.day : ""} </p>
           <p>Hora: {turnUser ? turnUser.hour : ""}</p>
+          <p>Direccion: {turnUser ? turnUser.address : ""}</p>
+          <p>Barrio/localidad: {turnUser ? turnUser.neighborhood : ""}</p>
           <p>
             Codigo de confirmación: {turnUser ? turnUser.keyCode : ""} <br />{" "}
             (este numero sera mostrado por el profesional para confirmación)

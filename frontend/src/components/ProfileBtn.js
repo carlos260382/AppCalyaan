@@ -68,19 +68,23 @@ const ProfileBtn = (props) => {
               Perfil de Usuario
             </DropdownItem>
           </NavLink>
-          <NavLink to="/orderhistory">
+          {/* <NavLink to="/orderhistory">
             <DropdownItem className={styles.MenuItem}>
               Historial de pedidos
             </DropdownItem>
-          </NavLink>
-          <NavLink to="/servicelist/seller">
+          </NavLink> */}
+          {/* <NavLink to="/servicelist/seller">
             <DropdownItem className={styles.MenuItem}>Servicios</DropdownItem>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/turnlist">
-            <DropdownItem className={styles.MenuItem}>Turnos</DropdownItem>
+            <DropdownItem className={styles.MenuItem}>
+              Turnos Pendientes
+            </DropdownItem>
           </NavLink>
           <NavLink to="/orderlist/seller">
-            <DropdownItem className={styles.MenuItem}>Pedidos</DropdownItem>
+            <DropdownItem className={styles.MenuItem}>
+              Pedidos Tomados
+            </DropdownItem>
           </NavLink>
           <NavLink to="/signout" onClick={signoutHandler}>
             <DropdownItem className={styles.MenuItem}>Salir</DropdownItem>

@@ -17,7 +17,6 @@ export default function TurnListScreen() {
   const dispatch = useDispatch();
   const turnList = useSelector((state) => state.turnList);
   const { loadingTurn, error, turns } = turnList;
-  console.log("turnos q llega", turns);
 
   // const userTopSellersList = useSelector((state) => state.userTopSellersList);
   // const {

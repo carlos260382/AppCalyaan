@@ -11,6 +11,8 @@ import styles from "../style/ProfileScreen.module.css";
 export default function ProfileScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [sellerName, setSellerName] = useState("");
@@ -62,6 +64,8 @@ export default function ProfileScreen() {
           sellerName,
           sellerLogo,
           sellerDescription,
+          gender,
+          dateOfBirth,
         })
       );
     }
@@ -84,10 +88,10 @@ export default function ProfileScreen() {
           </p>
 
           <span className={styles.url}>
-            {urlReferred}{" "}
+            {`${process.env.PUBLIC_URL}....${userInfo._id} `}{" "}
             <input
               type="submit"
-              value="copiar URL"
+              value="Copiar Link"
               onClick={copyText}
               className={styles.btn}
             />
@@ -132,6 +136,25 @@ export default function ProfileScreen() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
+            </div>
+            <div>
+              <label htmlFor="dateOfBirth">Fecha de nacimiento</label>
+              <input
+                type="date"
+                name="dateOfBirth"
+                placeholder="fecha"
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
+                required
+              ></input>
+            </div>
+            <div className={styles.mail}>
+              <label htmlFor="gender">Genero</label>
+              <select name="gender" onChange={(e) => setGender(e.target.value)}>
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Sin especificar">Sin especificar</option>
+              </select>
             </div>
             <div>
               <label htmlFor="password">Contraseña</label>

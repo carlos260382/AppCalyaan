@@ -9,9 +9,8 @@ import { listService } from "../actions/serviceActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Service from "../components/Service.js";
-//import Rating from "../components/Rating";
+
 import styles from "../style/SearchScreen.module.css";
-import { ratings } from "../utils";
 
 export default function SearchScreen(props) {
   const [filter, setFilter] = useState({
@@ -72,7 +71,7 @@ export default function SearchScreen(props) {
   const getFilter = () => {
     props.history.push(getFilterUrl(filter));
   };
-  console.log("rating", ratings);
+
   return (
     <div className={styles.container}>
       <div className={styles.containerSort}>

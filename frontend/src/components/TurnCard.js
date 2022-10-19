@@ -7,7 +7,7 @@ import styles from "../style/ServiceListScreen.module.css";
 
 export default function TurnCard(props) {
   const { turn } = props;
-  console.log("turn", turn);
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
@@ -31,16 +31,24 @@ export default function TurnCard(props) {
 
   const handleAcceptor = () => {
     if (window.confirm("¿Desea aceptar el turno?")) {
-      dispatch(updateTurn(Turn));
+      if (dispatch(updateTurn(Turn))) {
+        setTimeout(() => {
+          window.location.replace("");
+        }, 2000);
+      }
     }
-    window.location.replace("");
+    //
   };
 
   const handleDelete = () => {
     if (window.confirm("¿Desea eliminar el turno?")) {
-      dispatch(deleteTurn(Turn.id));
+      if (dispatch(deleteTurn(Turn.id))) {
+        setTimeout(() => {
+          window.location.replace("");
+        }, 2000);
+      }
     }
-    window.location.replace("");
+    // window.location.replace("");
   };
 
   return (

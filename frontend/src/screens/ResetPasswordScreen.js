@@ -9,10 +9,8 @@ import Swal from "sweetalert2";
 import styles from "../style/SigninScreen.module.css";
 
 export default function RegisterScreen(props) {
-  console.log("props q llegan", props);
   const { id, number } = props.match.params;
-  console.log("el id", id);
-  console.log("el numero", number);
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 

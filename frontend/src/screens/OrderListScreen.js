@@ -34,20 +34,32 @@ export default function OrderListScreen(props) {
 
   const deleteHandler = (order) => {
     if (window.confirm("¿Desea eliminar el pedido?")) {
-      dispatch(deleteOrder(order._id));
+      if (dispatch(deleteOrder(order._id))) {
+        setTimeout(() => {
+          window.location.replace("");
+        }, 2000);
+      }
     }
   };
 
   const changeToDo = (order) => {
     if (window.confirm("¿Va confirmar que realizo el servicio?")) {
-      dispatch(deliverOrder(order._id));
+      if (dispatch(deliverOrder(order._id))) {
+        setTimeout(() => {
+          window.location.replace("");
+        }, 2000);
+      }
     }
     window.location.replace("");
   };
 
   const changePay = (order) => {
     if (window.confirm("¿Confirma que el servicio fue pagado?")) {
-      dispatch(payOrder(order._id));
+      if (dispatch(payOrder(order._id))) {
+        setTimeout(() => {
+          window.location.replace("");
+        }, 2000);
+      }
     }
     window.location.replace("");
   };
@@ -65,7 +77,7 @@ export default function OrderListScreen(props) {
         <table className="table">
           <thead>
             <tr>
-              <th>FECHA</th>
+              <th>FECHA PEDIDO</th>
               <th>TOTAL</th>
               <th>PAGADO</th>
               <th>REALIZADO</th>
@@ -77,7 +89,7 @@ export default function OrderListScreen(props) {
               <tr key={order._id}>
                 {/* <td>{order.user.name}</td> */}
                 <td>{order.createdAt.substring(0, 10)}</td>
-                <td>{order.totalPrice.toFixed(2)}</td>
+                <td>{order.itemsPrice.toFixed(2)}</td>
                 <td>{order.isPaid ? "Pagado" : "No"}</td>
                 <td>{order.isDelivered ? "Realizado" : "No"}</td>
                 <td>

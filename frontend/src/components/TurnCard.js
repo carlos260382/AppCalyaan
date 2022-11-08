@@ -19,8 +19,8 @@ export default function TurnCard(props) {
     seller: userInfo._id,
   };
 
-  const nameService = turn.service.map((servi) => {
-    return `${servi.name} $${servi.price} `;
+  const nameService = turn.service?.map((servi) => {
+    return `${servi.orderItems.name} $${servi.orderItems.price} `;
   });
   //   const priceService = turn.service.map((servi) => {
   //     return servi.price;
@@ -50,26 +50,26 @@ export default function TurnCard(props) {
     }
     // window.location.replace("");
   };
-
+  console.log("turn de card", turn);
   return (
     <div className={styles.cards}>
       {userInfo.isSeller && !turn.status ? (
         <ul className={styles.ul} reversed>
           <li>
             <span>NOMBRE </span>
-            {turn.fullName}
+            {turn.user.name}
           </li>
           <li>
             <span>DIRECCION </span>
-            {turn.address}
+            {turn.shippingAddress.address}
           </li>
           <li>
             <span>FECHA </span>
-            {turn.day}
+            {turn.turn.day}
           </li>
           <li>
             <span>HORA </span>
-            {turn.hour}
+            {turn.turn.hour}
           </li>
           <li>
             <span>SERVICIO </span>
@@ -84,12 +84,12 @@ export default function TurnCard(props) {
 
           <li>
             <span>ESTADO </span>
-            {!turn.status ? <p>Pendiente</p> : <p>Aceptado</p>}
+            {!turn.turn.status ? <p>Pendiente</p> : <p>Aceptado</p>}
           </li>
 
           <li>
             {" "}
-            {!turn.status ? (
+            {!turn.turn.status ? (
               <button
                 type="button"
                 className={styles.btnTurn}
@@ -109,26 +109,24 @@ export default function TurnCard(props) {
         <ul className={styles.ul} reversed>
           <li>
             <span>NOMBRE </span>
-            {turn.fullName}
+            {turn.user.name}
           </li>
           <li>
             <span>DIRECCION </span>
-            {turn.address}
+            {turn.shippingAddress.address}
           </li>
           <li>
             <span>FECHA </span>
-            {turn.day}
+            {turn.turn.day}
           </li>
           <li>
             <span>HORA </span>
-            {turn.hour}
+            {turn.turn.hour}
           </li>
           <li>
             <span>SERVICIO </span>
             {nameService}
-            {/* {priceService} */}
           </li>
-
           {/* <li>
           <span>PRECIO </span>
           {priceService}
@@ -136,12 +134,12 @@ export default function TurnCard(props) {
 
           <li>
             <span>ESTADO </span>
-            {!turn.status ? <p>Pendiente</p> : <p>Aceptado</p>}
+            {!turn.turn.status ? <p>Pendiente</p> : <p>Aceptado</p>}
           </li>
 
           <li>
             {" "}
-            {!turn.status ? (
+            {!turn.turn.status ? (
               <button
                 type="button"
                 className={styles.btnTurn}

@@ -29,6 +29,8 @@ export default function TurnListScreen() {
     dispatch(listTurns());
     // dispatch(listTopSellers());
   }, [dispatch]);
+
+  console.log("turnos", turns);
   return (
     <div className={styles.container}>
       <h2>Lista de Turnos</h2>

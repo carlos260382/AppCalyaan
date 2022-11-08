@@ -149,6 +149,7 @@ userRouter.put(
       if (user.isSeller) {
         user.seller.name = req.body.sellerName || user.seller.name;
         user.seller.logo = req.body.sellerLogo || user.seller.logo;
+        user.seller.category = req.body.category || user.seller.category;
         user.seller.description =
           req.body.sellerDescription || user.seller.description;
       }
@@ -184,6 +185,21 @@ userRouter.get(
   })
 );
 
+userRouter.get(
+  "/professional",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    try {
+      const usersSeller = await User.find({ isSeller: true });
+      console.log("usuarios encontrados", usersSeller);
+      if (usersSeller) res.send(usersSeller);
+    } catch (error) {
+      console.log("error", error);
+    }
+  })
+);
+
 userRouter.delete(
   "/:id",
   isAuth,
@@ -212,6 +228,7 @@ userRouter.put(
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
+      user.seller.category = req.body.category || user.seller.category;
       user.isSeller = Boolean(req.body.isSeller);
       user.isAdmin = Boolean(req.body.isAdmin);
       // user.isAdmin = req.body.isAdmin || user.isAdmin;

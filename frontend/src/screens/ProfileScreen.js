@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { listServiceCategories } from "../actions/serviceActions.js";
 import { detailsUser, updateUserProfile } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -17,6 +18,7 @@ export default function ProfileScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [sellerName, setSellerName] = useState("");
   const [sellerLogo, setSellerLogo] = useState("");
+  const [category, setCategory] = useState([]);
   const [sellerDescription, setSellerDescription] = useState("");
   const [urlReferred, seturlReferred] = useState("");
 
@@ -30,6 +32,10 @@ export default function ProfileScreen() {
     error: errorUpdate,
     loading: loadingUpdate,
   } = userUpdateProfile;
+
+  const serviceCategoryList = useSelector((state) => state.serviceCategoryList);
+  const { categories } = serviceCategoryList;
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (!user) {
@@ -43,6 +49,7 @@ export default function ProfileScreen() {
         setSellerName(user.seller.name);
         setSellerLogo(user.seller.logo);
         setSellerDescription(user.seller.description);
+        dispatch(listServiceCategories());
       }
     }
 
@@ -63,6 +70,7 @@ export default function ProfileScreen() {
           password,
           sellerName,
           sellerLogo,
+          category,
           sellerDescription,
           gender,
           dateOfBirth,
@@ -76,6 +84,11 @@ export default function ProfileScreen() {
     Swal.fire("Link copiado al portapapeles");
   };
 
+  const handleChange = (evento) => {
+    setCategory((category) => [...category, evento]);
+  };
+
+  console.log("categorias de profesional", category);
   return (
     <div className={styles.container}>
       <div className={styles.referred}>
@@ -197,6 +210,23 @@ export default function ProfileScreen() {
                     onChange={(e) => setSellerLogo(e.target.value)}
                   ></input>
                 </div>
+                <div>
+                  <label htmlFor="category">
+                    Seleccione las categorias de los servicios que presta
+                  </label>
+
+                  {categories?.map((item, index) => (
+                    <div key={index}>
+                      <input
+                        value={item}
+                        type="checkbox"
+                        onChange={(e) => handleChange(e.target.value)}
+                      />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
                 <div>
                   <label htmlFor="sellerDescription">
                     Descripción del Profesional

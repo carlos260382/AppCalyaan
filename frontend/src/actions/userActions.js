@@ -24,6 +24,7 @@ import {
   USER_TOPSELLERS_LIST_REQUEST,
   USER_TOPSELLERS_LIST_SUCCESS,
   USER_TOPSELLERS_LIST_FAIL,
+  USER_LIST_SUCCESS_PROFESSIONAL,
 } from "../constants/userConstants";
 
 export const register = (form) => async (dispatch) => {
@@ -272,3 +273,28 @@ export const subscriptionUser =
       dispatch({ type: USER_UPDATE_PROFILE_FAIL, payload: message });
     }
   };
+
+export const listUsersProfessional = () => async (dispatch, getState) => {
+  dispatch({ type: USER_LIST_REQUEST });
+  try {
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    const { data } = await Axios.get(
+      `${process.env.REACT_APP_API_BASE_URL}/api/users/professional`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    console.log("data", data);
+    dispatch({ type: USER_LIST_SUCCESS_PROFESSIONAL, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_LIST_FAIL, payload: message });
+  }
+};

@@ -4,6 +4,10 @@
 	color: black;
 }
 
+.whastApp img{
+	width: 7vw;
+	height: 7vw;
+}
 
 .card{
     background-color: #ffffff;
@@ -42,4 +46,11 @@
 .chat{
 	width: 7vw;
 	height: 7vw;
+}
+
+@media (max-width: 575.98px) {
+.whastApp img{
+	width: 10vw;
+	height: 10vw;
+}
 }

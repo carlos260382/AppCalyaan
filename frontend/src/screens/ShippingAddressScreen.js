@@ -28,6 +28,8 @@ export default function ShippingAddressScreen(props) {
 
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
+
+  console.log("cart", cart);
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const [fullName, setFullName] = useState(shippingAddress.fullName);

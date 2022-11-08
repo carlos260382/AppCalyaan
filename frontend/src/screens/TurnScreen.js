@@ -8,22 +8,25 @@ import { useHistory } from "react-router-dom";
 import styles from "../style/OrderScreenTurn.module.css";
 import Swal from "sweetalert2";
 
+import { TURN_CREATE_FAIL } from "../constants/turnConstant.js";
 import {
-  TURN_CREATE_SUCCESS,
-  TURN_CREATE_FAIL,
-} from "../constants/turnConstant.js";
+  ORDER_UPDATE_SUCCESS,
+  ORDER_DETAILS_SUCCESS,
+} from "../constants/orderConstants.js";
 import Axios from "axios";
 
 export default function TurnScreen(props) {
   const history = useHistory();
 
-  const service = props.order.orderItems.map((service) => {
-    return {
-      name: service.name,
-      price: service.price,
-      qty: service.qty,
-    };
-  });
+  // const service = props.order.orderItems.map((service) => {
+  //   return {
+  //     name: service.name,
+  //     price: service.price,
+  //     category: service.category,
+  //     qty: service.qty,
+  //   };
+  // });
+  const orderId = props.order._id;
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -66,19 +69,19 @@ export default function TurnScreen(props) {
     setTurn({
       ...turn,
       [e.target.name]: e.target.value,
-      seller: props.order.seller,
+      // seller: props.order.seller,
       status: false,
-      user: props.order.user,
-      orderId: props.order._id,
-      fullName: props.order.shippingAddress.fullName,
-      emailUser: userInfo.email,
-      phoneUser: userInfo.phone,
-      address: props.order.shippingAddress.address,
-      neighborhood: props.order.shippingAddress.postalCode,
-      city: props.order.shippingAddress.city,
-      postalCode: props.order.shippingAddress.postalCode,
-      country: props.order.shippingAddress.country,
-      service,
+      // user: props.order.user,
+      // orderId: props.order._id,
+      // fullName: props.order.shippingAddress.fullName,
+      // emailUser: userInfo.email,
+      // phoneUser: userInfo.phone,
+      // address: props.order.shippingAddress.address,
+      // neighborhood: props.order.shippingAddress.postalCode,
+      // city: props.order.shippingAddress.city,
+      // postalCode: props.order.shippingAddress.postalCode,
+      // country: props.order.shippingAddress.country,
+      // service,
     });
   };
 
@@ -91,7 +94,8 @@ export default function TurnScreen(props) {
 
     try {
       const { data } = await Axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/api/turn`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/turn/${orderId}/turn`,
+        // `${process.env.REACT_APP_API_BASE_URL}/api/turn`,
         turn,
         {
           headers: {
@@ -99,8 +103,10 @@ export default function TurnScreen(props) {
           },
         }
       );
-      dispatch({ type: TURN_CREATE_SUCCESS, payload: data.turn });
-
+      dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data.turn });
+      dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.turn });
+      // dispatch({ type: TURN_CREATE_SUCCESS, payload: data.turn });
+      console.log("data", data);
       if (data) {
         Swal.fire(
           "Turno creado con exito, recibira una notificación cuando el profesional tome el servicio"
@@ -121,6 +127,7 @@ export default function TurnScreen(props) {
     }
   };
 
+  console.log("turno", turn);
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h1>Aquí podras gestionar tu turno</h1>

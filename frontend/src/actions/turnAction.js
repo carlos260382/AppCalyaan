@@ -1,9 +1,9 @@
 import Axios from "axios";
 
 import {
-  TURN_CREATE_SUCCESS,
-  TURN_CREATE_REQUEST,
-  TURN_CREATE_FAIL,
+  //TURN_CREATE_SUCCESS,
+  //TURN_CREATE_REQUEST,
+  //TURN_CREATE_FAIL,
   TURN_LIST_REQUEST,
   TURN_LIST_SUCCESS,
   TURN_LIST_FAIL,
@@ -18,34 +18,34 @@ import {
   TURN_GET_FAIL,
 } from "../constants/turnConstant";
 
-export const createTurn = (turn) => async (dispatch, getState) => {
-  dispatch({ type: TURN_CREATE_REQUEST, payload: turn });
-  try {
-    const {
-      userSignin: { userInfo },
-    } = getState();
-    const { data } = await Axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/api/turn`,
-      turn,
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
-    dispatch({ type: TURN_CREATE_SUCCESS, payload: data.turn });
-    // dispatch({ type: CART_EMPTY });
-    // localStorage.removeItem('cartItems');
-  } catch (error) {
-    dispatch({
-      type: TURN_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+// export const createTurn = (turn) => async (dispatch, getState) => {
+//   dispatch({ type: TURN_CREATE_REQUEST, payload: turn });
+//   try {
+//     const {
+//       userSignin: { userInfo },
+//     } = getState();
+//     const { data } = await Axios.post(
+//       `${process.env.REACT_APP_API_BASE_URL}/api/turn`,
+//       turn,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${userInfo.token}`,
+//         },
+//       }
+//     );
+//     dispatch({ type: TURN_CREATE_SUCCESS, payload: data.turn });
+//     // dispatch({ type: CART_EMPTY });
+//     // localStorage.removeItem('cartItems');
+//   } catch (error) {
+//     dispatch({
+//       type: TURN_CREATE_FAIL,
+//       payload:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     });
+//   }
+// };
 
 export const listTurns = () => async (dispatch) => {
   dispatch({

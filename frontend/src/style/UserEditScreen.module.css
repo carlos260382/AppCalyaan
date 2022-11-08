@@ -2,7 +2,8 @@
 
 .container {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
+	align-items: center;
     justify-content: center;
 	column-gap: 1vw;
 	flex-wrap: wrap;
@@ -22,7 +23,7 @@ label {
 .container div{
     margin: 1.5em;
 }
-.container button {
+.btn {
 	background-color: #eda598;
 	color: white;
 	border: none;
@@ -56,6 +57,40 @@ label {
 	background-color: #494949;
 }
 
+.btnSeller{
+	background-color: #f5eceb;
+	color: #eda598;
+	border: solid 2px #eda598;
+	border-radius: 12px;
+	padding: 0.5em;
+	font-size: 2em;
+	font-family: 'Josefin Sans';
+	cursor: pointer;
+	width: 30%;
+	transition: all 0.3s ease-in-out;
+
+}
+
+.container button:hover {
+	background-color: #eda598;
+	color: #ffffff
+}
+
+.container button:focus {
+	background-color: #494949;
+}
+
+.container button:active {
+	background-color: #494949;
+}
+
+.container button:disabled {
+	background-color: #494949;
+}
+
+.container button:disabled:hover {
+	background-color: #494949;
+}
 @media (max-width: 767.98px) {
 	.container {
 		margin-top: 2em;
